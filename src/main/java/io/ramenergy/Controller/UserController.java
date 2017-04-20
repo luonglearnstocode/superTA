@@ -22,7 +22,7 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @RequestMapping("/{username}")
+    @RequestMapping(method = RequestMethod.GET, value = "/{username}")
     public User getUser(@PathVariable String username) {
         return userService.getUser(username);
     }
