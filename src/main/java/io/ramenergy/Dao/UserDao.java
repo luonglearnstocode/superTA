@@ -13,7 +13,8 @@ public class UserDao {
     private List<User> users = new ArrayList<>(Arrays.asList(
             new User("a", "b", "ab", "a@b.com", "secret"),
             new User("c", "d", "cd", "c@d.com", "secret"),
-            new User("e", "f", "ef", "e@f.com", "secret")
+            new User("e", "f", "ef", "e@f.com", "secret"),
+            new User("g", "h", "gh", "g@h.com", "secret")
     ));
 
     public List<User> getAllUsers() {
