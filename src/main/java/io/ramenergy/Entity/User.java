@@ -1,5 +1,8 @@
 package io.ramenergy.Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by lwown on 20/4/2017.
  */
@@ -9,6 +12,7 @@ public class User {
     private String userName;
     private String email;
     private String password;
+    private List<Course> courses;
 
     public User() {
     }
@@ -19,6 +23,8 @@ public class User {
         this.userName = userName;
         this.email = email;
         this.password = password;
+        courses = new ArrayList<>();
+
     }
 
     public String getFirstName() {
@@ -59,5 +65,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 }
