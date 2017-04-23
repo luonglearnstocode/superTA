@@ -24,7 +24,7 @@ public class UserDao {
     }
 
     public User getUser(String username) {
-        return users.stream().filter(u -> u.getUserName().equals(username)).findFirst().get();
+        return users.stream().filter(u -> u.getUsername().equals(username)).findFirst().get();
     }
 
     public void addUser(User user) {
@@ -34,7 +34,7 @@ public class UserDao {
     public void updateUser(String username, User user) {
         for (int i = 0; i < users.size(); i++) {
             User u = users.get(i);
-            if (u.getUserName().equals(username)) {
+            if (u.getUsername().equals(username)) {
                 users.set(i, user);
                 return;
             }
@@ -42,7 +42,7 @@ public class UserDao {
     }
 
     public void deleteUser(String username) {
-        users.removeIf(u -> u.getUserName().equals(username));
+        users.removeIf(u -> u.getUsername().equals(username));
     }
 
 }

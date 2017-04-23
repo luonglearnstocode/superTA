@@ -1,30 +1,32 @@
 package io.ramenergy.Entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * Created by lwown on 20/4/2017.
  */
+@Entity
 public class User {
+    @Id
+    private String username;
     private String firstName;
     private String lastName;
-    private String userName;
     private String email;
     private String password;
-    private List<Course> courses;
+//    private List<Course> courses;
 
-    public User() {
-    }
-
-    public User(String firstName, String lastName, String userName, String email, String password) {
+    public User(String username, String firstName, String lastName, String email, String password) {
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userName = userName;
         this.email = email;
         this.password = password;
-        courses = new ArrayList<>();
+//        courses = new ArrayList<>();
 
+    }
+
+    public User() {
     }
 
     public String getFirstName() {
@@ -43,12 +45,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -67,11 +69,11 @@ public class User {
         this.password = password;
     }
 
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
+//    public List<Course> getCourses() {
+//        return courses;
+//    }
+//
+//    public void setCourses(List<Course> courses) {
+//        this.courses = courses;
+//    }
 }

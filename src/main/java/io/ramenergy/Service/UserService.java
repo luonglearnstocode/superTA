@@ -1,6 +1,7 @@
 package io.ramenergy.Service;
 
 import io.ramenergy.Dao.UserDao;
+import io.ramenergy.Dao.UserRepository;
 import io.ramenergy.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,26 +16,38 @@ import java.util.List;
 
 @Service
 public class UserService {
+    private List<User> users = new ArrayList<>(Arrays.asList(
+            new User("a", "b", "ab", "a@b.com", "secret"),
+            new User("c", "d", "cd", "c@d.com", "secret"),
+            new User("e", "f", "ef", "e@f.com", "secret"),
+            new User("g", "h", "gh", "g@h.com", "secret"),
+            new User("h", "i", "hi", "i@h.com", "secret2"),
+            new User("i", "k", "ki", "i@i.com", "secret5")
+    ));
+
     @Autowired
-    private UserDao userDao;
+    private UserRepository userRepository;
+//    private UserDao userDao;
 
     public List<User> getAllUsers() {
-        return userDao.getAllUsers();
+        List<User> users = new ArrayList<>();
+        userRepository.findAll().forEach(users::add);
+        return users;
     }
 
     public User getUser(String username) {
-        return userDao.getUser(username);
+        return userRepository.findOne(username);
     }
 
     public void addUser(User user) {
-        userDao.addUser(user);
+        userRepository.save(user);
     }
 
     public void updateUser(String username, User user) {
-        userDao.updateUser(username, user);
+        userRepository.save(user);
     }
-
+//
     public void deleteUser(String username) {
-        userDao.deleteUser(username);
+        userRepository.delete(username);
     }
 }

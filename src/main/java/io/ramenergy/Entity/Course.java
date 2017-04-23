@@ -1,23 +1,31 @@
 package io.ramenergy.Entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by lwown on 20/4/2017.
  */
+@Entity
 public class Course {
+    @Id
     private String id;
     private String name;
-    private List<Quiz> quizzes;
+    @ManyToOne
+    private User user;
+//    private List<Quiz> quizzes;
 
     public Course() {
     }
 
-    public Course(String id, String name) {
+    public Course(String id, String name, String username) {
         this.id = id;
         this.name = name;
-        this.quizzes = new ArrayList<>();
+        this.user = new User(username, "", "", "", "");
+//        this.quizzes = new ArrayList<>();
     }
 
     public String getId() {
@@ -36,11 +44,19 @@ public class Course {
         this.name = name;
     }
 
-    public List<Quiz> getQuizzes() {
-        return quizzes;
+//    public List<Quiz> getQuizzes() {
+//        return quizzes;
+//    }
+//
+//    public void setQuizzes(List<Quiz> quizzes) {
+//        this.quizzes = quizzes;
+//    }
+
+    public User getUser() {
+        return user;
     }
 
-    public void setQuizzes(List<Quiz> quizzes) {
-        this.quizzes = quizzes;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

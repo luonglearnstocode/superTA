@@ -2,7 +2,7 @@ package io.ramenergy.Controller;
 
 import io.ramenergy.Entity.Course;
 import io.ramenergy.Entity.User;
-import io.ramenergy.Service.UserService;
+import io.ramenergy.Service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,15 +15,33 @@ import java.util.List;
 @RequestMapping("/users/{username}/courses")
 public class CourseController {
     @Autowired
-    private UserService userService;
+    private CourseService courseService;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Course> getCoursesOfUser(@PathVariable String username) {
-        return userService.getUser(username).getCourses();
+        return courseService.getAllCourses(username);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public Course getCourse(@PathVariable String id) {
+        return courseService.getCourse(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public void addCourse(@RequestBody Course course, @PathVariable String username) {
-        userService.getUser(username).getCourses().add(course);
+        course.setUser(new User(username, "", "", "", ""));
+        courseService.addCourse(course);
     }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+    public void updateUser(@RequestBody Course course, @PathVariable String username, @PathVariable String id) {
+        course.setUser(new User(username, "", "", "", ""));
+        courseService.addCourse(course);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    public void deleteUser(@PathVariable String id) {
+        courseService.deleteCourse(id);
+    }
+
 }
