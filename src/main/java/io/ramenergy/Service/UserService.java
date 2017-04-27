@@ -22,7 +22,7 @@ public class UserService {
             new User("e", "f", "ef", "e@f.com", "secret"),
             new User("g", "h", "gh", "g@h.com", "secret"),
             new User("h", "i", "hi", "i@h.com", "secret2"),
-            new User("i", "k", "ki", "i@i.com", "secret5jesse")
+            new User("i", "k", "ki", "i@i.com", "secret5jes")
     ));
 
     @Autowired
