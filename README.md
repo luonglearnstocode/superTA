@@ -1,2 +1,2 @@
 # superTA
-Application allows math teachers automate the grading process.
+This application allows math teachers to automate the grading process.
