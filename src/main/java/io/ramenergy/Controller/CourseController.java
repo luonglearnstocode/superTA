@@ -36,7 +36,7 @@ public class CourseController {
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
     public void updateUser(@RequestBody Course course, @PathVariable String username, @PathVariable String id) {
         course.setUser(new User(username, "", "", "", ""));
-        courseService.addCourse(course);
+        courseService.updateCourse(course);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")

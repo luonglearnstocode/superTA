@@ -1,27 +1,34 @@
 package io.ramenergy.Entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 /**
  * Created by lwown on 20/4/2017.
  */
+//@Entity
 public class Question {
-    private String id;
+//    @Id
+//    @GeneratedValue
+    private int id;
     private String text;
     private String solution;
 
     public Question() {
     }
 
-    public Question(String id, String text, String solution) {
+    public Question(int id, String text, String solution) {
         this.id = id;
         this.text = text;
         this.solution = solution;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
