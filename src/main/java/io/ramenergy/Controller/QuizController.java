@@ -40,7 +40,7 @@ public class QuizController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-    public void deleteUser(@PathVariable int id) {
+    public void deleteQuiz(@PathVariable int id) {
         quizService.deleteQuiz(id);
     }
 

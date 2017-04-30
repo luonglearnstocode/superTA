@@ -1,27 +1,34 @@
 package io.ramenergy.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * Created by lwown on 20/4/2017.
  */
-//@Entity
+@Entity
 public class Question {
-//    @Id
-//    @GeneratedValue
+    @Id
+    @GeneratedValue
     private int id;
     private String text;
     private String solution;
+    @ManyToOne
+    @JsonIgnore
+    private Quiz quiz;
 
     public Question() {
     }
 
-    public Question(int id, String text, String solution) {
+    public Question(int id, String text, String solution, int quizId) {
         this.id = id;
         this.text = text;
         this.solution = solution;
+        this.quiz = new Quiz(quizId, "", "");
     }
 
     public int getId() {
@@ -46,5 +53,13 @@ public class Question {
 
     public void setSolution(String solution) {
         this.solution = solution;
+    }
+
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
     }
 }

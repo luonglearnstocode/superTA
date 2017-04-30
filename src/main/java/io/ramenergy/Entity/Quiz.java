@@ -1,5 +1,7 @@
 package io.ramenergy.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,6 +19,7 @@ public class Quiz {
     private int id;
     private String title;
     @ManyToOne
+    @JsonIgnore
     private Course course;
 //    private List<Question> questions;
 

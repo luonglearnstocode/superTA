@@ -1,5 +1,7 @@
 package io.ramenergy.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -15,6 +17,7 @@ public class Course {
     private String id;
     private String name;
     @ManyToOne
+    @JsonIgnore
     private User user;
 //    private List<Quiz> quizzes;
 

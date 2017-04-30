@@ -34,13 +34,13 @@ public class CourseController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    public void updateUser(@RequestBody Course course, @PathVariable String username, @PathVariable String id) {
+    public void updateCourse(@RequestBody Course course, @PathVariable String username, @PathVariable String id) {
         course.setUser(new User(username, "", "", "", ""));
         courseService.updateCourse(course);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-    public void deleteUser(@PathVariable String id) {
+    public void deleteCourse(@PathVariable String id) {
         courseService.deleteCourse(id);
     }
 
