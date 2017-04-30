@@ -2,12 +2,10 @@ package io.ramenergy.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 /**
  * Created by lwown on 20/4/2017.
@@ -21,7 +19,9 @@ public class Quiz {
     @ManyToOne
     @JsonIgnore
     private Course course;
-//    private List<Question> questions;
+
+//    private TreeSet<Grade> grades = new TreeSet<>();
+
 
     public Quiz() {
     }
@@ -30,7 +30,7 @@ public class Quiz {
         this.id = id;
         this.title = title;
         this.course = new Course(courseId, "", "");
-//        this.questions = new ArrayList<>();
+//        this.grades = new ArrayList<>();
     }
 
     public int getId() {
@@ -49,14 +49,6 @@ public class Quiz {
         this.title = title;
     }
 
-//    public List<Question> getQuestions() {
-//        return questions;
-//    }
-//
-//    public void setQuestions(List<Question> questions) {
-//        this.questions = questions;
-//    }
-
     public Course getCourse() {
         return course;
     }
@@ -64,4 +56,14 @@ public class Quiz {
     public void setCourse(Course course) {
         this.course = course;
     }
+
+//    public TreeSet<Grade> getGrades() {
+//        return grades;
+//    }
+//
+//    public void setGrades(TreeSet<Grade> grades) {
+//        this.grades = grades;
+//    }
+
+
 }

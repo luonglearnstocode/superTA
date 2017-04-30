@@ -1,12 +1,14 @@
 package io.ramenergy.Controller;
 
 import io.ramenergy.Entity.Course;
+import io.ramenergy.Entity.Grade;
 import io.ramenergy.Entity.Quiz;
 import io.ramenergy.Service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.TreeSet;
 
 /**
  * Created by lwown on 30/4/2017.
@@ -27,6 +29,7 @@ public class QuizController {
         return quizService.getQuiz(id);
     }
 
+
     @RequestMapping(method = RequestMethod.POST)
     public void addQuiz(@RequestBody Quiz quiz, @PathVariable String courseId) {
         quiz.setCourse(new Course(courseId, "", ""));
@@ -43,5 +46,7 @@ public class QuizController {
     public void deleteQuiz(@PathVariable int id) {
         quizService.deleteQuiz(id);
     }
+
+
 
 }

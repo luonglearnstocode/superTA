@@ -1,6 +1,5 @@
 package io.ramenergy.Service;
 
-import io.ramenergy.Dao.UserDao;
 import io.ramenergy.Dao.UserRepository;
 import io.ramenergy.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,6 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-//    private UserDao userDao;
 
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
