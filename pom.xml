@@ -74,6 +74,13 @@
             <version>1.5.3.RELEASE</version>
         </dependency>
 
+        <dependency>
+            <groupId>lib6005</groupId>
+            <artifactId>parser</artifactId>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/parserlib.jar</systemPath>
+        </dependency>
+
 
 
     </dependencies>
