@@ -129,14 +129,6 @@
     <orderEntry type="library" name="Maven: org.unbescape:unbescape:1.1.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:1.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.groovy:groovy:2.4.9" level="project" />
-    <orderEntry type="module-library">
-      <library name="Maven: lib6005:parser:6.005">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/parserlib.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="Maven: com.mit6005:parserlib:1.0" level="project" />
   </component>
 </module>
