@@ -74,15 +74,19 @@
             <version>1.5.3.RELEASE</version>
         </dependency>
 
+        <!--<dependency>-->
+            <!--<groupId>lib6005</groupId>-->
+            <!--<artifactId>parser</artifactId>-->
+            <!--<scope>system</scope>-->
+            <!--<systemPath>${project.basedir}/lib/parserlib.jar</systemPath>-->
+            <!--<version>6.005</version>-->
+        <!--</dependency>-->
+
         <dependency>
-            <groupId>lib6005</groupId>
-            <artifactId>parser</artifactId>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/parserlib.jar</systemPath>
-            <version>6.005</version>
+            <groupId>com.mit6005</groupId>
+            <artifactId>parserlib</artifactId>
+            <version>1.0</version>
         </dependency>
-
-
 
     </dependencies>
 
@@ -90,6 +94,14 @@
         <java.version>1.8</java.version>
     </properties>
 
+    <repositories>
+        <!--other repositories if any-->
+        <repository>
+            <id>project.local</id>
+            <name>project</name>
+            <url>file:${project.basedir}/repo</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
