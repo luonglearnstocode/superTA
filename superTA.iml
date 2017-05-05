@@ -130,7 +130,7 @@
     <orderEntry type="library" name="Maven: nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:1.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.groovy:groovy:2.4.9" level="project" />
     <orderEntry type="module-library">
-      <library name="Maven: lib6005:parser:unknown">
+      <library name="Maven: lib6005:parser:6.005">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/parserlib.jar!/" />
         </CLASSES>

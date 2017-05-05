@@ -79,6 +79,7 @@
             <artifactId>parser</artifactId>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/parserlib.jar</systemPath>
+            <version>6.005</version>
         </dependency>
 
 
