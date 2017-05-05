@@ -15,7 +15,7 @@ import java.util.Map;
  */
 
 @RestController
-@RequestMapping("/users/{username}/courses/{courseId}/quizzes/{quizId}/questions")
+@RequestMapping("api/users/{username}/courses/{courseId}/quizzes/{quizId}/questions")
 public class QuestionController {
     @Autowired
     private QuestionService questionService;

@@ -5,6 +5,7 @@ import io.ramenergy.Dao.QuizRepository;
 import io.ramenergy.Entity.Grade;
 import io.ramenergy.Entity.Question;
 import io.ramenergy.Entity.Quiz;
+import io.ramenergy.expressivo.Logic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,8 +55,10 @@ public class QuestionService {
         List<Boolean> check = new ArrayList<>();
         List<String> solutions = new ArrayList<>();
         questionRepository.findByQuizId(quizId).forEach(q -> solutions.add(q.getSolution()));
+
         for (int i = 0; i < answers.size(); i++) {
-            check.add(solutions.get(i).equals(answers.get(i)));
+            check.add(Logic.compare(solutions.get(i), answers.get(i)));
+//            check.add(solutions.get(i).equals(answers.get(i)));
         }
 
         long score = check.stream().filter(p -> p == true).count();

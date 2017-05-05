@@ -14,7 +14,7 @@ import java.util.TreeSet;
  * Created by lwown on 30/4/2017.
  */
 @RestController
-@RequestMapping("/users/{username}/courses/{courseId}/quizzes")
+@RequestMapping("api/users/{username}/courses/{courseId}/quizzes")
 public class QuizController {
     @Autowired
     private QuizService quizService;
