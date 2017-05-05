@@ -11,7 +11,7 @@ import java.util.List;
  * Created by lwown on 30/4/2017.
  */
 @RestController
-@RequestMapping("/users/{username}/courses/{courseId}/quizzes/{id}/grades")
+@RequestMapping("api/users/{username}/courses/{courseId}/quizzes/{id}/grades")
 public class GradeController {
     @Autowired
     private GradeService gradeService;

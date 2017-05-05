@@ -1,3 +1,10 @@
 language: java
 jdk:
- - oraclejdk8
+- oraclejdk8
+deploy:
+  provider: heroku
+  api_key:
+    secure: ARacOjfX3HpCV1rolQL9gBCdamBeYN2yraDk2ybutZntP0qVSrd0eL0ifT9W0WKKSFK8aj8lw9nvblDmvdYAbznIObOSxnLn1ju4QldzDcdmnXanKBKWBlrbNQmrMYggkOhJoLgPonpCXOBgZKyvN1P3bfue5Z1X1O5Jwn/KLp81FunOyVGgBw87HSlv1T7krflzg7k/4u5WnyivG2i4/kMgL/k/WDvBLcok6IPPiS4JJupbJkMZ8BM4Cha8JTtbmn1bZdbb74y5uGL9bLwnud10vS7EPTz+P/3GvwgRPpFykUTj44wR/XV1MfkZuINcr/K05YA6MpFak7sGy80wzVqV95lV2iJS2+DiOshMVPQ4UjPvw8C126fbqhERK0c13yqdCfAteumrWYdjkPLe6uFjYEYGL50cK66yEgs6TQIx/9xt/cXs2s18uVL162CpRMJLtx1m2N9HmMLd2N3yAnPEDVtEVOqkRzeb/w+/oOi+k+szc67cl8lTNtg7DNbbsk9zNYBe1GHBgpucgqYwtEWzumlNTuCL7ndKRinJSAVy2PsOeAJ/XzWOR7Y7zFc7CsjiMJ84TeCccaILCgHzXaX6sze+NSUquZFXWgPQrGTc4SU+I4h7EN2qnLO/XZV6edSjhGKhR3G+hFkjYZqB9QljedDdY/ylMfmmNYRpYCI=
+  app:
+    master: superta
+    development: superta-dev
