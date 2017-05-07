@@ -1,0 +1,143 @@
+[
+  {
+    "id": "c1",
+    "title": "Software Structures and Models",
+    "quizzes": [
+      {
+        "id": "c1a1",
+        "title": "Modelling",
+        "exercises": [
+          {
+            "id": "c1e1",
+            "question": "Modelling first question",
+            "answer": "Modelling first answer"
+          },
+          {
+            "id": "c2e2",
+            "question": "Modelling second question",
+            "answer": "Modelling second answer"
+          },
+          {
+            "id": "c3e3",
+            "question": "Modelling third question",
+            "answer": "Modelling third answer"
+          }
+        ]
+      },
+      {
+        "id": "c1a2",
+        "title": "Algorithms",
+        "exercises": [
+          {
+            "id": "c1e3",
+            "question": "Algorithms question 1",
+            "answer": "Algorithms answer 1"
+          },
+          {
+            "id": "c1e4",
+            "question": "Algorithms question 2",
+            "answer": "Algorithms answer 2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c2",
+    "title": "Finnish For Foreigners 3",
+    "quizzes": [
+      {
+        "id": "c2a1",
+        "title": "Finnish",
+        "exercises": [
+          {
+            "id": "c1e3",
+            "question": "Finnish question 1",
+            "answer": "Finnish answer 1"
+          },
+          {
+            "id": "c1e4",
+            "question": "Finnish question 2",
+            "answer": "Finnish answer 2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c3",
+    "title": "Application Development Methods",
+    "quizzes": [
+      {
+        "id": "c3a1",
+        "title": "Mathematics",
+        "exercises": [
+          {
+            "id": "c1e3",
+            "question": "ADM question 1",
+            "answer": "ADM answer 1"
+          },
+          {
+            "id": "c1e4",
+            "question": "ADM question 2",
+            "answer": "ADM answer 2"
+          }
+        ]
+      },
+      {
+        "id": "c3a2",
+        "title": "Java Programming",
+        "exercises": [
+          {
+          "id": "c1e3",
+          "question": "Java programming question 1",
+          "answer": "Java programming answer 1"
+        },
+        {
+          "id": "c1e4",
+          "question": "Java programming question 2",
+          "answer": "Java programming answer 2"
+        }
+      ]
+      }
+    ]
+  },
+  {
+    "id": "c4",
+    "title": "Web Programming",
+    "quizzes": [
+      {
+        "id": "c3a1",
+        "title": "Databases",
+        "exercises": [
+          {
+            "id": "c1e3",
+            "question": "Databases question 1",
+            "answer": "Algorithms answer 1"
+          },
+          {
+            "id": "c1e4",
+            "question": "Databases question 2",
+            "answer": "Algorithms answer 2"
+          }
+        ]
+      },
+      {
+        "id": "c3a2",
+        "title": "English",
+        "exercises": [
+          {
+          "id": "c1e3",
+          "question": "English question 1",
+          "answer": "Algorithms answer 1"
+        },
+        {
+          "id": "c1e4",
+          "question": "English question 2",
+          "answer": "Algorithms answer 2"
+        }
+      ]
+      }
+    ]
+  }
+]
