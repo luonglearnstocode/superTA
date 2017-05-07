@@ -4,6 +4,7 @@ import CourseList from '../Fixtures/Courses.json'
 import styles from './Styles/WorkspaceStyles'
 import ExerciseQuestions from './Exercises/ExerciseQuestions'
 import { CourseAddForm, CourseEditForm, QuizAddForm, QuizEditForm }  from './Forms'
+import NavigationBar from './Common/NavigationBar'
 
 class Workspace extends Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class Workspace extends Component {
   render() {
     return (
       <div>
+        <NavigationBar />
         <Grid style={{ width: '100vw', margin: 0 }}>
           <Row className="show-grid">
             <Col md={2} style={styles.bar}>
