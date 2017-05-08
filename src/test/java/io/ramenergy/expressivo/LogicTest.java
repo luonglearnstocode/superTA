@@ -21,13 +21,18 @@ public class LogicTest {
     }
 
     @Test
-    public void comparePlus2IntegersWithWhiteSpace() throws Exception {
-        assertTrue(Logic.compare("1    + 2", "     3"));
+    public void comparePlus2IntegersFalse() throws Exception {
+        assertFalse(Logic.compare("4 + 3", "9"));
     }
 
     @Test
-    public void comparePlus2IntegersFalse() throws Exception {
-        assertFalse(Logic.compare("4 + 3", "9"));
+        public void comparePlus2IntegersWithWhiteSpace() throws Exception {
+            assertTrue(Logic.compare("1    + 2", "     3"));
+    }
+
+    @Test
+    public void comparePlus2IntegersWithWhiteSpaceFalse() throws Exception {
+        assertFalse(Logic.compare("1    + 2", "     4"));
     }
 
     @Test
@@ -36,8 +41,18 @@ public class LogicTest {
     }
 
     @Test
+    public void compareSubtract2IntegersFalse() throws Exception {
+        assertFalse(Logic.compare("5-7", "-3"));
+    }
+
+    @Test
     public void compareSubtract2IntegersWithWhiteSpace() throws Exception {
         assertTrue(Logic.compare("5   -     7", "-2    "));
+    }
+
+    @Test
+    public void compareSubtract2IntegersWithWhiteSpaceFalse() throws Exception {
+        assertFalse(Logic.compare("5   -     7", "-3    "));
     }
 
     @Test
@@ -46,8 +61,18 @@ public class LogicTest {
     }
 
     @Test
+    public void compareMultiply2IntegersFalse() throws Exception {
+        assertFalse(Logic.compare("81*2", "163"));
+    }
+
+    @Test
     public void compareMultiply2IntegersWithWhiteSpace() throws Exception {
         assertTrue(Logic.compare("81*2      ", "      162"));
+    }
+
+    @Test
+    public void compareMultiply2IntegersWithWhiteSpaceFalse() throws Exception {
+        assertFalse(Logic.compare("81*2      ", "      163"));
     }
 
     @Test
@@ -56,13 +81,28 @@ public class LogicTest {
     }
 
     @Test
+    public void compareDivide2IntegersFalse() throws Exception {
+        assertFalse(Logic.compare("9/3", "2"));
+    }
+
+    @Test
     public void compareDivide2IntegersWithWhiteSpace() throws Exception {
         assertTrue(Logic.compare("9  /   2", "   4.5"));
     }
 
     @Test
+    public void compareDivide2IntegersWithWhiteSpaceFalse() throws Exception {
+        assertFalse(Logic.compare("9  /   2", "   4"));
+    }
+
+    @Test
     public void comparePower2Integers() throws Exception {
         assertTrue(Logic.compare("5^2", "25"));
+    }
+
+    @Test
+    public void comparePower2IntegersFalse() throws Exception {
+        assertFalse(Logic.compare("5^2", "26"));
     }
 
     @Test
