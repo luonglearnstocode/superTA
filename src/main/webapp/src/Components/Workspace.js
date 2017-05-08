@@ -55,7 +55,7 @@ class Workspace extends Component {
               </ListGroup>
             </Col>
             <Col md={8}>
-              <ExerciseQuestions questions={this.state.quiz.exercises}/>
+              <ExerciseQuestions questions={this.state.quiz.questions}/>
             </Col>
           </Row>
         </Grid>

@@ -1,6 +1,19 @@
 import React from 'react'
 import {Navbar, NavItem, Nav, Grid} from 'react-bootstrap'
 
+const styles = {
+  icon: {
+    fontSize: 30,
+    marginRight: 5
+  },
+  nav: {
+    fontSize: 16
+  },
+  brand: {
+    fontSize: 20
+  }
+}
+
 const NavigationBar = () => {
   return (
     <Navbar style={styles.nav}>
@@ -19,19 +32,6 @@ const NavigationBar = () => {
       </Nav>
     </Navbar>
   )
-}
-
-const styles = {
-  icon: {
-    fontSize: 30,
-    marginRight: 5
-  },
-  nav: {
-    fontSize: 16
-  },
-  brand: {
-    fontSize: 20
-  }
 }
 
 export default NavigationBar

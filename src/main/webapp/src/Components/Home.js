@@ -13,7 +13,10 @@ class Home extends Component {
     };
   }
 
-  updateCurrentFormula = (e) => this.setState({ currentFormula: e.target.value });
+  updateCurrentFormula = (e) => {
+    const value = e.target.value.replace("/", ' \\over ').replace("*", " \\times ").replace('.', ' \\cdot ')
+    this.setState({ currentFormula: value })
+  }
 
   render() {
     return (

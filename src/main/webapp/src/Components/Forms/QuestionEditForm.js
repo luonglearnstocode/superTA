@@ -11,14 +11,14 @@ class QuestionEditForm extends Component {
   }
 
   handleSubmit(event) {
-    alert('A quiz was editted: ' + this.question.value + 'and answer ' + this.answer.value);
+    alert('A quiz was editted: ' + this.text.value + 'and solution ' + this.solution.value);
     this.props.close()
     event.preventDefault();
   }
 
   handleReset() {
-    this.question.value = ''
-    this.answer.value = ''
+    this.text.value = ''
+    this.solution.value = ''
   }
 
   render() {
@@ -33,11 +33,11 @@ class QuestionEditForm extends Component {
       <form>
         <FormGroup controlId='question'>
           <ControlLabel>Question:</ControlLabel>
-          <input style={styles.input} placeholder="Enter question" type="text" defaultValue={this.props.value.question} ref={(input) => this.question = input} />
+          <input style={styles.input} placeholder="Enter question" type="text" defaultValue={this.props.value.text} ref={(input) => this.text = input} />
         </FormGroup>
         <FormGroup controlId='answer'>
           <ControlLabel>Answer:</ControlLabel>
-          <input style={styles.input} placeholder="Enter answer" type="text" defaultValue={this.props.value.answer} ref={(input) => this.answer = input} />
+          <input style={styles.input} placeholder="Enter solution" type="text" defaultValue={this.props.value.solution} ref={(input) => this.solution = input} />
         </FormGroup>
       </form>
       </FormModal>

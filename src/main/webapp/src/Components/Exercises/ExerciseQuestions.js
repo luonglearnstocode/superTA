@@ -7,7 +7,7 @@ const header = (question, number, onClick) => {
   return (
     <div>
       <h4 style={{ display: 'inline'}} >Question {number}</h4>
-      <Button bsStyle="danger" style={{ display: 'inline-block', float: 'right' }} onClick={() => window.alert('Do you want to delete '+ question.question)}>Delete</Button>
+      <Button bsStyle="danger" style={{ display: 'inline-block', float: 'right' }} onClick={() => window.alert('Do you want to delete '+ question.text)}>Delete</Button>
       <Button bsStyle="warning" style={{ display: 'inline-block', float: 'right' }} onClick={onClick}>Edit</Button>
     </div>
   )
@@ -18,7 +18,7 @@ class ExerciseQuestions extends Component {
     super(props)
     this.state = {
       activeModal: null,
-      question: { question: null, answer: null}
+      question: { text: null, solution: null}
     }
   }
 
@@ -39,9 +39,9 @@ class ExerciseQuestions extends Component {
               style={styles.box}
               header={header(question, index+1, () => this.open('QuestionEditForm', question))}
               bsStyle="warning">
-              <label style={styles.label}>{question.question}</label>
+              <label style={styles.label}>{question.text}</label>
               <div>
-                {question.answer}
+                {question.solution}
               </div>
             </Panel>
           )

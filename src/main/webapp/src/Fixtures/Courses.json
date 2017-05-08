@@ -6,37 +6,37 @@
       {
         "id": "c1a1",
         "title": "Modelling",
-        "exercises": [
+        "questions": [
           {
             "id": "c1e1",
-            "question": "Modelling first question",
-            "answer": "Modelling first answer"
+            "text": "Modelling first question",
+            "solution": "Modelling first solution"
           },
           {
             "id": "c2e2",
-            "question": "Modelling second question",
-            "answer": "Modelling second answer"
+            "text": "Modelling second question",
+            "solution": "Modelling second solution"
           },
           {
             "id": "c3e3",
-            "question": "Modelling third question",
-            "answer": "Modelling third answer"
+            "text": "Modelling third question",
+            "solution": "Modelling third solution"
           }
         ]
       },
       {
         "id": "c1a2",
         "title": "Algorithms",
-        "exercises": [
+        "questions": [
           {
             "id": "c1e3",
-            "question": "Algorithms question 1",
-            "answer": "Algorithms answer 1"
+            "text": "Algorithms question 1",
+            "solution": "Algorithms solution 1"
           },
           {
             "id": "c1e4",
-            "question": "Algorithms question 2",
-            "answer": "Algorithms answer 2"
+            "text": "Algorithms question 2",
+            "solution": "Algorithms solution 2"
           }
         ]
       }
@@ -49,16 +49,16 @@
       {
         "id": "c2a1",
         "title": "Finnish",
-        "exercises": [
+        "questions": [
           {
             "id": "c1e3",
-            "question": "Finnish question 1",
-            "answer": "Finnish answer 1"
+            "text": "Finnish question 1",
+            "solution": "Finnish solution 1"
           },
           {
             "id": "c1e4",
-            "question": "Finnish question 2",
-            "answer": "Finnish answer 2"
+            "text": "Finnish question 2",
+            "solution": "Finnish solution 2"
           }
         ]
       }
@@ -71,32 +71,32 @@
       {
         "id": "c3a1",
         "title": "Mathematics",
-        "exercises": [
+        "questions": [
           {
             "id": "c1e3",
-            "question": "ADM question 1",
-            "answer": "ADM answer 1"
+            "text": "ADM question 1",
+            "solution": "ADM solution 1"
           },
           {
             "id": "c1e4",
-            "question": "ADM question 2",
-            "answer": "ADM answer 2"
+            "text": "ADM question 2",
+            "solution": "ADM solution 2"
           }
         ]
       },
       {
         "id": "c3a2",
         "title": "Java Programming",
-        "exercises": [
+        "questions": [
           {
           "id": "c1e3",
-          "question": "Java programming question 1",
-          "answer": "Java programming answer 1"
+          "text": "Java programming question 1",
+          "solution": "Java programming solution 1"
         },
         {
           "id": "c1e4",
-          "question": "Java programming question 2",
-          "answer": "Java programming answer 2"
+          "text": "Java programming question 2",
+          "solution": "Java programming solution 2"
         }
       ]
       }
@@ -109,32 +109,32 @@
       {
         "id": "c3a1",
         "title": "Databases",
-        "exercises": [
+        "questions": [
           {
             "id": "c1e3",
-            "question": "Databases question 1",
-            "answer": "Algorithms answer 1"
+            "text": "Databases question 1",
+            "solution": "Algorithms solution 1"
           },
           {
             "id": "c1e4",
-            "question": "Databases question 2",
-            "answer": "Algorithms answer 2"
+            "text": "Databases question 2",
+            "solution": "Algorithms solution 2"
           }
         ]
       },
       {
         "id": "c3a2",
         "title": "English",
-        "exercises": [
+        "questions": [
           {
           "id": "c1e3",
-          "question": "English question 1",
-          "answer": "Algorithms answer 1"
+          "text": "English question 1",
+          "solution": "Algorithms solution 1"
         },
         {
           "id": "c1e4",
-          "question": "English question 2",
-          "answer": "Algorithms answer 2"
+          "text": "English question 2",
+          "solution": "Algorithms solution 2"
         }
       ]
       }

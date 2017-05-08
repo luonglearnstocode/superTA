@@ -60,8 +60,9 @@ class ExerciseForm extends React.Component {
   }
 
   updateCurrentFormula(event, index) {
+    const value = event.target.value.replace("/", ' \\over ').replace("*", " \\times ").replace('.', ' \\cdot ')
     var answers = this.state.answers.slice()
-    answers[index] = event.target.value
+    answers[index] = value
     this.setState({ answers })
   }
 
@@ -88,14 +89,14 @@ class ExerciseForm extends React.Component {
           </Col>
         </Row>
         <form onSubmit={this.props.handleSubmit(this.onSubmit)} style={this.props.style}>
-          { this.state.quiz.exercises.map((question, index) => {
+          { this.state.quiz.questions.map((question, index) => {
             return (
               <Panel
                 key={question.id}
                 style={styles.box}
                 header={title(index+1)}
                 bsStyle="warning">
-                <label style={styles.label}>{question.question}</label>
+                <label style={styles.label}>{question.text}</label>
                 <div>
                   <Field
                     style={styles.input}
