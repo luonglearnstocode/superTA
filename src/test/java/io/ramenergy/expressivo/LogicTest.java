@@ -18,7 +18,7 @@ public class LogicTest {
 
     @Test
     public void comparePlus2Numbers() throws Exception {
-        assertTrue(Logic.compare("1 + 2", "6"));
+        assertTrue(Logic.compare("1 + 2", "3"));
     }
 
     @Test
