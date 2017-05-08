@@ -1,5 +1,6 @@
 import React from 'react'
 import {Navbar, NavItem, Nav, Grid} from 'react-bootstrap'
+import { NavLink } from 'react-router-dom'
 
 const styles = {
   icon: {
@@ -11,6 +12,9 @@ const styles = {
   },
   brand: {
     fontSize: 20
+  },
+  navLink: {
+    color: '#777'
   }
 }
 
@@ -23,8 +27,8 @@ const NavigationBar = () => {
         </Navbar.Brand>
       </Navbar.Header>
       <Nav>
-        <NavItem href="/"><i className="fa fa-home" style={styles.icon}></i> Home</NavItem>
-        <NavItem href="/workspace"><i className="fa fa-folder-open-o" style={styles.icon}></i> Workspace</NavItem>
+        <NavItem><NavLink style={styles.navLink} to="/"><i className="fa fa-home" style={styles.icon}></i> Home</NavLink></NavItem>
+        <NavItem><NavLink style={styles.navLink} to="/workspace"><i className="fa fa-folder-open-o" style={styles.icon}></i> Workspace</NavLink></NavItem>
       </Nav>
       <Nav pullRight>
         <NavItem eventKey={1} href="#"><i className="fa fa-user" style={styles.icon}></i> Sign Up</NavItem>

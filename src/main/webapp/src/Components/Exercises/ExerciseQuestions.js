@@ -22,7 +22,9 @@ class ExerciseQuestions extends Component {
     }
   }
 
-  close = () => this.setState({ activeModal: null })
+  close(){
+    this.setState({ activeModal: null })
+  }
 
   open(modal,item) {
     this.setState({ activeModal: modal, question: item })
@@ -46,8 +48,8 @@ class ExerciseQuestions extends Component {
             </Panel>
           )
         })}
-        <QuestionAddForm close={this.close} showModal={this.state.activeModal === 'QuestionAddForm'} />
-        <QuestionEditForm close={this.close} showModal={this.state.activeModal === 'QuestionEditForm'} value={this.state.question} />
+        <QuestionAddForm close={this.close.bind(this)} showModal={this.state.activeModal === 'QuestionAddForm'} />
+        <QuestionEditForm close={this.close.bind(this)} showModal={this.state.activeModal === 'QuestionEditForm'} value={this.state.question} />
       </div>
     )
   }

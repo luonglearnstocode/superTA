@@ -13,7 +13,7 @@ class Home extends Component {
     };
   }
 
-  updateCurrentFormula = (e) => {
+  updateCurrentFormula(e) {
     const value = e.target.value.replace("/", ' \\over ').replace("*", " \\times ").replace('.', ' \\cdot ')
     this.setState({ currentFormula: value })
   }
@@ -29,7 +29,7 @@ class Home extends Component {
               type="text"
               defaultValue={this.state.currentFormula}
               placeholder="Enter expression"
-              onChange={this.updateCurrentFormula}
+              onChange={this.updateCurrentFormula.bind(this)}
             />
           </FormGroup>
           <TeX value={this.state.currentFormula || 'type-an-expression'} style={{ fontSize: 18 }} />

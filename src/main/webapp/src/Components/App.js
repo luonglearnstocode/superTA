@@ -4,18 +4,16 @@ import Home from './Home'
 import Workspace from './Workspace'
 import ExerciseForm from './Exercises/ExerciseForm'
 
-class App extends Component {
-  render() {
-    return (
-      <Router>
-        <div>
-          <Route exact path="/" component={Home}/>
-          <Route path="/workspace" component={Workspace}/>
-          <Route path="/exercise" component={ExerciseForm}/>
-        </div>
-      </Router>
-    );
-  }
+const App = () => {
+  return (
+    <Router>
+      <div>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/workspace" component={Workspace} />
+        <Route exact path="/exercise" component={ExerciseForm} />
+      </div>
+    </Router>
+  )
 }
 
 export default App

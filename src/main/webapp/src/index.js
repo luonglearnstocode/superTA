@@ -5,6 +5,11 @@ import './index.css';
 import { Provider } from 'react-redux'
 import { createStore, combineReducers } from 'redux'
 import { reducer as reduxFormReducer } from 'redux-form'
+import { HashRouter as Router, Route } from 'react-router-dom';
+
+import Home from './Components/Home'
+import Workspace from './Components/Workspace'
+import ExerciseForm from './Components/Exercises/ExerciseForm'
 
 const reducer = combineReducers({
   form: reduxFormReducer // mounted under "form"
@@ -14,7 +19,13 @@ const store =
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <div>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/workspace" component={Workspace} />
+        <Route exact path="/exercise" component={ExerciseForm} />
+      </div>
+    </Router>
   </Provider>,
   document.getElementById('root')
 );

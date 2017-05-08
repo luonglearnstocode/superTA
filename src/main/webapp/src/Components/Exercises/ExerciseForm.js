@@ -12,10 +12,10 @@ const title = (number) => {
   )
 }
 
-const InputComponent = ({ meta: { error }, input : { onChange }, index, style, updateFormula, ...props }) => {
+const InputComponent = ({ meta: { error }, input : { onChange }, index, style, updateFormula, placeholder, type }) => {
   return (
     <div style={{ display: 'inline' }}>
-      <input style={style} onChange={(event) => { updateFormula(event,index), onChange(event)}} {...props} />
+      <input style={style} onChange={(event) => { updateFormula(event,index), onChange(event)}} placeholder={placeholder} type={type} />
       {error && <Error message={error} />}
     </div>
   )

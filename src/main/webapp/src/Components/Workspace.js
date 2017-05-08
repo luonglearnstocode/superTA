@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { Grid, Row, Col, ListGroup, ListGroupItem, Button } from 'react-bootstrap'
-import CourseList from '../Fixtures/Courses.json'
+// import CourseList from '../Fixtures/Courses.json'
 import styles from './Styles/WorkspaceStyles'
 import ExerciseQuestions from './Exercises/ExerciseQuestions'
 import { CourseAddForm, CourseEditForm, QuizAddForm, QuizEditForm }  from './Forms'
@@ -16,7 +16,9 @@ class Workspace extends Component {
     }
   }
 
-  close = () => this.setState({ activeModal: null })
+  close() {
+    this.setState({ activeModal: null })
+  }
 
   open(modal) {
     this.setState({ activeModal: modal })
@@ -59,10 +61,10 @@ class Workspace extends Component {
             </Col>
           </Row>
         </Grid>
-        <CourseAddForm close={this.close} showModal={this.state.activeModal === 'CourseAddForm'} />
-        <CourseEditForm close={this.close} showModal={this.state.activeModal === 'CourseEditForm'} value={this.state.course.title}/>
-        <QuizAddForm close={this.close} showModal={this.state.activeModal === 'QuizAddForm'} />
-        <QuizEditForm close={this.close} showModal={this.state.activeModal === 'QuizEditForm'} value={this.state.quiz.title}/>
+        <CourseAddForm close={this.close.bind(this)} showModal={this.state.activeModal === 'CourseAddForm'} />
+        <CourseEditForm close={this.close.bind(this)} showModal={this.state.activeModal === 'CourseEditForm'} value={this.state.course.title}/>
+        <QuizAddForm close={this.close.bind(this)} showModal={this.state.activeModal === 'QuizAddForm'} />
+        <QuizEditForm close={this.close.bind(this)} showModal={this.state.activeModal === 'QuizEditForm'} value={this.state.quiz.title}/>
       </div>
     )
   }
