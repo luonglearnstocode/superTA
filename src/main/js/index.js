@@ -1,13 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './src/Components/App';
-import { HashRouter as Router, Route } from 'react-router-dom';
-
+import App from './Components/App';
 import { Provider } from 'react-redux'
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
+import { createStore, combineReducers } from 'redux'
 import { reducer as reduxFormReducer } from 'redux-form'
-import AuthReducer from './src/Redux/reducers'
+import { HashRouter as Router, Route } from 'react-router-dom';
 
 import Home from './src/Components/Home'
 import Workspace from './src/Components/Workspace'
@@ -16,12 +13,10 @@ import LoginForm from './src/Components/Auth/LoginForm'
 import SignupForm from './src/Components/Auth/SignupForm'
 
 const reducer = combineReducers({
-  form: reduxFormReducer, // mounted under "form"
-  auth: AuthReducer
+  form: reduxFormReducer // mounted under "form"
 })
-
 const store =
-  (window.devToolsExtension ? window.devToolsExtension()(createStore) : createStore)(reducer, {},  applyMiddleware(thunk))
+  (window.devToolsExtension ? window.devToolsExtension()(createStore) : createStore)(reducer)
 
 ReactDOM.render(
   <Provider store={store}>

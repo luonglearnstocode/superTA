@@ -31,8 +31,8 @@ const NavigationBar = () => {
         <NavItem><NavLink style={styles.navLink} to="/workspace"><i className="fa fa-folder-open-o" style={styles.icon}></i> Workspace</NavLink></NavItem>
       </Nav>
       <Nav pullRight>
-        <NavItem><NavLink style={styles.navLink} to="/signup"><i className="fa fa-user" style={styles.icon}></i> Sign Up</NavLink></NavItem>
-        <NavItem><NavLink style={styles.navLink} to="/login"><i className="fa fa-sign-in" style={styles.icon}></i> Login</NavLink></NavItem>
+        <NavItem><NavLink style={styles.navLink} to="/login"><i className="fa fa-user" style={styles.icon}></i> Sign Up</NavLink></NavItem>
+        <NavItem><NavLink style={styles.navLink} to="/signup"><i className="fa fa-sign-in" style={styles.icon}></i> Login</NavLink></NavItem>
       </Nav>
     </Navbar>
   )
