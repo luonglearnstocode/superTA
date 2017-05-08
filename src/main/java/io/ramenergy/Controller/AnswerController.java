@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/public/{quizId}/answer")
+@RequestMapping("api/public/{quizId}/answer")
 public class AnswerController {
     @Autowired
     private QuestionService questionService;

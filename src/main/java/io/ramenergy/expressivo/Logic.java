@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-
 public class Logic {
     
     public static boolean compare(String aStr, String bStr){
@@ -45,4 +44,5 @@ public class Logic {
         }
         return true;
     }
+
 }
