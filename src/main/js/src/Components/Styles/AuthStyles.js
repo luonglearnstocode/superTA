@@ -11,10 +11,13 @@ const styles = {
   },
   jumbotron: {
     width: '40%',
-    margin: 50,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 200,
     padding: 50,
     paddingTop: 20,
-    borderRadius: 15
+    borderRadius: 15,
+    backgroundColor: '#f8f8f8'
   },
   h3: {
     marginBottom: 20

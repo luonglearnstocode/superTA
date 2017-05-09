@@ -1,26 +1,12 @@
 import React, {Component} from 'react'
 import { Grid, Row, Col, ListGroup, ListGroupItem, Button } from 'react-bootstrap'
-// import CourseList from '../Fixtures/Courses.json'
+import { Redirect } from 'react-router'
 import styles from './Styles/WorkspaceStyles'
 import ExerciseQuestions from './Exercises/ExerciseQuestions'
 import NavigationBar from './Common/NavigationBar'
 import { connect } from 'react-redux'
 import { getAllCourses, getAllQuizzes, getAllQuestions, selectCourse, selectQuiz } from '../Redux/CoursesActions'
 import FormTemplate from './Forms/FormTemplate'
-
-const CourseList = [ {
-  id: 'sdf',
-  name: 'a name',
-  quizzes: [{
-    id: 'se',
-    title: 'a quiz',
-    questions: [{
-      id: 'eds',
-      text: 'a question',
-      solution: 'a solution'
-    }]
-  }]
-}]
 
 class Workspace extends Component {
   constructor(props) {
@@ -56,53 +42,62 @@ class Workspace extends Component {
   }
 
   _selectQuiz(quiz) {
-    this.props.selectQuiz(quiz)
-    if (this.props.selectedQuiz && this.props.selectedCourse) {
-      this.props.getAllQuestions(this.props.username, this.props.selectedCourse.id, this.props.selectedQuiz.id)
+    this.props.selectQuiz(quiz, this.props.username, this.props.selectedCourse.id)
+  }
+
+  _getLink() {
+    if(this.props.selectedQuiz) {
+      return <p>Link: {'https://superta.herokuapp.com/quiz/' + this.props.selectedQuiz.id + '/answer'}</p>
     }
   }
 
   render() {
-    console.log(this.props)
     return (
       <div>
-        <NavigationBar />
-        <Grid style={{ width: '100vw', margin: 0 }}>
-          <Row className="show-grid">
-            <Col md={2} style={styles.bar}>
-              <h3 style={styles.heading} >Courses</h3>
-              <div style={styles.buttons}>
-                <Button bsStyle="danger" onClick={() => this._delete(this.props.selectedCourse)}>Delete</Button>
-                <Button bsStyle="warning" onClick={() => this._open('Course Edit Form', 'Course Name', this.props.selectCourse.name)}>Edit</Button>
-                <Button bsStyle="success" onClick={() => this._open('Course Add Form', 'Course Name', '')}> Add </Button>
-              </div>
-              <ListGroup>
-                {this.props.courses.map((course) => <ListGroupItem style={styles.item} key={course.id} onClick={() => this._selectCourse(course)} active={this.props.selectedCourse === course}>{course.name}</ListGroupItem> )}
-              </ListGroup>
-            </Col>
-            <Col md={2} style={styles.bar}>
-              <h3 style={styles.heading} >Quizzes</h3>
-              <div style={styles.buttons}>
-                <Button bsStyle="danger" onClick={() => this._delete(this.props.selectedQuiz)}>Delete</Button>
-                <Button bsStyle="warning" onClick={() => this._open('Quiz Edit Form', 'Quiz Name', this.props.selectedQuiz.title)}>Edit</Button>
-                <Button bsStyle="success" onClick={() => this._open('Quiz Add Form', 'Quiz Name', '')}> Add </Button>
-              </div>
-              <ListGroup>
-                {this.props.quizzes.map((quiz) => <ListGroupItem style={styles.item} key={quiz.id} onClick={() => this._selectQuiz(quiz)} active={this.props.selectedQuiz === quiz}>{quiz.title}</ListGroupItem> )}
-              </ListGroup>
-            </Col>
-            <Col md={8}>
-              <ExerciseQuestions questions={this.props.questions}/>
-            </Col>
-          </Row>
-        </Grid>
-        <FormTemplate
-          close={this._close.bind(this)}
-          showModal={this.state.activeModal}
-          title={this.modal.title}
-          placeholder={this.modal.placeholder}
-          value={this.modal.value}
-        />
+        { this.props.username ?
+          <div>
+            <NavigationBar />
+            <Grid style={{ width: '100vw', margin: 0 }}>
+              <Row className="show-grid">
+                <Col md={2} style={styles.bar}>
+                  <h3 style={styles.heading} >Courses</h3>
+                  <div style={styles.buttons}>
+                    <Button bsStyle="danger" onClick={() => this._delete(this.props.selectedCourse)}><i className="fa fa-trash-o"></i></Button>
+                    <Button bsStyle="warning" onClick={() => this._open('Course Edit Form', 'Course Name', this.props.selectCourse.name)}><i className="fa fa-pencil"></i></Button>
+                    <Button bsStyle="success" onClick={() => this._open('Course Add Form', 'Course Name', '')}><i className="fa fa-plus" aria-hidden="true"></i></Button>
+                  </div>
+                  <ListGroup>
+                    {this.props.courses.map((course) => <ListGroupItem style={styles.item} key={course.id} onClick={() => this._selectCourse(course)} active={this.props.selectedCourse === course}>{course.name}</ListGroupItem> )}
+                  </ListGroup>
+                </Col>
+                <Col md={2} style={styles.bar}>
+                  <h3 style={styles.heading} >Quizzes</h3>
+                  <div style={styles.buttons}>
+                    <Button bsStyle="danger" onClick={() => this._delete(this.props.selectedQuiz)}><i className="fa fa-trash-o"></i></Button>
+                    <Button bsStyle="warning" onClick={() => this._open('Quiz Edit Form', 'Quiz Name', this.props.selectedQuiz.title)}><i className="fa fa-pencil"></i></Button>
+                    <Button bsStyle="success" onClick={() => this._open('Quiz Add Form', 'Quiz Name', '')}><i className="fa fa-plus"></i></Button>
+                  </div>
+                  <ListGroup>
+                    {this.props.quizzes.map((quiz) => <ListGroupItem style={styles.item} key={quiz.id} onClick={() => this._selectQuiz(quiz)} active={this.props.selectedQuiz === quiz}>{quiz.title}</ListGroupItem> )}
+                  </ListGroup>
+                </Col>
+                <Col md={8}>
+                  {this._getLink()}
+                  <ExerciseQuestions questions={this.props.questions}/>
+                </Col>
+              </Row>
+            </Grid>
+            <FormTemplate
+              close={this._close.bind(this)}
+              showModal={this.state.activeModal}
+              title={this.modal.title}
+              placeholder={this.modal.placeholder}
+              value={this.modal.value}
+            />
+          </div>
+          :
+            <Redirect to="/login" />
+        }
       </div>
     )
   }
@@ -123,9 +118,8 @@ const mapDispatchToProps = dispatch => {
   return {
     getAllCourses: (username) => dispatch(getAllCourses(username)),
     getAllQuizzes: (username, courseId) => dispatch(getAllQuizzes(username, courseId)),
-    getAllQuestions: (username, courseId, quizId) => dispatch(getAllQuestions(username, courseId, quizId)),
     selectCourse: (course) => dispatch(selectCourse(course)),
-    selectQuiz: (quiz) => dispatch(selectQuiz(quiz))
+    selectQuiz: (quiz, username, courseId) => dispatch(selectQuiz(quiz, username, courseId))
   }
 }
 

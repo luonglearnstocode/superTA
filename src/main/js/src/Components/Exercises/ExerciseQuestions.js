@@ -7,8 +7,8 @@ const header = (question, number, onClick) => {
   return (
     <div>
       <h4 style={{ display: 'inline'}} >Question {number}</h4>
-      <Button bsStyle="danger" style={{ display: 'inline-block', float: 'right' }} onClick={() => window.alert('Do you want to delete '+ question.text)}>Delete</Button>
-      <Button bsStyle="warning" style={{ display: 'inline-block', float: 'right' }} onClick={onClick}>Edit</Button>
+      <Button bsStyle="danger" style={{ display: 'inline-block', float: 'right' }} onClick={() => window.alert('Do you want to delete '+ question.text)}><i className="fa fa-trash-o"></i></Button>
+      <Button bsStyle="warning" style={{ display: 'inline-block', float: 'right' }} onClick={onClick}><i className="fa fa-pencil"></i></Button>
     </div>
   )
 }

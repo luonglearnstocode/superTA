@@ -38,14 +38,14 @@ export const getAllQuizzes = (username, courseId) => {
   }
 }
 
-export const selectQuiz = (quiz) => {
-  return {
-    type: SELECT_QUIZ,
-    payload: quiz
+export const selectQuiz = (quiz, username, courseId ) => {
+  return dispatch => {
+    dispatch(getAllQuestions(username, courseId, quiz.id))
+    dispatch({ type: SELECT_QUIZ, payload: quiz })
   }
 }
 
-export const getAllQuestions = (username, courseId, quizId) => {
+const getAllQuestions = (username, courseId, quizId) => {
   return (dispatch) => {
     API.getAllQuestions(username, courseId, quizId).then((res) => {
       if (res.data) {
