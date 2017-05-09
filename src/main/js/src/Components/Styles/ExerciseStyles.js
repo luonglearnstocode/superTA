@@ -18,6 +18,11 @@ const styles = {
     borderStyle: 'solid',
     width: '70%'
   },
+  smallInput: {
+    padding: 5,
+    marginLeft: 10,
+    width: 200,
+  },
   addButton: {
     float: 'right'
   },
@@ -35,8 +40,10 @@ const styles = {
   },
   result: {
     fontSize: 18,
-    textAlign: 'right',
     marginRight: 50
+  },
+  label: {
+    fontSize: 18
   }
 }
 

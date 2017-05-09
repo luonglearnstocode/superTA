@@ -93,9 +93,9 @@ class ExerciseForm extends React.Component {
             <Col md={8} style={{ paddingLeft: 50 }}>
               <h2>Quiz</h2>
             </Col>
-            <Col md={3}>
-              <label htmlFor="studentId">Enter Student ID:</label>
-              <Field type="number" id="studentId" name="studentId" component="input" placeholder="Enter your Student ID" required />
+            <Col md={3} style={{ marginTop: 15 }}>
+              <label style={styles.label} htmlFor="studentId">Enter Student ID:  </label>
+              <Field style={styles.input,styles.smallInput} type="number" id="studentId" name="studentId" component="input" placeholder="Enter your Student ID" required />
               <p style={styles.result}>Marks Obtained: {this._getMarks()} / {this.state.questions.length} </p>
               <p style={styles.result}>Percentage: {this._getPercent()} %</p>
             </Col>

@@ -59360,6 +59360,11 @@
 	  },
 	  navLink: {
 	    color: '#777'
+	  },
+	  brandImage: {
+	    height: 40,
+	    marginRight: 20,
+	    display: 'inline'
 	  }
 	};
 	
@@ -59391,11 +59396,11 @@
 	          _react2.default.createElement(
 	            _reactBootstrap.Navbar.Brand,
 	            null,
-	            _react2.default.createElement(_reactBootstrap.Image, { src: _brand2.default, circle: true, style: { height: 40, marginRight: 20, display: 'inline' } }),
 	            _react2.default.createElement(
 	              'a',
 	              { style: styles.brand, href: '#' },
-	              'Super TA'
+	              _react2.default.createElement(_reactBootstrap.Image, { src: _brand2.default, circle: true, style: styles.brandImage }),
+	              ' Super TA'
 	            )
 	          )
 	        ),
@@ -63772,7 +63777,10 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var styles = {
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	var styles = _defineProperty({
 	  form: {
 	    marginLeft: 30
 	  },
@@ -63792,6 +63800,11 @@
 	    borderStyle: 'solid',
 	    width: '70%'
 	  },
+	  smallInput: {
+	    padding: 5,
+	    marginLeft: 10,
+	    width: 200
+	  },
 	  addButton: {
 	    float: 'right'
 	  },
@@ -63809,10 +63822,11 @@
 	  },
 	  result: {
 	    fontSize: 18,
-	    textAlign: 'right',
 	    marginRight: 50
 	  }
-	};
+	}, 'label', {
+	  fontSize: 18
+	});
 	
 	exports.default = styles;
 
@@ -64559,10 +64573,10 @@
 	              { md: 3 },
 	              _react2.default.createElement(
 	                'label',
-	                { htmlFor: 'studentId' },
-	                'Enter Student ID:'
+	                { style: _ExerciseStyles2.default.label, htmlFor: 'studentId' },
+	                'Enter Student ID:  '
 	              ),
-	              _react2.default.createElement(_reduxForm.Field, { type: 'number', id: 'studentId', name: 'studentId', component: 'input', placeholder: 'Enter your Student ID', required: true }),
+	              _react2.default.createElement(_reduxForm.Field, { style: (_ExerciseStyles2.default.input, _ExerciseStyles2.default.smallInput), type: 'number', id: 'studentId', name: 'studentId', component: 'input', placeholder: 'Enter your Student ID', required: true }),
 	              _react2.default.createElement(
 	                'p',
 	                { style: _ExerciseStyles2.default.result },
