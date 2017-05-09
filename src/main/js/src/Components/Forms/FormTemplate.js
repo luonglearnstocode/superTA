@@ -3,7 +3,7 @@ import {FormGroup, ControlLabel } from 'react-bootstrap'
 import FormModal from './FormModal'
 import styles from '../Styles/FormModalStyles'
 
-class QuizEditForm extends Component {
+class FormTemplate extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -11,7 +11,7 @@ class QuizEditForm extends Component {
   }
 
   handleSubmit(event) {
-    alert('A quiz was editted: ' + this.input.value);
+    alert('submitted: ' + this.input.value);
     this.props.close()
     event.preventDefault();
   }
@@ -25,14 +25,14 @@ class QuizEditForm extends Component {
       <FormModal
         showModal={this.props.showModal}
         close={this.props.close}
-        title="Edit selected quiz"
+        title={this.props.title}
         handleSubmit={this.handleSubmit}
         reset={this.handleReset}
       >
       <form>
-        <FormGroup controlId='quiz'>
-          <ControlLabel>Quiz title:</ControlLabel>
-          <input style={styles.input} placeholder="Enter quiz title" type="text" defaultValue={this.props.value} ref={(input) => this.input = input} />
+        <FormGroup controlId='course'>
+          <ControlLabel>Title:</ControlLabel>
+          <input style={styles.input} placeholder={this.props.placeholder} defaultValue={this.props.value} type="text" ref={(input) => this.input = input} />
         </FormGroup>
       </form>
       </FormModal>
@@ -40,4 +40,4 @@ class QuizEditForm extends Component {
   }
 }
 
-export { QuizEditForm }
+export default FormTemplate
