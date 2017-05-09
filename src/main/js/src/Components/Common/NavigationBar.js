@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Navbar, NavItem, Nav, Grid} from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { logoutUser } from '../../Redux/Actions'
+import { logoutUser } from '../../Redux/AuthActions'
 
 const styles = {
   icon: {

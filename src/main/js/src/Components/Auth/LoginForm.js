@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import NavigationBar from '../Common/NavigationBar'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
-import { loginUser } from '../../Redux/Actions'
+import { loginUser } from '../../Redux/AuthActions'
 import { Button, Jumbotron } from 'react-bootstrap'
 import Alert from '../Common/Alert'
 import styles from '../Styles/AuthStyles'
@@ -22,11 +22,13 @@ class LoginForm extends Component {
   }
 
   render() {
+    console.log(this.props)
+
     if(this.props.username) {
       window.alert('Logged in!')
       return <Redirect to="/workspace" />
     }
-    
+
     return (
       <div>
       <NavigationBar />

@@ -37,6 +37,14 @@ const editQuestion = (username, courseId, quizId, id, text, solution) => axios.p
 
 const deleteQuestion = (username, courseId, quizId, id ) => axios.delete(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/questions/' + id)
 
+// ANSWERS
+const getOnlyQuestions = (quizId) => axios.get(baseURL + '/public/' + quizId + '/answer')
+
+const answerQuestions = (quizId, answersArray, studentId) => axios.post(baseURL + '/public/' + quizId + '/answer?student=' + studentId, answersArray)
+
+// GRADES
+const getGrades = (username, courseId, quizId ) => axios.get(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/grades')
+
 export default {
   createUser,
   getUser,
@@ -52,5 +60,8 @@ export default {
   getQuestion,
   createQuestion,
   editQuestion,
-  deleteQuestion
+  deleteQuestion,
+  getOnlyQuestions,
+  answerQuestions,
+  getGrades
 }

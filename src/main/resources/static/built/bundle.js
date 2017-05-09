@@ -126,7 +126,7 @@
 	      null,
 	      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _Home2.default }),
 	      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/workspace', component: _Workspace2.default }),
-	      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/exercise', component: _ExerciseForm2.default }),
+	      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/quiz/:quizId/answer', component: _ExerciseForm2.default }),
 	      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/login', component: _LoginForm2.default }),
 	      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/signup', component: _SignupForm2.default })
 	    )
@@ -59304,7 +59304,7 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 182);
 	
-	var _Actions = __webpack_require__(/*! ../../Redux/Actions */ 717);
+	var _AuthActions = __webpack_require__(/*! ../../Redux/AuthActions */ 717);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -59440,7 +59440,7 @@
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    logoutUser: function logoutUser() {
-	      return dispatch((0, _Actions.logoutUser)());
+	      return dispatch((0, _AuthActions.logoutUser)());
 	    }
 	  };
 	};
@@ -59448,9 +59448,9 @@
 
 /***/ }),
 /* 717 */
-/*!******************************************!*\
-  !*** ./src/main/js/src/Redux/Actions.js ***!
-  \******************************************/
+/*!**********************************************!*\
+  !*** ./src/main/js/src/Redux/AuthActions.js ***!
+  \**********************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63230,6 +63230,20 @@
 	  return _axios2.default.delete(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/questions/' + id);
 	};
 	
+	// ANSWERS
+	var getOnlyQuestions = function getOnlyQuestions(quizId) {
+	  return _axios2.default.get(baseURL + '/public/' + quizId + '/answer');
+	};
+	
+	var answerQuestions = function answerQuestions(quizId, answersArray, studentId) {
+	  return _axios2.default.post(baseURL + '/public/' + quizId + '/answer?student=' + studentId, answersArray);
+	};
+	
+	// GRADES
+	var getGrades = function getGrades(username, courseId, quizId) {
+	  return _axios2.default.get(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/grades');
+	};
+	
 	exports.default = {
 	  createUser: createUser,
 	  getUser: getUser,
@@ -63245,7 +63259,10 @@
 	  getQuestion: getQuestion,
 	  createQuestion: createQuestion,
 	  editQuestion: editQuestion,
-	  deleteQuestion: deleteQuestion
+	  deleteQuestion: deleteQuestion,
+	  getOnlyQuestions: getOnlyQuestions,
+	  answerQuestions: answerQuestions,
+	  getGrades: getGrades
 	};
 
 /***/ }),
@@ -64327,6 +64344,8 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	var _react = __webpack_require__(/*! react */ 1);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -64335,17 +64354,19 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 182);
+	
 	var _ExerciseStyles = __webpack_require__(/*! ../Styles/ExerciseStyles */ 751);
 	
 	var _ExerciseStyles2 = _interopRequireDefault(_ExerciseStyles);
 	
-	var _reactFormulaBeautifier = __webpack_require__(/*! react-formula-beautifier */ 463);
-	
-	var _reactFormulaBeautifier2 = _interopRequireDefault(_reactFormulaBeautifier);
-	
 	var _Error = __webpack_require__(/*! ../Common/Error */ 760);
 	
 	var _Error2 = _interopRequireDefault(_Error);
+	
+	var _api = __webpack_require__(/*! ../../Services/api */ 747);
+	
+	var _api2 = _interopRequireDefault(_api);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -64354,6 +64375,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 	
 	var title = function title(number) {
 	  return _react2.default.createElement(
@@ -64366,20 +64389,16 @@
 	
 	var InputComponent = function InputComponent(_ref) {
 	  var error = _ref.meta.error,
-	      _onChange = _ref.input.onChange,
-	      index = _ref.index,
-	      style = _ref.style,
-	      updateFormula = _ref.updateFormula,
-	      placeholder = _ref.placeholder,
-	      type = _ref.type;
+	      onChange = _ref.input.onChange,
+	      answerId = _ref.answerId,
+	      results = _ref.results,
+	      props = _objectWithoutProperties(_ref, ['meta', 'input', 'answerId', 'results']);
 	
 	  return _react2.default.createElement(
 	    'div',
 	    { style: { display: 'inline' } },
-	    _react2.default.createElement('input', { style: style, onChange: function onChange(event) {
-	        updateFormula(event, index), _onChange(event);
-	      }, placeholder: placeholder, type: type }),
-	    error && _react2.default.createElement(_Error2.default, { message: error })
+	    _react2.default.createElement('input', _extends({ onChange: onChange, type: 'text', required: true }, props)),
+	    results && _react2.default.createElement(_Error2.default, { message: results[answerId] })
 	  );
 	};
 	
@@ -64392,134 +64411,167 @@
 	    var _this = _possibleConstructorReturn(this, (ExerciseForm.__proto__ || Object.getPrototypeOf(ExerciseForm)).call(this, props));
 	
 	    _this.state = {
-	      answers: [],
-	      quiz: CourseList[0].quizzes[0],
-	      marksObtained: '-',
-	      marksMax: '-',
-	      marksPercent: '-'
+	      questions: [],
+	      disabled: false,
+	      results: null
 	    };
+	    _this.quizId = _this.props.match.params.quizId;
 	    return _this;
 	  }
 	
 	  _createClass(ExerciseForm, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      var _this2 = this;
+	
+	      _api2.default.getOnlyQuestions(this.quizId).then(function (res) {
+	        console.log(res);
+	        _this2.setState({ questions: res.data });
+	      }).catch(function (err) {
+	        return console.log(err);
+	      });
+	    }
+	  }, {
 	    key: 'onSubmit',
 	    value: function onSubmit(values) {
-	      window.alert(JSON.stringify(values));
-	      //dummy
-	      var checkedObj = {
-	        c1e1: true,
-	        c2e2: false,
-	        c3e3: true
-	      };
-	      var keys = Object.keys(checkedObj);
-	      var errors = {};
-	      var grade = 0;
-	      var max = keys.length;
-	      keys.forEach(function (questionID) {
-	        if (checkedObj[questionID]) {
-	          grade++;
-	          errors[questionID] = 'correct';
-	        } else {
-	          errors[questionID] = 'incorrect';
-	        }
+	      var _this3 = this;
+	
+	      var sortedKeys = Object.keys(values.answers).sort();
+	      var answersArray = [];
+	      sortedKeys.forEach(function (key) {
+	        answersArray.push(values.answers[key]);
 	      });
-	      if (Object.keys(errors).length > 0) {
-	        errors._error = { grade: grade, max: max };
-	        throw new _reduxForm.SubmissionError(errors);
+	      if (answersArray.length > 0) {
+	        _api2.default.answerQuestions(this.quizId, answersArray, values.studentId).then(function (res) {
+	          if (res.data) {
+	            _this3.checkAnswers(res.data, sortedKeys);
+	          } else {
+	            console.log('No data!');
+	          }
+	        }).catch(function (err) {
+	          return console.log(err);
+	        });
 	      }
 	    }
 	  }, {
-	    key: 'updateCurrentFormula',
-	    value: function updateCurrentFormula(event, index) {
-	      var value = event.target.value.replace("/", ' \\over ').replace("*", " \\times ").replace('.', ' \\cdot ');
-	      var answers = this.state.answers.slice();
-	      answers[index] = value;
-	      this.setState({ answers: answers });
+	    key: 'checkAnswers',
+	    value: function checkAnswers(checkedArray, keys) {
+	      var results = {};
+	      for (var i = 0; i < keys.length; i++) {
+	        if (checkedArray[i] === true) {
+	          results[keys[i]] = 'correct';
+	        } else {
+	          results[keys[i]] = 'incorrect';
+	        }
+	      }
+	      if (Object.keys(results).length > 0) {
+	        console.log(results);
+	        this.setState({ disabled: true, results: results });
+	      }
 	    }
 	  }, {
-	    key: 'getGrades',
-	    value: function getGrades() {
-	      if (this.props.error) {
-	        var marksObtained = this.props.error.grade;
-	        var marksMax = this.props.error.max;
-	        var marksPercent = (marksObtained * 100 / marksMax).toFixed(2);
-	        this.setState({ marksObtained: marksObtained, marksMax: marksMax, marksPercent: marksPercent });
+	    key: '_getMarks',
+	    value: function _getMarks() {
+	      if (this.state.results) {
+	        this.marksObtained = Object.values(this.state.results).filter(function (result) {
+	          return result === 'correct';
+	        }).length;
+	        return this.marksObtained;
+	      } else {
+	        return '-';
+	      }
+	    }
+	  }, {
+	    key: '_getPercent',
+	    value: function _getPercent() {
+	      if (this.marksObtained) {
+	        return this.marksObtained * 100 / this.state.questions.length;
+	      } else {
+	        return '-';
 	      }
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
+	      var _this4 = this;
 	
-	      this.getGrades();
+	      console.log(this.state);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement(
-	          _reactBootstrap.Row,
-	          null,
+	          'form',
+	          { onSubmit: this.props.handleSubmit(this.onSubmit.bind(this)) },
 	          _react2.default.createElement(
-	            _reactBootstrap.Col,
-	            { md: 8, style: { paddingLeft: 50 } },
+	            _reactBootstrap.Row,
+	            null,
 	            _react2.default.createElement(
-	              'h2',
-	              null,
-	              this.state.quiz.title,
-	              ' Quiz'
+	              _reactBootstrap.Col,
+	              { md: 8, style: { paddingLeft: 50 } },
+	              _react2.default.createElement(
+	                'h2',
+	                null,
+	                'Quiz'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { md: 3 },
+	              _react2.default.createElement(
+	                'label',
+	                { htmlFor: 'studentId' },
+	                'Enter Student ID:'
+	              ),
+	              _react2.default.createElement(_reduxForm.Field, { type: 'number', id: 'studentId', name: 'studentId', component: 'input', placeholder: 'Enter your Student ID', required: true }),
+	              _react2.default.createElement(
+	                'p',
+	                { style: _ExerciseStyles2.default.result },
+	                'Marks Obtained: ',
+	                this._getMarks(),
+	                ' / ',
+	                this.state.questions.length,
+	                ' '
+	              ),
+	              _react2.default.createElement(
+	                'p',
+	                { style: _ExerciseStyles2.default.result },
+	                'Percentage: ',
+	                this._getPercent(),
+	                ' %'
+	              )
 	            )
 	          ),
 	          _react2.default.createElement(
-	            _reactBootstrap.Col,
-	            { md: 3 },
-	            _react2.default.createElement(
-	              'p',
-	              { style: _ExerciseStyles2.default.result },
-	              'Marks Obtained: ',
-	              this.state.marksObtained,
-	              ' / ',
-	              this.state.marksMax
-	            ),
-	            _react2.default.createElement(
-	              'p',
-	              { style: _ExerciseStyles2.default.result },
-	              'Percentage: ',
-	              this.state.marksPercent,
-	              ' %'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'form',
-	          { onSubmit: this.props.handleSubmit(this.onSubmit), style: this.props.style },
-	          this.state.quiz.questions.map(function (question, index) {
-	            return _react2.default.createElement(
-	              _reactBootstrap.Panel,
-	              {
-	                key: question.id,
-	                style: _ExerciseStyles2.default.box,
-	                header: title(index + 1),
-	                bsStyle: 'warning' },
-	              _react2.default.createElement(
-	                'label',
-	                { style: _ExerciseStyles2.default.label },
-	                question.text
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(_reduxForm.Field, {
-	                  style: _ExerciseStyles2.default.input,
-	                  updateFormula: _this2.updateCurrentFormula.bind(_this2),
-	                  index: index,
-	                  name: question.id,
-	                  component: InputComponent,
-	                  type: 'text',
-	                  placeholder: 'Answer'
-	                }),
-	                _react2.default.createElement(_reactFormulaBeautifier2.default, { style: _ExerciseStyles2.default.tex, value: _this2.state.answers[index] || "your-expression" })
-	              )
-	            );
-	          }),
+	            'div',
+	            { style: this.props.style },
+	            this.state.questions.map(function (question, index) {
+	              return _react2.default.createElement(
+	                _reactBootstrap.Panel,
+	                {
+	                  key: index,
+	                  style: _ExerciseStyles2.default.box,
+	                  header: title(index + 1),
+	                  bsStyle: 'warning' },
+	                _react2.default.createElement(
+	                  'label',
+	                  { style: _ExerciseStyles2.default.label },
+	                  question
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  null,
+	                  _react2.default.createElement(_reduxForm.Field, {
+	                    style: _ExerciseStyles2.default.input,
+	                    results: _this4.state.results,
+	                    name: 'answers[a' + index + ']',
+	                    answerId: 'a' + index,
+	                    component: InputComponent,
+	                    placeholder: 'Answer'
+	                  })
+	                )
+	              );
+	            })
+	          ),
 	          _react2.default.createElement(
 	            _reactBootstrap.Row,
 	            { style: { width: '100%' } },
@@ -64528,7 +64580,7 @@
 	              { md: 2, mdOffset: 5 },
 	              _react2.default.createElement(
 	                _reactBootstrap.Button,
-	                { style: _ExerciseStyles2.default.button, bsStyle: 'warning', type: 'submit' },
+	                { style: _ExerciseStyles2.default.button, bsStyle: 'warning', type: 'submit', disabled: this.state.disabled },
 	                'Submit'
 	              )
 	            )
@@ -64628,7 +64680,7 @@
 	
 	var _reactRouter = __webpack_require__(/*! react-router */ 436);
 	
-	var _Actions = __webpack_require__(/*! ../../Redux/Actions */ 717);
+	var _AuthActions = __webpack_require__(/*! ../../Redux/AuthActions */ 717);
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
@@ -64673,6 +64725,8 @@
 	    key: 'render',
 	    value: function render() {
 	      var _this2 = this;
+	
+	      console.log(this.props);
 	
 	      if (this.props.username) {
 	        window.alert('Logged in!');
@@ -64727,7 +64781,7 @@
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    loginUser: function loginUser(username) {
-	      return dispatch((0, _Actions.loginUser)(username));
+	      return dispatch((0, _AuthActions.loginUser)(username));
 	    }
 	  };
 	};
@@ -64864,7 +64918,7 @@
 	
 	var _reactRouter = __webpack_require__(/*! react-router */ 436);
 	
-	var _Actions = __webpack_require__(/*! ../../Redux/Actions */ 717);
+	var _AuthActions = __webpack_require__(/*! ../../Redux/AuthActions */ 717);
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
@@ -64974,7 +65028,7 @@
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    signupUser: function signupUser(username, password, firstName, lastName, email) {
-	      return dispatch((0, _Actions.signupUser)(username, password, firstName, lastName, email));
+	      return dispatch((0, _AuthActions.signupUser)(username, password, firstName, lastName, email));
 	    }
 	  };
 	};
