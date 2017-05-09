@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import NavigationBar from '../Common/NavigationBar'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router'
 import { loginUser } from '../../Redux/Actions'
 import { Button, Jumbotron } from 'react-bootstrap'
+import Alert from '../Common/Alert'
 import styles from '../Styles/AuthStyles'
 
 class LoginForm extends Component {
@@ -16,14 +18,19 @@ class LoginForm extends Component {
 
   handleSubmit(event) {
     this.props.loginUser(this.state.username)
-    window.alert('username: ' + this.state.username + ' password: ' + this.state.password)
     event.preventDefault();
   }
 
   render() {
+    if(this.props.username) {
+      window.alert('Logged in!')
+      return <Redirect to="/workspace" />
+    }
+    
     return (
       <div>
       <NavigationBar />
+      { this.props.error && <Alert style={{ width: '60%', margin: 50 }} bsStyle="danger" message={this.props.error} /> }
       <Jumbotron style={styles.jumbotron}>
         <h3 style={styles.h3}> Log in </h3>
         <form onSubmit={this.handleSubmit.bind(this)}>
@@ -39,7 +46,8 @@ class LoginForm extends Component {
 
 const mapStateToProps = ({ auth }) => {
   return {
-    username: auth.username
+    username: auth.username,
+    error: auth.error
   }
 }
 

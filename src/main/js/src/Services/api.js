@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const baseURL = 'https://superta.herokuapp.com/api'
+// const baseURL = 'https://superta.herokuapp.com/api'
+const baseURL = '/api'
 
 //AUTH
 const createUser = (username, password, firstName, lastName, email) => axios.post(baseURL + '/users', { username, password, firstName, lastName, email })

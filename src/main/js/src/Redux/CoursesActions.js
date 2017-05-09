@@ -12,9 +12,10 @@ import {
 export const getAllCourses = (username) => {
   return (dispatch) => {
     API.getCourses(username).then((res) => {
-      console.log(res)
-      dispatch({ type: GET_ALL_COURSES, payload: res })
-      // dispatch(selectCourse(res[0]))
+      if (res.data) {
+        dispatch({ type: GET_ALL_COURSES, payload: res.data })
+        dispatch({ type: SELECT_COURSE, payload: res.data[0] })
+      }
     }).catch((err) => dispatch(requestFailed()))
   }
 }
@@ -29,8 +30,10 @@ export const selectCourse = (course) => {
 export const getAllQuizzes = (username, courseId) => {
   return (dispatch) => {
     API.getQuizzes(username, courseId).then((res) => {
-      dispatch({ type: GET_ALL_QUIZZES, payload: res })
-      // dispatch(selectQuiz(res[0]))
+      if (res.data) {
+        dispatch({ type: GET_ALL_QUIZZES, payload: res.data })
+        dispatch(selectQuiz(res.data[0]))
+      }
     }).catch((err) => dispatch(requestFailed()))
   }
 }
@@ -45,7 +48,9 @@ export const selectQuiz = (quiz) => {
 export const getAllQuestions = (username, courseId, quizId) => {
   return (dispatch) => {
     API.getAllQuestions(username, courseId, quizId).then((res) => {
-      dispatch({ type: GET_ALL_QUESTIONS, payload: res })
+      if (res.data) {
+        dispatch({ type: GET_ALL_QUESTIONS, payload: res.data })
+      }
     }).catch((err) => dispatch(requestFailed()))
   }
 }

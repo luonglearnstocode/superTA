@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import NavigationBar from '../Common/NavigationBar'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router'
 import { signupUser } from '../../Redux/Actions'
 import { Button, Jumbotron } from 'react-bootstrap'
 import styles from '../Styles/AuthStyles'
+import Alert from '../Common/Alert'
 
 class SignupForm extends Component {
   constructor(props) {
@@ -19,14 +21,18 @@ class SignupForm extends Component {
 
   handleSubmit(event) {
     this.props.signupUser(this.state.username, this.state.password, this.state.firstName, this.state.lastName, this.state.email)
-    window.alert('username: ' + this.state.username + ' password: ' + this.state.password)
     event.preventDefault();
   }
 
   render() {
+    if(this.props.username) {
+      window.alert('Signed up!')
+      return <Redirect to="/workspace" />
+    }
     return (
       <div>
       <NavigationBar />
+      { this.props.error && <Alert style={{ width: '60%', margin: 50 }} bsStyle="danger" message={this.props.error} /> }
       <Jumbotron style={styles.jumbotron}>
         <h3 style={styles.h3}> Sign up </h3>
         <form onSubmit={this.handleSubmit.bind(this)}>
@@ -45,7 +51,8 @@ class SignupForm extends Component {
 
 const mapStateToProps = ({ auth }) => {
   return {
-    username: auth.username
+    username: auth.username,
+    error: auth.error
   }
 }
 

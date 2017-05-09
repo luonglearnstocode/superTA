@@ -81,19 +81,19 @@
 	
 	var _Home2 = _interopRequireDefault(_Home);
 	
-	var _Workspace = __webpack_require__(/*! ./src/Components/Workspace */ 717);
+	var _Workspace = __webpack_require__(/*! ./src/Components/Workspace */ 748);
 	
 	var _Workspace2 = _interopRequireDefault(_Workspace);
 	
-	var _ExerciseForm = __webpack_require__(/*! ./src/Components/Exercises/ExerciseForm */ 758);
+	var _ExerciseForm = __webpack_require__(/*! ./src/Components/Exercises/ExerciseForm */ 759);
 	
 	var _ExerciseForm2 = _interopRequireDefault(_ExerciseForm);
 	
-	var _LoginForm = __webpack_require__(/*! ./src/Components/Auth/LoginForm */ 760);
+	var _LoginForm = __webpack_require__(/*! ./src/Components/Auth/LoginForm */ 761);
 	
 	var _LoginForm2 = _interopRequireDefault(_LoginForm);
 	
-	var _SignupForm = __webpack_require__(/*! ./src/Components/Auth/SignupForm */ 763);
+	var _SignupForm = __webpack_require__(/*! ./src/Components/Auth/SignupForm */ 764);
 	
 	var _SignupForm2 = _interopRequireDefault(_SignupForm);
 	
@@ -105,6 +105,15 @@
 	  data: _CourseReducers2.default
 	});
 	var store = (window.devToolsExtension ? window.devToolsExtension()(_redux.createStore) : _redux.createStore)(reducer, {}, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+	
+	// const requireAuth = (nextState, replace) => {
+	//   if () {
+	//     replace({
+	//       pathname: '/login',
+	//       state: { nextPathname: nextState.location.pathname }
+	//     })
+	//   }
+	// }
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRedux.Provider,
@@ -35526,23 +35535,29 @@
 	  value: true
 	});
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	var _Types = __webpack_require__(/*! ./Types */ 423);
 	
 	var INITIAL_STATE = {
-	  username: null
+	  username: null,
+	  error: null
 	};
 	
 	exports.default = function () {
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
 	  var action = arguments[1];
 	
+	  console.log(action);
 	  switch (action.type) {
 	    case _Types.LOGIN_USER_SUCCESS:
-	      return { username: action.payload };
+	      return _extends({}, state, { username: action.payload });
 	    case _Types.LOGIN_USER_FAIL:
+	      return _extends({}, state, { error: 'Log in failed!' });
 	    case _Types.SIGNUP_USER_FAIL:
-	    case _Types.LOGOUT_USER:
-	      return state;
+	      return _extends({}, state, { error: 'Sign up failed!' });
+	    case _Types.LOGOUT_USER_SUCCESS:
+	      return { error: null, username: null };
 	    default:
 	      return state;
 	  }
@@ -59277,6 +59292,8 @@
 	  value: true
 	});
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
 	var _react = __webpack_require__(/*! react */ 1);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -59285,7 +59302,17 @@
 	
 	var _reactRouterDom = __webpack_require__(/*! react-router-dom */ 426);
 	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 182);
+	
+	var _Actions = __webpack_require__(/*! ../../Redux/Actions */ 717);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var styles = {
 	  icon: {
@@ -59303,384 +59330,127 @@
 	  }
 	};
 	
-	var NavigationBar = function NavigationBar() {
-	  return _react2.default.createElement(
-	    _reactBootstrap.Navbar,
-	    { style: styles.nav },
-	    _react2.default.createElement(
-	      _reactBootstrap.Navbar.Header,
-	      null,
-	      _react2.default.createElement(
-	        _reactBootstrap.Navbar.Brand,
-	        null,
-	        _react2.default.createElement(
-	          'a',
-	          { style: styles.brand, href: '#' },
-	          'Super TA'
-	        )
-	      )
-	    ),
-	    _react2.default.createElement(
-	      _reactBootstrap.Nav,
-	      null,
-	      _react2.default.createElement(
-	        _reactBootstrap.NavItem,
-	        null,
-	        _react2.default.createElement(
-	          _reactRouterDom.NavLink,
-	          { style: styles.navLink, to: '/' },
-	          _react2.default.createElement('i', { className: 'fa fa-home', style: styles.icon }),
-	          ' Home'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactBootstrap.NavItem,
-	        null,
-	        _react2.default.createElement(
-	          _reactRouterDom.NavLink,
-	          { style: styles.navLink, to: '/workspace' },
-	          _react2.default.createElement('i', { className: 'fa fa-folder-open-o', style: styles.icon }),
-	          ' Workspace'
-	        )
-	      )
-	    ),
-	    _react2.default.createElement(
-	      _reactBootstrap.Nav,
-	      { pullRight: true },
-	      _react2.default.createElement(
-	        _reactBootstrap.NavItem,
-	        null,
-	        _react2.default.createElement(
-	          _reactRouterDom.NavLink,
-	          { style: styles.navLink, to: '/signup' },
-	          _react2.default.createElement('i', { className: 'fa fa-user', style: styles.icon }),
-	          ' Sign Up'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactBootstrap.NavItem,
-	        null,
-	        _react2.default.createElement(
-	          _reactRouterDom.NavLink,
-	          { style: styles.navLink, to: '/login' },
-	          _react2.default.createElement('i', { className: 'fa fa-sign-in', style: styles.icon }),
-	          ' Login'
-	        )
-	      )
-	    )
-	  );
-	};
+	var NavigationBar = function (_Component) {
+	  _inherits(NavigationBar, _Component);
 	
-	exports.default = NavigationBar;
-
-/***/ }),
-/* 717 */
-/*!*************************************************!*\
-  !*** ./src/main/js/src/Components/Workspace.js ***!
-  \*************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
+	  function NavigationBar() {
+	    _classCallCheck(this, NavigationBar);
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
-	
-	var _WorkspaceStyles = __webpack_require__(/*! ./Styles/WorkspaceStyles */ 718);
-	
-	var _WorkspaceStyles2 = _interopRequireDefault(_WorkspaceStyles);
-	
-	var _ExerciseQuestions = __webpack_require__(/*! ./Exercises/ExerciseQuestions */ 719);
-	
-	var _ExerciseQuestions2 = _interopRequireDefault(_ExerciseQuestions);
-	
-	var _NavigationBar = __webpack_require__(/*! ./Common/NavigationBar */ 716);
-	
-	var _NavigationBar2 = _interopRequireDefault(_NavigationBar);
-	
-	var _reactRedux = __webpack_require__(/*! react-redux */ 182);
-	
-	var _CoursesActions = __webpack_require__(/*! ../Redux/CoursesActions */ 726);
-	
-	var _FormTemplate = __webpack_require__(/*! ./Forms/FormTemplate */ 757);
-	
-	var _FormTemplate2 = _interopRequireDefault(_FormTemplate);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	// import CourseList from '../Fixtures/Courses.json'
-	
-	
-	var CourseList = [{
-	  id: 'sdf',
-	  name: 'a name',
-	  quizzes: [{
-	    id: 'se',
-	    title: 'a quiz',
-	    questions: [{
-	      id: 'eds',
-	      text: 'a question',
-	      solution: 'a solution'
-	    }]
-	  }]
-	}];
-	
-	var Workspace = function (_Component) {
-	  _inherits(Workspace, _Component);
-	
-	  function Workspace(props) {
-	    _classCallCheck(this, Workspace);
-	
-	    var _this = _possibleConstructorReturn(this, (Workspace.__proto__ || Object.getPrototypeOf(Workspace)).call(this, props));
-	
-	    _this.state = {
-	      course: CourseList[0],
-	      quiz: CourseList[0].quizzes[0],
-	      activeModal: null
-	    };
-	    _this.modal = { title: '', placeholder: '', value: '' };
-	    return _this;
+	    return _possibleConstructorReturn(this, (NavigationBar.__proto__ || Object.getPrototypeOf(NavigationBar)).apply(this, arguments));
 	  }
 	
-	  _createClass(Workspace, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      this.props.getAllCourses(this.props.username);
-	    }
-	  }, {
-	    key: '_close',
-	    value: function _close() {
-	      this.setState({ activeModal: null });
-	    }
-	  }, {
-	    key: '_open',
-	    value: function _open(title, placeholder, value) {
-	      this.setState({ activeModal: true });
-	      this.modal = { title: title, placeholder: placeholder, value: value };
-	    }
-	  }, {
-	    key: '_delete',
-	    value: function _delete(item) {
-	      window.confirm('Are you sure you want to delete: ' + item.title);
+	  _createClass(NavigationBar, [{
+	    key: 'handleLogout',
+	    value: function handleLogout() {
+	      this.props.logoutUser();
+	      window.alert('Logged out!');
+	      console.log(this.props);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
-	
-	      console.log(this.props);
 	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(_NavigationBar2.default, null),
+	        _reactBootstrap.Navbar,
+	        { style: styles.nav },
 	        _react2.default.createElement(
-	          _reactBootstrap.Grid,
-	          { style: { width: '100vw', margin: 0 } },
+	          _reactBootstrap.Navbar.Header,
+	          null,
 	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            { className: 'show-grid' },
+	            _reactBootstrap.Navbar.Brand,
+	            null,
 	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { md: 2, style: _WorkspaceStyles2.default.bar },
-	              _react2.default.createElement(
-	                'h3',
-	                { style: _WorkspaceStyles2.default.heading },
-	                'Courses'
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { style: _WorkspaceStyles2.default.buttons },
-	                _react2.default.createElement(
-	                  _reactBootstrap.Button,
-	                  { bsStyle: 'danger', onClick: function onClick() {
-	                      return _this2._delete(_this2.state.course);
-	                    } },
-	                  'Delete'
-	                ),
-	                _react2.default.createElement(
-	                  _reactBootstrap.Button,
-	                  { bsStyle: 'warning', onClick: function onClick() {
-	                      return _this2._open('Course Edit Form', 'Course Name', _this2.state.course.name);
-	                    } },
-	                  'Edit'
-	                ),
-	                _react2.default.createElement(
-	                  _reactBootstrap.Button,
-	                  { bsStyle: 'success', onClick: function onClick() {
-	                      return _this2._open('Course Add Form', 'Course Name', '');
-	                    } },
-	                  ' Add '
-	                )
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.ListGroup,
-	                null,
-	                CourseList.map(function (course) {
-	                  return _react2.default.createElement(
-	                    _reactBootstrap.ListGroupItem,
-	                    { style: _WorkspaceStyles2.default.item, key: course.id, onClick: function onClick() {
-	                        return _this2.setState({ course: course });
-	                      }, active: _this2.state.course === course },
-	                    course.name
-	                  );
-	                })
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { md: 2, style: _WorkspaceStyles2.default.bar },
-	              _react2.default.createElement(
-	                'h3',
-	                { style: _WorkspaceStyles2.default.heading },
-	                'Quizzes'
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { style: _WorkspaceStyles2.default.buttons },
-	                _react2.default.createElement(
-	                  _reactBootstrap.Button,
-	                  { bsStyle: 'danger', onClick: function onClick() {
-	                      return _this2._delete(_this2.state.quiz);
-	                    } },
-	                  'Delete'
-	                ),
-	                _react2.default.createElement(
-	                  _reactBootstrap.Button,
-	                  { bsStyle: 'warning', onClick: function onClick() {
-	                      return _this2._open('Quiz Edit Form', 'Quiz Name', _this2.state.quiz.title);
-	                    } },
-	                  'Edit'
-	                ),
-	                _react2.default.createElement(
-	                  _reactBootstrap.Button,
-	                  { bsStyle: 'success', onClick: function onClick() {
-	                      return _this2._open('Quiz Add Form', 'Quiz Name', '');
-	                    } },
-	                  ' Add '
-	                )
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.ListGroup,
-	                null,
-	                this.state.course.quizzes.map(function (quiz) {
-	                  return _react2.default.createElement(
-	                    _reactBootstrap.ListGroupItem,
-	                    { style: _WorkspaceStyles2.default.item, key: quiz.id, onClick: function onClick() {
-	                        return _this2.setState({ quiz: quiz });
-	                      }, active: _this2.state.quiz === quiz },
-	                    quiz.title
-	                  );
-	                })
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { md: 8 },
-	              _react2.default.createElement(_ExerciseQuestions2.default, { questions: this.state.quiz.questions })
+	              'a',
+	              { style: styles.brand, href: '#' },
+	              'Super TA'
 	            )
 	          )
 	        ),
-	        _react2.default.createElement(_FormTemplate2.default, {
-	          close: this._close.bind(this),
-	          showModal: this.state.activeModal,
-	          title: this.modal.title,
-	          placeholder: this.modal.placeholder,
-	          value: this.modal.value
-	        })
+	        _react2.default.createElement(
+	          _reactBootstrap.Nav,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.NavItem,
+	            null,
+	            _react2.default.createElement(
+	              _reactRouterDom.NavLink,
+	              { style: styles.navLink, to: '/' },
+	              _react2.default.createElement('i', { className: 'fa fa-home', style: styles.icon }),
+	              ' Home'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.NavItem,
+	            null,
+	            _react2.default.createElement(
+	              _reactRouterDom.NavLink,
+	              { style: styles.navLink, to: '/workspace' },
+	              _react2.default.createElement('i', { className: 'fa fa-folder-open-o', style: styles.icon }),
+	              ' Workspace'
+	            )
+	          )
+	        ),
+	        this.props.username === null ? _react2.default.createElement(
+	          _reactBootstrap.Nav,
+	          { pullRight: true },
+	          _react2.default.createElement(
+	            _reactBootstrap.NavItem,
+	            null,
+	            _react2.default.createElement(
+	              _reactRouterDom.NavLink,
+	              { style: styles.navLink, to: '/signup' },
+	              _react2.default.createElement('i', { className: 'fa fa-user', style: styles.icon }),
+	              ' Sign Up'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.NavItem,
+	            null,
+	            _react2.default.createElement(
+	              _reactRouterDom.NavLink,
+	              { style: styles.navLink, to: '/login' },
+	              _react2.default.createElement('i', { className: 'fa fa-sign-in', style: styles.icon }),
+	              ' Login'
+	            )
+	          )
+	        ) : _react2.default.createElement(
+	          _reactBootstrap.Nav,
+	          { pullRight: true },
+	          _react2.default.createElement(
+	            _reactBootstrap.NavItem,
+	            { onClick: this.handleLogout.bind(this) },
+	            _react2.default.createElement('i', { className: 'fa fa-sign-out', style: styles.icon }),
+	            ' Log out'
+	          )
+	        )
 	      );
 	    }
 	  }]);
 	
-	  return Workspace;
+	  return NavigationBar;
 	}(_react.Component);
 	
 	var mapStateToProps = function mapStateToProps(_ref) {
-	  var data = _ref.data,
-	      auth = _ref.auth;
+	  var auth = _ref.auth;
 	
 	  return {
-	    username: auth.username,
-	    courses: data.courses,
-	    quizzes: data.quizzes,
-	    questions: data.questions,
-	    selectedCourse: data.selectedCourse,
-	    selectedQuiz: data.selectedQuiz
+	    username: auth.username
 	  };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    getAllCourses: function getAllCourses(username) {
-	      return dispatch((0, _CoursesActions.getAllCourses)(username));
-	    },
-	    getAllQuizzes: function getAllQuizzes(username, courseId) {
-	      return dispatch((0, _CoursesActions.getAllQuizzes)(username, courseId));
-	    },
-	    getAllQuestions: function getAllQuestions(username, courseId, quizId) {
-	      return dispatch((0, _CoursesActions.getAllQuestions)(username, courseId, quizId));
-	    },
-	    selectCourse: function selectCourse(course) {
-	      return dispatch((0, _CoursesActions.selectCourse)(course));
-	    },
-	    selectQuiz: function selectQuiz(quiz) {
-	      return dispatch((0, _CoursesActions.selectQuiz)(quiz));
+	    logoutUser: function logoutUser() {
+	      return dispatch((0, _Actions.logoutUser)());
 	    }
 	  };
 	};
-	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Workspace);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(NavigationBar);
 
 /***/ }),
-/* 718 */
-/*!**************************************************************!*\
-  !*** ./src/main/js/src/Components/Styles/WorkspaceStyles.js ***!
-  \**************************************************************/
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var styles = {
-	  item: {
-	    paddingTop: 20,
-	    paddingBottom: 20,
-	    borderWidth: 0
-	  },
-	  heading: {
-	    marginBottom: 5
-	  },
-	  buttons: {
-	    float: 'right',
-	    marginBottom: 10
-	  },
-	  bar: {
-	    backgroundColor: '#f8f8f8',
-	    height: '100vh'
-	  }
-	};
-	
-	exports.default = styles;
-
-/***/ }),
-/* 719 */
-/*!*******************************************************************!*\
-  !*** ./src/main/js/src/Components/Exercises/ExerciseQuestions.js ***!
-  \*******************************************************************/
+/* 717 */
+/*!******************************************!*\
+  !*** ./src/main/js/src/Redux/Actions.js ***!
+  \******************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -59688,749 +59458,93 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
-	
-	var _ExerciseStyles = __webpack_require__(/*! ../Styles/ExerciseStyles */ 720);
-	
-	var _ExerciseStyles2 = _interopRequireDefault(_ExerciseStyles);
-	
-	var _Forms = __webpack_require__(/*! ../Forms */ 721);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var header = function header(question, number, onClick) {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      'h4',
-	      { style: { display: 'inline' } },
-	      'Question ',
-	      number
-	    ),
-	    _react2.default.createElement(
-	      _reactBootstrap.Button,
-	      { bsStyle: 'danger', style: { display: 'inline-block', float: 'right' }, onClick: function onClick() {
-	          return window.alert('Do you want to delete ' + question.text);
-	        } },
-	      'Delete'
-	    ),
-	    _react2.default.createElement(
-	      _reactBootstrap.Button,
-	      { bsStyle: 'warning', style: { display: 'inline-block', float: 'right' }, onClick: onClick },
-	      'Edit'
-	    )
-	  );
-	};
-	
-	var ExerciseQuestions = function (_Component) {
-	  _inherits(ExerciseQuestions, _Component);
-	
-	  function ExerciseQuestions(props) {
-	    _classCallCheck(this, ExerciseQuestions);
-	
-	    var _this = _possibleConstructorReturn(this, (ExerciseQuestions.__proto__ || Object.getPrototypeOf(ExerciseQuestions)).call(this, props));
-	
-	    _this.state = {
-	      activeModal: null,
-	      question: { text: null, solution: null }
-	    };
-	    return _this;
-	  }
-	
-	  _createClass(ExerciseQuestions, [{
-	    key: 'close',
-	    value: function close() {
-	      this.setState({ activeModal: null });
-	    }
-	  }, {
-	    key: 'open',
-	    value: function open(modal, item) {
-	      this.setState({ activeModal: modal, question: item });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          _reactBootstrap.Button,
-	          { bsStyle: 'success', style: _ExerciseStyles2.default.addButton, onClick: function onClick() {
-	              return _this2.open('QuestionAddForm');
-	            } },
-	          'Add Question'
-	        ),
-	        this.props.questions.map(function (question, index) {
-	          return _react2.default.createElement(
-	            _reactBootstrap.Panel,
-	            {
-	              key: question.id,
-	              style: _ExerciseStyles2.default.box,
-	              header: header(question, index + 1, function () {
-	                return _this2.open('QuestionEditForm', question);
-	              }),
-	              bsStyle: 'warning' },
-	            _react2.default.createElement(
-	              'label',
-	              { style: _ExerciseStyles2.default.label },
-	              question.text
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              question.solution
-	            )
-	          );
-	        }),
-	        _react2.default.createElement(_Forms.QuestionAddForm, { close: this.close.bind(this), showModal: this.state.activeModal === 'QuestionAddForm' }),
-	        _react2.default.createElement(_Forms.QuestionEditForm, { close: this.close.bind(this), showModal: this.state.activeModal === 'QuestionEditForm', value: this.state.question })
-	      );
-	    }
-	  }]);
-	
-	  return ExerciseQuestions;
-	}(_react.Component);
-	
-	exports.default = ExerciseQuestions;
-
-/***/ }),
-/* 720 */
-/*!*************************************************************!*\
-  !*** ./src/main/js/src/Components/Styles/ExerciseStyles.js ***!
-  \*************************************************************/
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var styles = {
-	  form: {
-	    marginLeft: 30
-	  },
-	  box: {
-	    margin: 30,
-	    width: '80%'
-	  },
-	  label: {
-	    fontSize: 16
-	  },
-	  input: {
-	    borderRadius: 5,
-	    padding: 10,
-	    display: 'inline',
-	    borderWidth: 1,
-	    borderColor: '#ccc',
-	    borderStyle: 'solid',
-	    width: '70%'
-	  },
-	  addButton: {
-	    float: 'right'
-	  },
-	  tex: {
-	    display: 'inline',
-	    marginLeft: 20
-	  },
-	  button: {
-	    margin: 10,
-	    paddingLeft: 30,
-	    paddingRight: 30,
-	    paddingTop: 15,
-	    paddingBottom: 15,
-	    fontSize: 16
-	  },
-	  result: {
-	    fontSize: 18,
-	    textAlign: 'right',
-	    marginRight: 50
-	  }
-	};
-	
-	exports.default = styles;
-
-/***/ }),
-/* 721 */
-/*!***************************************************!*\
-  !*** ./src/main/js/src/Components/Forms/index.js ***!
-  \***************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _QuestionAddForm = __webpack_require__(/*! ./QuestionAddForm */ 722);
-	
-	Object.keys(_QuestionAddForm).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _QuestionAddForm[key];
-	    }
-	  });
-	});
-	
-	var _QuestionEditForm = __webpack_require__(/*! ./QuestionEditForm */ 725);
-	
-	Object.keys(_QuestionEditForm).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _QuestionEditForm[key];
-	    }
-	  });
-	});
-
-/***/ }),
-/* 722 */
-/*!*************************************************************!*\
-  !*** ./src/main/js/src/Components/Forms/QuestionAddForm.js ***!
-  \*************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.QuestionAddForm = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
-	
-	var _FormModal = __webpack_require__(/*! ./FormModal */ 723);
-	
-	var _FormModal2 = _interopRequireDefault(_FormModal);
-	
-	var _FormModalStyles = __webpack_require__(/*! ../Styles/FormModalStyles */ 724);
-	
-	var _FormModalStyles2 = _interopRequireDefault(_FormModalStyles);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var QuestionAddForm = function (_Component) {
-	  _inherits(QuestionAddForm, _Component);
-	
-	  function QuestionAddForm(props) {
-	    _classCallCheck(this, QuestionAddForm);
-	
-	    var _this = _possibleConstructorReturn(this, (QuestionAddForm.__proto__ || Object.getPrototypeOf(QuestionAddForm)).call(this, props));
-	
-	    _this.handleSubmit = _this.handleSubmit.bind(_this);
-	    _this.handleReset = _this.handleReset.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(QuestionAddForm, [{
-	    key: 'handleSubmit',
-	    value: function handleSubmit(event) {
-	      alert('A question was submitted: ' + this.question.value + ' and answer: ' + this.answer.value);
-	      this.props.close();
-	      event.preventDefault();
-	    }
-	  }, {
-	    key: 'handleReset',
-	    value: function handleReset() {
-	      this.question.value = '';
-	      this.answer.value = '';
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      return _react2.default.createElement(
-	        _FormModal2.default,
-	        {
-	          showModal: this.props.showModal,
-	          close: this.props.close,
-	          title: 'Add Question',
-	          handleSubmit: this.handleSubmit,
-	          reset: this.handleReset
-	        },
-	        _react2.default.createElement(
-	          'form',
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.FormGroup,
-	            { controlId: 'question' },
-	            _react2.default.createElement(
-	              _reactBootstrap.ControlLabel,
-	              null,
-	              'Question:'
-	            ),
-	            _react2.default.createElement('input', { style: _FormModalStyles2.default.input, placeholder: 'Enter question', type: 'text', ref: function ref(input) {
-	                return _this2.question = input;
-	              } })
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.FormGroup,
-	            { controlId: 'answer' },
-	            _react2.default.createElement(
-	              _reactBootstrap.ControlLabel,
-	              null,
-	              'Answer:'
-	            ),
-	            _react2.default.createElement('input', { style: _FormModalStyles2.default.input, placeholder: 'Enter answer', type: 'text', ref: function ref(input) {
-	                return _this2.answer = input;
-	              } })
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return QuestionAddForm;
-	}(_react.Component);
-	
-	exports.QuestionAddForm = QuestionAddForm;
-
-/***/ }),
-/* 723 */
-/*!*******************************************************!*\
-  !*** ./src/main/js/src/Components/Forms/FormModal.js ***!
-  \*******************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var FormModal = function (_Component) {
-	  _inherits(FormModal, _Component);
-	
-	  function FormModal() {
-	    _classCallCheck(this, FormModal);
-	
-	    return _possibleConstructorReturn(this, (FormModal.__proto__ || Object.getPrototypeOf(FormModal)).apply(this, arguments));
-	  }
-	
-	  _createClass(FormModal, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        _reactBootstrap.Modal,
-	        { show: this.props.showModal, onHide: this.props.close },
-	        _react2.default.createElement(
-	          _reactBootstrap.Modal.Header,
-	          { closeButton: true },
-	          _react2.default.createElement(
-	            _reactBootstrap.Modal.Title,
-	            null,
-	            this.props.title
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Modal.Body,
-	          null,
-	          this.props.children
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Modal.Footer,
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.Button,
-	            { onClick: this.props.reset },
-	            'Reset'
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Button,
-	            { onClick: this.props.handleSubmit },
-	            'Submit'
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Button,
-	            { onClick: this.props.close },
-	            'Close'
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return FormModal;
-	}(_react.Component);
-	
-	exports.default = FormModal;
-
-/***/ }),
-/* 724 */
-/*!**************************************************************!*\
-  !*** ./src/main/js/src/Components/Styles/FormModalStyles.js ***!
-  \**************************************************************/
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var styles = {
-	  input: {
-	    borderRadius: 5,
-	    padding: 10,
-	    display: 'block',
-	    borderWidth: 1,
-	    borderColor: '#ccc',
-	    borderStyle: 'solid',
-	    width: '80%'
-	  }
-	};
-	
-	exports.default = styles;
-
-/***/ }),
-/* 725 */
-/*!**************************************************************!*\
-  !*** ./src/main/js/src/Components/Forms/QuestionEditForm.js ***!
-  \**************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.QuestionEditForm = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
-	
-	var _FormModal = __webpack_require__(/*! ./FormModal */ 723);
-	
-	var _FormModal2 = _interopRequireDefault(_FormModal);
-	
-	var _FormModalStyles = __webpack_require__(/*! ../Styles/FormModalStyles */ 724);
-	
-	var _FormModalStyles2 = _interopRequireDefault(_FormModalStyles);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var QuestionEditForm = function (_Component) {
-	  _inherits(QuestionEditForm, _Component);
-	
-	  function QuestionEditForm(props) {
-	    _classCallCheck(this, QuestionEditForm);
-	
-	    var _this = _possibleConstructorReturn(this, (QuestionEditForm.__proto__ || Object.getPrototypeOf(QuestionEditForm)).call(this, props));
-	
-	    _this.handleSubmit = _this.handleSubmit.bind(_this);
-	    _this.handleReset = _this.handleReset.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(QuestionEditForm, [{
-	    key: 'handleSubmit',
-	    value: function handleSubmit(event) {
-	      alert('A quiz was editted: ' + this.text.value + 'and solution ' + this.solution.value);
-	      this.props.close();
-	      event.preventDefault();
-	    }
-	  }, {
-	    key: 'handleReset',
-	    value: function handleReset() {
-	      this.text.value = '';
-	      this.solution.value = '';
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      return _react2.default.createElement(
-	        _FormModal2.default,
-	        {
-	          showModal: this.props.showModal,
-	          close: this.props.close,
-	          title: 'Edit selected question',
-	          handleSubmit: this.handleSubmit,
-	          reset: this.handleReset
-	        },
-	        _react2.default.createElement(
-	          'form',
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.FormGroup,
-	            { controlId: 'question' },
-	            _react2.default.createElement(
-	              _reactBootstrap.ControlLabel,
-	              null,
-	              'Question:'
-	            ),
-	            _react2.default.createElement('input', { style: _FormModalStyles2.default.input, placeholder: 'Enter question', type: 'text', defaultValue: this.props.value.text, ref: function ref(input) {
-	                return _this2.text = input;
-	              } })
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.FormGroup,
-	            { controlId: 'answer' },
-	            _react2.default.createElement(
-	              _reactBootstrap.ControlLabel,
-	              null,
-	              'Answer:'
-	            ),
-	            _react2.default.createElement('input', { style: _FormModalStyles2.default.input, placeholder: 'Enter solution', type: 'text', defaultValue: this.props.value.solution, ref: function ref(input) {
-	                return _this2.solution = input;
-	              } })
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return QuestionEditForm;
-	}(_react.Component);
-	
-	exports.QuestionEditForm = QuestionEditForm;
-
-/***/ }),
-/* 726 */
-/*!*************************************************!*\
-  !*** ./src/main/js/src/Redux/CoursesActions.js ***!
-  \*************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.getAllQuestions = exports.selectQuiz = exports.getAllQuizzes = exports.selectCourse = exports.getAllCourses = undefined;
-	
-	var _api = __webpack_require__(/*! ../Services/api */ 727);
-	
-	var _api2 = _interopRequireDefault(_api);
+	exports.logoutUser = exports.signupUserFail = exports.loginUserFail = exports.loginUserSuccess = exports.loginUser = exports.signupUser = undefined;
 	
 	var _Types = __webpack_require__(/*! ./Types */ 423);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var getAllCourses = exports.getAllCourses = function getAllCourses(username) {
-	  return function (dispatch) {
-	    _api2.default.getCourses(username).then(function (res) {
-	      console.log(res);
-	      dispatch({ type: _Types.GET_ALL_COURSES, payload: res });
-	      // dispatch(selectCourse(res[0]))
-	    }).catch(function (err) {
-	      return dispatch(requestFailed());
-	    });
-	  };
-	};
-	
-	var selectCourse = exports.selectCourse = function selectCourse(course) {
-	  return {
-	    type: _Types.SELECT_COURSE,
-	    payload: course
-	  };
-	};
-	
-	var getAllQuizzes = exports.getAllQuizzes = function getAllQuizzes(username, courseId) {
-	  return function (dispatch) {
-	    _api2.default.getQuizzes(username, courseId).then(function (res) {
-	      dispatch({ type: _Types.GET_ALL_QUIZZES, payload: res });
-	      // dispatch(selectQuiz(res[0]))
-	    }).catch(function (err) {
-	      return dispatch(requestFailed());
-	    });
-	  };
-	};
-	
-	var selectQuiz = exports.selectQuiz = function selectQuiz(quiz) {
-	  return {
-	    type: _Types.SELECT_QUIZ,
-	    payload: quiz
-	  };
-	};
-	
-	var getAllQuestions = exports.getAllQuestions = function getAllQuestions(username, courseId, quizId) {
-	  return function (dispatch) {
-	    _api2.default.getAllQuestions(username, courseId, quizId).then(function (res) {
-	      dispatch({ type: _Types.GET_ALL_QUESTIONS, payload: res });
-	    }).catch(function (err) {
-	      return dispatch(requestFailed());
-	    });
-	  };
-	};
-	
-	var requestFailed = function requestFailed() {
-	  type: _Types.REQUEST_FAIL;
-	};
-
-/***/ }),
-/* 727 */
-/*!*****************************************!*\
-  !*** ./src/main/js/src/Services/api.js ***!
-  \*****************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _axios = __webpack_require__(/*! axios */ 728);
+	var _axios = __webpack_require__(/*! axios */ 718);
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
+	var _api = __webpack_require__(/*! ../Services/api */ 747);
+	
+	var _api2 = _interopRequireDefault(_api);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var baseURL = 'https://superta.herokuapp.com/api';
-	
-	//AUTH
-	var createUser = function createUser(username, password, firstName, lastName, email) {
-	  return _axios2.default.post(baseURL + '/users', { username: username, password: password, firstName: firstName, lastName: lastName, email: email });
+	var signupUser = exports.signupUser = function signupUser(username, password, firstName, lastName, email) {
+	  return function (dispatch) {
+	    console.log('sending sign up req...');
+	    _api2.default.createUser(username, password, firstName, lastName, email).then(function (res) {
+	      console.log(res);
+	      if (res.status === 200 || res.status === 201) {
+	        dispatch(loginUserSuccess(username));
+	      } else {
+	        dispatch(signupUserFail());
+	      }
+	    }).catch(function (err) {
+	      console.log(err);
+	      dispatch(signupUserFail());
+	    });
+	  };
 	};
 	
-	var getUser = function getUser(username) {
-	  return _axios2.default.get(baseURL + '/users/' + username);
+	var loginUser = exports.loginUser = function loginUser(username) {
+	  return function (dispatch) {
+	    console.log('sending login req...');
+	    _api2.default.getUser(username).then(function (res) {
+	      console.log(res);
+	      if (res.data) {
+	        dispatch(loginUserSuccess(username));
+	      } else {
+	        dispatch(loginUserFail());
+	      }
+	    }).catch(function (err) {
+	      dispatch(loginUserFail());
+	      console.log('Error: ', err);
+	    });
+	  };
 	};
 	
-	// COURSES
-	var getCourses = function getCourses(username) {
-	  return _axios2.default.get(baseURL + '/users/' + username + '/courses');
+	var loginUserSuccess = exports.loginUserSuccess = function loginUserSuccess(username) {
+	  console.log('log in user success');
+	  return {
+	    type: _Types.LOGIN_USER_SUCCESS,
+	    payload: username
+	  };
 	};
 	
-	var createCourse = function createCourse(username, id, name) {
-	  return _axios2.default.post(baseURL + '/users/' + username + '/courses', { id: id, name: name });
+	var loginUserFail = exports.loginUserFail = function loginUserFail() {
+	  console.log('log in user fail');
+	  return {
+	    type: _Types.LOGIN_USER_FAIL
+	  };
 	};
 	
-	var editCourse = function editCourse(username, id, name) {
-	  return _axios2.default.put(baseURL + '/users/' + username + '/courses/' + id, { id: id, name: name });
+	var signupUserFail = exports.signupUserFail = function signupUserFail() {
+	  console.log('sign up fail');
+	  return {
+	    type: _Types.SIGNUP_USER_FAIL
+	  };
 	};
 	
-	var deleteCourse = function deleteCourse(username, id) {
-	  return _axios2.default.delete(baseURL + '/users/' + username + '/courses/' + id);
-	};
-	
-	// QUIZZES
-	var getQuizzes = function getQuizzes(username, courseId) {
-	  return _axios2.default.get(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes');
-	};
-	
-	var createQuiz = function createQuiz(username, courseId, id, title) {
-	  return _axios2.default.post(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes', { id: id, title: title });
-	};
-	
-	var editQuiz = function editQuiz(username, courseId, id, title) {
-	  return _axios2.default.put(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + id, { id: id, title: title });
-	};
-	
-	var deleteQuiz = function deleteQuiz(username, courseId, id) {
-	  return _axios2.default.delete(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + id);
-	};
-	
-	// QUESTIONS
-	var getAllQuestions = function getAllQuestions(username, courseId, quizId) {
-	  return _axios2.default.get(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/questions');
-	};
-	
-	var getQuestion = function getQuestion(username, courseId, quizId, id) {
-	  return _axios2.default.get(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/questions/' + id);
-	};
-	
-	var createQuestion = function createQuestion(username, courseId, quizId, id, text, solution) {
-	  return _axios2.default.post(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/questions', { id: id, text: text, solution: solution });
-	};
-	
-	var editQuestion = function editQuestion(username, courseId, quizId, id, text, solution) {
-	  return _axios2.default.put(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/questions/' + id, { id: id, text: text, solution: solution });
-	};
-	
-	var deleteQuestion = function deleteQuestion(username, courseId, quizId, id) {
-	  return _axios2.default.delete(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/questions/' + id);
-	};
-	
-	exports.default = {
-	  createUser: createUser,
-	  getUser: getUser,
-	  getCourses: getCourses,
-	  createCourse: createCourse,
-	  editCourse: editCourse,
-	  deleteCourse: deleteCourse,
-	  getQuizzes: getQuizzes,
-	  createQuiz: createQuiz,
-	  editQuiz: editQuiz,
-	  deleteQuiz: deleteQuiz,
-	  getAllQuestions: getAllQuestions,
-	  getQuestion: getQuestion,
-	  createQuestion: createQuestion,
-	  editQuestion: editQuestion,
-	  deleteQuestion: deleteQuestion
+	var logoutUser = exports.logoutUser = function logoutUser() {
+	  return {
+	    type: _Types.LOGOUT_USER_SUCCESS
+	  };
 	};
 
 /***/ }),
-/* 728 */
+/* 718 */
 /*!**************************!*\
   !*** ./~/axios/index.js ***!
   \**************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(/*! ./lib/axios */ 729);
+	module.exports = __webpack_require__(/*! ./lib/axios */ 719);
 
 /***/ }),
-/* 729 */
+/* 719 */
 /*!******************************!*\
   !*** ./~/axios/lib/axios.js ***!
   \******************************/
@@ -60438,10 +59552,10 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./utils */ 730);
-	var bind = __webpack_require__(/*! ./helpers/bind */ 735);
-	var Axios = __webpack_require__(/*! ./core/Axios */ 736);
-	var defaults = __webpack_require__(/*! ./defaults */ 737);
+	var utils = __webpack_require__(/*! ./utils */ 720);
+	var bind = __webpack_require__(/*! ./helpers/bind */ 725);
+	var Axios = __webpack_require__(/*! ./core/Axios */ 726);
+	var defaults = __webpack_require__(/*! ./defaults */ 727);
 	
 	/**
 	 * Create an instance of Axios
@@ -60474,15 +59588,15 @@
 	};
 	
 	// Expose Cancel & CancelToken
-	axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ 754);
-	axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ 755);
-	axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ 751);
+	axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ 744);
+	axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ 745);
+	axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ 741);
 	
 	// Expose all/spread
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(/*! ./helpers/spread */ 756);
+	axios.spread = __webpack_require__(/*! ./helpers/spread */ 746);
 	
 	module.exports = axios;
 	
@@ -60491,7 +59605,7 @@
 
 
 /***/ }),
-/* 730 */
+/* 720 */
 /*!******************************!*\
   !*** ./~/axios/lib/utils.js ***!
   \******************************/
@@ -60499,7 +59613,7 @@
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {'use strict';
 	
-	var bind = __webpack_require__(/*! ./helpers/bind */ 735);
+	var bind = __webpack_require__(/*! ./helpers/bind */ 725);
 	
 	/*global toString:true*/
 	
@@ -60810,10 +59924,10 @@
 	  trim: trim
 	};
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../buffer/index.js */ 731).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../buffer/index.js */ 721).Buffer))
 
 /***/ }),
-/* 731 */
+/* 721 */
 /*!***************************!*\
   !*** ./~/buffer/index.js ***!
   \***************************/
@@ -60829,9 +59943,9 @@
 	
 	'use strict'
 	
-	var base64 = __webpack_require__(/*! base64-js */ 732)
-	var ieee754 = __webpack_require__(/*! ieee754 */ 733)
-	var isArray = __webpack_require__(/*! isarray */ 734)
+	var base64 = __webpack_require__(/*! base64-js */ 722)
+	var ieee754 = __webpack_require__(/*! ieee754 */ 723)
+	var isArray = __webpack_require__(/*! isarray */ 724)
 	
 	exports.Buffer = Buffer
 	exports.SlowBuffer = SlowBuffer
@@ -62612,7 +61726,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 732 */
+/* 722 */
 /*!******************************!*\
   !*** ./~/base64-js/index.js ***!
   \******************************/
@@ -62735,7 +61849,7 @@
 
 
 /***/ }),
-/* 733 */
+/* 723 */
 /*!****************************!*\
   !*** ./~/ieee754/index.js ***!
   \****************************/
@@ -62828,7 +61942,7 @@
 
 
 /***/ }),
-/* 734 */
+/* 724 */
 /*!*************************************!*\
   !*** ./~/buffer/~/isarray/index.js ***!
   \*************************************/
@@ -62842,7 +61956,7 @@
 
 
 /***/ }),
-/* 735 */
+/* 725 */
 /*!*************************************!*\
   !*** ./~/axios/lib/helpers/bind.js ***!
   \*************************************/
@@ -62862,7 +61976,7 @@
 
 
 /***/ }),
-/* 736 */
+/* 726 */
 /*!***********************************!*\
   !*** ./~/axios/lib/core/Axios.js ***!
   \***********************************/
@@ -62870,12 +61984,12 @@
 
 	'use strict';
 	
-	var defaults = __webpack_require__(/*! ./../defaults */ 737);
-	var utils = __webpack_require__(/*! ./../utils */ 730);
-	var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ 748);
-	var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ 749);
-	var isAbsoluteURL = __webpack_require__(/*! ./../helpers/isAbsoluteURL */ 752);
-	var combineURLs = __webpack_require__(/*! ./../helpers/combineURLs */ 753);
+	var defaults = __webpack_require__(/*! ./../defaults */ 727);
+	var utils = __webpack_require__(/*! ./../utils */ 720);
+	var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ 738);
+	var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ 739);
+	var isAbsoluteURL = __webpack_require__(/*! ./../helpers/isAbsoluteURL */ 742);
+	var combineURLs = __webpack_require__(/*! ./../helpers/combineURLs */ 743);
 	
 	/**
 	 * Create a new instance of Axios
@@ -62956,7 +62070,7 @@
 
 
 /***/ }),
-/* 737 */
+/* 727 */
 /*!*********************************!*\
   !*** ./~/axios/lib/defaults.js ***!
   \*********************************/
@@ -62964,8 +62078,8 @@
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(/*! ./utils */ 730);
-	var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ 738);
+	var utils = __webpack_require__(/*! ./utils */ 720);
+	var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ 728);
 	
 	var DEFAULT_CONTENT_TYPE = {
 	  'Content-Type': 'application/x-www-form-urlencoded'
@@ -62981,10 +62095,10 @@
 	  var adapter;
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(/*! ./adapters/xhr */ 739);
+	    adapter = __webpack_require__(/*! ./adapters/xhr */ 729);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(/*! ./adapters/http */ 739);
+	    adapter = __webpack_require__(/*! ./adapters/http */ 729);
 	  }
 	  return adapter;
 	}
@@ -63058,7 +62172,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../process/browser.js */ 3)))
 
 /***/ }),
-/* 738 */
+/* 728 */
 /*!****************************************************!*\
   !*** ./~/axios/lib/helpers/normalizeHeaderName.js ***!
   \****************************************************/
@@ -63066,7 +62180,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ../utils */ 730);
+	var utils = __webpack_require__(/*! ../utils */ 720);
 	
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -63079,7 +62193,7 @@
 
 
 /***/ }),
-/* 739 */
+/* 729 */
 /*!*************************************!*\
   !*** ./~/axios/lib/adapters/xhr.js ***!
   \*************************************/
@@ -63087,13 +62201,13 @@
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 730);
-	var settle = __webpack_require__(/*! ./../core/settle */ 740);
-	var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ 743);
-	var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ 744);
-	var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ 745);
-	var createError = __webpack_require__(/*! ../core/createError */ 741);
-	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ 746);
+	var utils = __webpack_require__(/*! ./../utils */ 720);
+	var settle = __webpack_require__(/*! ./../core/settle */ 730);
+	var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ 733);
+	var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ 734);
+	var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ 735);
+	var createError = __webpack_require__(/*! ../core/createError */ 731);
+	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ 736);
 	
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -63189,7 +62303,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(/*! ./../helpers/cookies */ 747);
+	      var cookies = __webpack_require__(/*! ./../helpers/cookies */ 737);
 	
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -63268,7 +62382,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../process/browser.js */ 3)))
 
 /***/ }),
-/* 740 */
+/* 730 */
 /*!************************************!*\
   !*** ./~/axios/lib/core/settle.js ***!
   \************************************/
@@ -63276,7 +62390,7 @@
 
 	'use strict';
 	
-	var createError = __webpack_require__(/*! ./createError */ 741);
+	var createError = __webpack_require__(/*! ./createError */ 731);
 	
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -63302,7 +62416,7 @@
 
 
 /***/ }),
-/* 741 */
+/* 731 */
 /*!*****************************************!*\
   !*** ./~/axios/lib/core/createError.js ***!
   \*****************************************/
@@ -63310,7 +62424,7 @@
 
 	'use strict';
 	
-	var enhanceError = __webpack_require__(/*! ./enhanceError */ 742);
+	var enhanceError = __webpack_require__(/*! ./enhanceError */ 732);
 	
 	/**
 	 * Create an Error with the specified message, config, error code, and response.
@@ -63328,7 +62442,7 @@
 
 
 /***/ }),
-/* 742 */
+/* 732 */
 /*!******************************************!*\
   !*** ./~/axios/lib/core/enhanceError.js ***!
   \******************************************/
@@ -63356,7 +62470,7 @@
 
 
 /***/ }),
-/* 743 */
+/* 733 */
 /*!*****************************************!*\
   !*** ./~/axios/lib/helpers/buildURL.js ***!
   \*****************************************/
@@ -63364,7 +62478,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 730);
+	var utils = __webpack_require__(/*! ./../utils */ 720);
 	
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -63433,7 +62547,7 @@
 
 
 /***/ }),
-/* 744 */
+/* 734 */
 /*!*********************************************!*\
   !*** ./~/axios/lib/helpers/parseHeaders.js ***!
   \*********************************************/
@@ -63441,7 +62555,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 730);
+	var utils = __webpack_require__(/*! ./../utils */ 720);
 	
 	/**
 	 * Parse headers into an object
@@ -63479,7 +62593,7 @@
 
 
 /***/ }),
-/* 745 */
+/* 735 */
 /*!************************************************!*\
   !*** ./~/axios/lib/helpers/isURLSameOrigin.js ***!
   \************************************************/
@@ -63487,7 +62601,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 730);
+	var utils = __webpack_require__(/*! ./../utils */ 720);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -63556,7 +62670,7 @@
 
 
 /***/ }),
-/* 746 */
+/* 736 */
 /*!*************************************!*\
   !*** ./~/axios/lib/helpers/btoa.js ***!
   \*************************************/
@@ -63601,7 +62715,7 @@
 
 
 /***/ }),
-/* 747 */
+/* 737 */
 /*!****************************************!*\
   !*** ./~/axios/lib/helpers/cookies.js ***!
   \****************************************/
@@ -63609,7 +62723,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 730);
+	var utils = __webpack_require__(/*! ./../utils */ 720);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -63663,7 +62777,7 @@
 
 
 /***/ }),
-/* 748 */
+/* 738 */
 /*!************************************************!*\
   !*** ./~/axios/lib/core/InterceptorManager.js ***!
   \************************************************/
@@ -63671,7 +62785,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 730);
+	var utils = __webpack_require__(/*! ./../utils */ 720);
 	
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -63724,7 +62838,7 @@
 
 
 /***/ }),
-/* 749 */
+/* 739 */
 /*!*********************************************!*\
   !*** ./~/axios/lib/core/dispatchRequest.js ***!
   \*********************************************/
@@ -63732,10 +62846,10 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 730);
-	var transformData = __webpack_require__(/*! ./transformData */ 750);
-	var isCancel = __webpack_require__(/*! ../cancel/isCancel */ 751);
-	var defaults = __webpack_require__(/*! ../defaults */ 737);
+	var utils = __webpack_require__(/*! ./../utils */ 720);
+	var transformData = __webpack_require__(/*! ./transformData */ 740);
+	var isCancel = __webpack_require__(/*! ../cancel/isCancel */ 741);
+	var defaults = __webpack_require__(/*! ../defaults */ 727);
 	
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -63812,7 +62926,7 @@
 
 
 /***/ }),
-/* 750 */
+/* 740 */
 /*!*******************************************!*\
   !*** ./~/axios/lib/core/transformData.js ***!
   \*******************************************/
@@ -63820,7 +62934,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 730);
+	var utils = __webpack_require__(/*! ./../utils */ 720);
 	
 	/**
 	 * Transform the data for a request or a response
@@ -63841,7 +62955,7 @@
 
 
 /***/ }),
-/* 751 */
+/* 741 */
 /*!****************************************!*\
   !*** ./~/axios/lib/cancel/isCancel.js ***!
   \****************************************/
@@ -63855,7 +62969,7 @@
 
 
 /***/ }),
-/* 752 */
+/* 742 */
 /*!**********************************************!*\
   !*** ./~/axios/lib/helpers/isAbsoluteURL.js ***!
   \**********************************************/
@@ -63878,7 +62992,7 @@
 
 
 /***/ }),
-/* 753 */
+/* 743 */
 /*!********************************************!*\
   !*** ./~/axios/lib/helpers/combineURLs.js ***!
   \********************************************/
@@ -63901,7 +63015,7 @@
 
 
 /***/ }),
-/* 754 */
+/* 744 */
 /*!**************************************!*\
   !*** ./~/axios/lib/cancel/Cancel.js ***!
   \**************************************/
@@ -63929,7 +63043,7 @@
 
 
 /***/ }),
-/* 755 */
+/* 745 */
 /*!*******************************************!*\
   !*** ./~/axios/lib/cancel/CancelToken.js ***!
   \*******************************************/
@@ -63937,7 +63051,7 @@
 
 	'use strict';
 	
-	var Cancel = __webpack_require__(/*! ./Cancel */ 754);
+	var Cancel = __webpack_require__(/*! ./Cancel */ 744);
 	
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -63995,7 +63109,7 @@
 
 
 /***/ }),
-/* 756 */
+/* 746 */
 /*!***************************************!*\
   !*** ./~/axios/lib/helpers/spread.js ***!
   \***************************************/
@@ -64031,7 +63145,1074 @@
 
 
 /***/ }),
+/* 747 */
+/*!*****************************************!*\
+  !*** ./src/main/js/src/Services/api.js ***!
+  \*****************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _axios = __webpack_require__(/*! axios */ 718);
+	
+	var _axios2 = _interopRequireDefault(_axios);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// const baseURL = 'https://superta.herokuapp.com/api'
+	var baseURL = '/api';
+	
+	//AUTH
+	var createUser = function createUser(username, password, firstName, lastName, email) {
+	  return _axios2.default.post(baseURL + '/users', { username: username, password: password, firstName: firstName, lastName: lastName, email: email });
+	};
+	
+	var getUser = function getUser(username) {
+	  return _axios2.default.get(baseURL + '/users/' + username);
+	};
+	
+	// COURSES
+	var getCourses = function getCourses(username) {
+	  return _axios2.default.get(baseURL + '/users/' + username + '/courses');
+	};
+	
+	var createCourse = function createCourse(username, id, name) {
+	  return _axios2.default.post(baseURL + '/users/' + username + '/courses', { id: id, name: name });
+	};
+	
+	var editCourse = function editCourse(username, id, name) {
+	  return _axios2.default.put(baseURL + '/users/' + username + '/courses/' + id, { id: id, name: name });
+	};
+	
+	var deleteCourse = function deleteCourse(username, id) {
+	  return _axios2.default.delete(baseURL + '/users/' + username + '/courses/' + id);
+	};
+	
+	// QUIZZES
+	var getQuizzes = function getQuizzes(username, courseId) {
+	  return _axios2.default.get(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes');
+	};
+	
+	var createQuiz = function createQuiz(username, courseId, id, title) {
+	  return _axios2.default.post(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes', { id: id, title: title });
+	};
+	
+	var editQuiz = function editQuiz(username, courseId, id, title) {
+	  return _axios2.default.put(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + id, { id: id, title: title });
+	};
+	
+	var deleteQuiz = function deleteQuiz(username, courseId, id) {
+	  return _axios2.default.delete(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + id);
+	};
+	
+	// QUESTIONS
+	var getAllQuestions = function getAllQuestions(username, courseId, quizId) {
+	  return _axios2.default.get(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/questions');
+	};
+	
+	var getQuestion = function getQuestion(username, courseId, quizId, id) {
+	  return _axios2.default.get(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/questions/' + id);
+	};
+	
+	var createQuestion = function createQuestion(username, courseId, quizId, id, text, solution) {
+	  return _axios2.default.post(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/questions', { id: id, text: text, solution: solution });
+	};
+	
+	var editQuestion = function editQuestion(username, courseId, quizId, id, text, solution) {
+	  return _axios2.default.put(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/questions/' + id, { id: id, text: text, solution: solution });
+	};
+	
+	var deleteQuestion = function deleteQuestion(username, courseId, quizId, id) {
+	  return _axios2.default.delete(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/questions/' + id);
+	};
+	
+	exports.default = {
+	  createUser: createUser,
+	  getUser: getUser,
+	  getCourses: getCourses,
+	  createCourse: createCourse,
+	  editCourse: editCourse,
+	  deleteCourse: deleteCourse,
+	  getQuizzes: getQuizzes,
+	  createQuiz: createQuiz,
+	  editQuiz: editQuiz,
+	  deleteQuiz: deleteQuiz,
+	  getAllQuestions: getAllQuestions,
+	  getQuestion: getQuestion,
+	  createQuestion: createQuestion,
+	  editQuestion: editQuestion,
+	  deleteQuestion: deleteQuestion
+	};
+
+/***/ }),
+/* 748 */
+/*!*************************************************!*\
+  !*** ./src/main/js/src/Components/Workspace.js ***!
+  \*************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
+	
+	var _WorkspaceStyles = __webpack_require__(/*! ./Styles/WorkspaceStyles */ 749);
+	
+	var _WorkspaceStyles2 = _interopRequireDefault(_WorkspaceStyles);
+	
+	var _ExerciseQuestions = __webpack_require__(/*! ./Exercises/ExerciseQuestions */ 750);
+	
+	var _ExerciseQuestions2 = _interopRequireDefault(_ExerciseQuestions);
+	
+	var _NavigationBar = __webpack_require__(/*! ./Common/NavigationBar */ 716);
+	
+	var _NavigationBar2 = _interopRequireDefault(_NavigationBar);
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 182);
+	
+	var _CoursesActions = __webpack_require__(/*! ../Redux/CoursesActions */ 757);
+	
+	var _FormTemplate = __webpack_require__(/*! ./Forms/FormTemplate */ 758);
+	
+	var _FormTemplate2 = _interopRequireDefault(_FormTemplate);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	// import CourseList from '../Fixtures/Courses.json'
+	
+	
+	var CourseList = [{
+	  id: 'sdf',
+	  name: 'a name',
+	  quizzes: [{
+	    id: 'se',
+	    title: 'a quiz',
+	    questions: [{
+	      id: 'eds',
+	      text: 'a question',
+	      solution: 'a solution'
+	    }]
+	  }]
+	}];
+	
+	var Workspace = function (_Component) {
+	  _inherits(Workspace, _Component);
+	
+	  function Workspace(props) {
+	    _classCallCheck(this, Workspace);
+	
+	    var _this = _possibleConstructorReturn(this, (Workspace.__proto__ || Object.getPrototypeOf(Workspace)).call(this, props));
+	
+	    _this.state = {
+	      activeModal: null
+	    };
+	    _this.modal = { title: '', placeholder: '', value: '' };
+	    return _this;
+	  }
+	
+	  _createClass(Workspace, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      this.props.getAllCourses(this.props.username);
+	    }
+	  }, {
+	    key: '_close',
+	    value: function _close() {
+	      this.setState({ activeModal: null });
+	    }
+	  }, {
+	    key: '_open',
+	    value: function _open(title, placeholder, value) {
+	      this.setState({ activeModal: true });
+	      this.modal = { title: title, placeholder: placeholder, value: value };
+	    }
+	  }, {
+	    key: '_delete',
+	    value: function _delete(item) {
+	      window.confirm('Are you sure you want to delete: ' + item.title);
+	    }
+	  }, {
+	    key: '_selectCourse',
+	    value: function _selectCourse(course) {
+	      this.props.selectCourse(course);
+	      if (this.props.selectedCourse) {
+	        this.props.getAllQuizzes(this.props.username, this.props.selectedCourse.id);
+	      }
+	    }
+	  }, {
+	    key: '_selectQuiz',
+	    value: function _selectQuiz(quiz) {
+	      this.props.selectQuiz(quiz);
+	      if (this.props.selectedQuiz && this.props.selectedCourse) {
+	        this.props.getAllQuestions(this.props.username, this.props.selectedCourse.id, this.props.selectedQuiz.id);
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      console.log(this.props);
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_NavigationBar2.default, null),
+	        _react2.default.createElement(
+	          _reactBootstrap.Grid,
+	          { style: { width: '100vw', margin: 0 } },
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            { className: 'show-grid' },
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { md: 2, style: _WorkspaceStyles2.default.bar },
+	              _react2.default.createElement(
+	                'h3',
+	                { style: _WorkspaceStyles2.default.heading },
+	                'Courses'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { style: _WorkspaceStyles2.default.buttons },
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  { bsStyle: 'danger', onClick: function onClick() {
+	                      return _this2._delete(_this2.props.selectedCourse);
+	                    } },
+	                  'Delete'
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  { bsStyle: 'warning', onClick: function onClick() {
+	                      return _this2._open('Course Edit Form', 'Course Name', _this2.props.selectCourse.name);
+	                    } },
+	                  'Edit'
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  { bsStyle: 'success', onClick: function onClick() {
+	                      return _this2._open('Course Add Form', 'Course Name', '');
+	                    } },
+	                  ' Add '
+	                )
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.ListGroup,
+	                null,
+	                this.props.courses.map(function (course) {
+	                  return _react2.default.createElement(
+	                    _reactBootstrap.ListGroupItem,
+	                    { style: _WorkspaceStyles2.default.item, key: course.id, onClick: function onClick() {
+	                        return _this2._selectCourse(course);
+	                      }, active: _this2.props.selectedCourse === course },
+	                    course.name
+	                  );
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { md: 2, style: _WorkspaceStyles2.default.bar },
+	              _react2.default.createElement(
+	                'h3',
+	                { style: _WorkspaceStyles2.default.heading },
+	                'Quizzes'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { style: _WorkspaceStyles2.default.buttons },
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  { bsStyle: 'danger', onClick: function onClick() {
+	                      return _this2._delete(_this2.props.selectedQuiz);
+	                    } },
+	                  'Delete'
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  { bsStyle: 'warning', onClick: function onClick() {
+	                      return _this2._open('Quiz Edit Form', 'Quiz Name', _this2.props.selectedQuiz.title);
+	                    } },
+	                  'Edit'
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  { bsStyle: 'success', onClick: function onClick() {
+	                      return _this2._open('Quiz Add Form', 'Quiz Name', '');
+	                    } },
+	                  ' Add '
+	                )
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.ListGroup,
+	                null,
+	                this.props.quizzes.map(function (quiz) {
+	                  return _react2.default.createElement(
+	                    _reactBootstrap.ListGroupItem,
+	                    { style: _WorkspaceStyles2.default.item, key: quiz.id, onClick: function onClick() {
+	                        return _this2._selectQuiz(quiz);
+	                      }, active: _this2.props.selectedQuiz === quiz },
+	                    quiz.title
+	                  );
+	                })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { md: 8 },
+	              _react2.default.createElement(_ExerciseQuestions2.default, { questions: this.props.questions })
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(_FormTemplate2.default, {
+	          close: this._close.bind(this),
+	          showModal: this.state.activeModal,
+	          title: this.modal.title,
+	          placeholder: this.modal.placeholder,
+	          value: this.modal.value
+	        })
+	      );
+	    }
+	  }]);
+	
+	  return Workspace;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(_ref) {
+	  var data = _ref.data,
+	      auth = _ref.auth;
+	
+	  return {
+	    username: auth.username,
+	    courses: data.courses,
+	    quizzes: data.quizzes,
+	    questions: data.questions,
+	    selectedCourse: data.selectedCourse,
+	    selectedQuiz: data.selectedQuiz
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    getAllCourses: function getAllCourses(username) {
+	      return dispatch((0, _CoursesActions.getAllCourses)(username));
+	    },
+	    getAllQuizzes: function getAllQuizzes(username, courseId) {
+	      return dispatch((0, _CoursesActions.getAllQuizzes)(username, courseId));
+	    },
+	    getAllQuestions: function getAllQuestions(username, courseId, quizId) {
+	      return dispatch((0, _CoursesActions.getAllQuestions)(username, courseId, quizId));
+	    },
+	    selectCourse: function selectCourse(course) {
+	      return dispatch((0, _CoursesActions.selectCourse)(course));
+	    },
+	    selectQuiz: function selectQuiz(quiz) {
+	      return dispatch((0, _CoursesActions.selectQuiz)(quiz));
+	    }
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Workspace);
+
+/***/ }),
+/* 749 */
+/*!**************************************************************!*\
+  !*** ./src/main/js/src/Components/Styles/WorkspaceStyles.js ***!
+  \**************************************************************/
+/***/ (function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var styles = {
+	  item: {
+	    paddingTop: 20,
+	    paddingBottom: 20,
+	    borderWidth: 0
+	  },
+	  heading: {
+	    marginBottom: 5
+	  },
+	  buttons: {
+	    float: 'right',
+	    marginBottom: 10
+	  },
+	  bar: {
+	    backgroundColor: '#f8f8f8',
+	    height: '100vh'
+	  }
+	};
+	
+	exports.default = styles;
+
+/***/ }),
+/* 750 */
+/*!*******************************************************************!*\
+  !*** ./src/main/js/src/Components/Exercises/ExerciseQuestions.js ***!
+  \*******************************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
+	
+	var _ExerciseStyles = __webpack_require__(/*! ../Styles/ExerciseStyles */ 751);
+	
+	var _ExerciseStyles2 = _interopRequireDefault(_ExerciseStyles);
+	
+	var _Forms = __webpack_require__(/*! ../Forms */ 752);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var header = function header(question, number, onClick) {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'h4',
+	      { style: { display: 'inline' } },
+	      'Question ',
+	      number
+	    ),
+	    _react2.default.createElement(
+	      _reactBootstrap.Button,
+	      { bsStyle: 'danger', style: { display: 'inline-block', float: 'right' }, onClick: function onClick() {
+	          return window.alert('Do you want to delete ' + question.text);
+	        } },
+	      'Delete'
+	    ),
+	    _react2.default.createElement(
+	      _reactBootstrap.Button,
+	      { bsStyle: 'warning', style: { display: 'inline-block', float: 'right' }, onClick: onClick },
+	      'Edit'
+	    )
+	  );
+	};
+	
+	var ExerciseQuestions = function (_Component) {
+	  _inherits(ExerciseQuestions, _Component);
+	
+	  function ExerciseQuestions(props) {
+	    _classCallCheck(this, ExerciseQuestions);
+	
+	    var _this = _possibleConstructorReturn(this, (ExerciseQuestions.__proto__ || Object.getPrototypeOf(ExerciseQuestions)).call(this, props));
+	
+	    _this.state = {
+	      activeModal: null,
+	      question: { text: null, solution: null }
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(ExerciseQuestions, [{
+	    key: 'close',
+	    value: function close() {
+	      this.setState({ activeModal: null });
+	    }
+	  }, {
+	    key: 'open',
+	    value: function open(modal, item) {
+	      this.setState({ activeModal: modal, question: item });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Button,
+	          { bsStyle: 'success', style: _ExerciseStyles2.default.addButton, onClick: function onClick() {
+	              return _this2.open('QuestionAddForm');
+	            } },
+	          'Add Question'
+	        ),
+	        this.props.questions.map(function (question, index) {
+	          return _react2.default.createElement(
+	            _reactBootstrap.Panel,
+	            {
+	              key: question.id,
+	              style: _ExerciseStyles2.default.box,
+	              header: header(question, index + 1, function () {
+	                return _this2.open('QuestionEditForm', question);
+	              }),
+	              bsStyle: 'warning' },
+	            _react2.default.createElement(
+	              'label',
+	              { style: _ExerciseStyles2.default.label },
+	              question.text
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              question.solution
+	            )
+	          );
+	        }),
+	        _react2.default.createElement(_Forms.QuestionAddForm, { close: this.close.bind(this), showModal: this.state.activeModal === 'QuestionAddForm' }),
+	        _react2.default.createElement(_Forms.QuestionEditForm, { close: this.close.bind(this), showModal: this.state.activeModal === 'QuestionEditForm', value: this.state.question })
+	      );
+	    }
+	  }]);
+	
+	  return ExerciseQuestions;
+	}(_react.Component);
+	
+	exports.default = ExerciseQuestions;
+
+/***/ }),
+/* 751 */
+/*!*************************************************************!*\
+  !*** ./src/main/js/src/Components/Styles/ExerciseStyles.js ***!
+  \*************************************************************/
+/***/ (function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var styles = {
+	  form: {
+	    marginLeft: 30
+	  },
+	  box: {
+	    margin: 30,
+	    width: '80%'
+	  },
+	  label: {
+	    fontSize: 16
+	  },
+	  input: {
+	    borderRadius: 5,
+	    padding: 10,
+	    display: 'inline',
+	    borderWidth: 1,
+	    borderColor: '#ccc',
+	    borderStyle: 'solid',
+	    width: '70%'
+	  },
+	  addButton: {
+	    float: 'right'
+	  },
+	  tex: {
+	    display: 'inline',
+	    marginLeft: 20
+	  },
+	  button: {
+	    margin: 10,
+	    paddingLeft: 30,
+	    paddingRight: 30,
+	    paddingTop: 15,
+	    paddingBottom: 15,
+	    fontSize: 16
+	  },
+	  result: {
+	    fontSize: 18,
+	    textAlign: 'right',
+	    marginRight: 50
+	  }
+	};
+	
+	exports.default = styles;
+
+/***/ }),
+/* 752 */
+/*!***************************************************!*\
+  !*** ./src/main/js/src/Components/Forms/index.js ***!
+  \***************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _QuestionAddForm = __webpack_require__(/*! ./QuestionAddForm */ 753);
+	
+	Object.keys(_QuestionAddForm).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
+	    enumerable: true,
+	    get: function get() {
+	      return _QuestionAddForm[key];
+	    }
+	  });
+	});
+	
+	var _QuestionEditForm = __webpack_require__(/*! ./QuestionEditForm */ 756);
+	
+	Object.keys(_QuestionEditForm).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
+	    enumerable: true,
+	    get: function get() {
+	      return _QuestionEditForm[key];
+	    }
+	  });
+	});
+
+/***/ }),
+/* 753 */
+/*!*************************************************************!*\
+  !*** ./src/main/js/src/Components/Forms/QuestionAddForm.js ***!
+  \*************************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.QuestionAddForm = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
+	
+	var _FormModal = __webpack_require__(/*! ./FormModal */ 754);
+	
+	var _FormModal2 = _interopRequireDefault(_FormModal);
+	
+	var _FormModalStyles = __webpack_require__(/*! ../Styles/FormModalStyles */ 755);
+	
+	var _FormModalStyles2 = _interopRequireDefault(_FormModalStyles);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var QuestionAddForm = function (_Component) {
+	  _inherits(QuestionAddForm, _Component);
+	
+	  function QuestionAddForm(props) {
+	    _classCallCheck(this, QuestionAddForm);
+	
+	    var _this = _possibleConstructorReturn(this, (QuestionAddForm.__proto__ || Object.getPrototypeOf(QuestionAddForm)).call(this, props));
+	
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    _this.handleReset = _this.handleReset.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(QuestionAddForm, [{
+	    key: 'handleSubmit',
+	    value: function handleSubmit(event) {
+	      alert('A question was submitted: ' + this.question.value + ' and answer: ' + this.answer.value);
+	      this.props.close();
+	      event.preventDefault();
+	    }
+	  }, {
+	    key: 'handleReset',
+	    value: function handleReset() {
+	      this.question.value = '';
+	      this.answer.value = '';
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      return _react2.default.createElement(
+	        _FormModal2.default,
+	        {
+	          showModal: this.props.showModal,
+	          close: this.props.close,
+	          title: 'Add Question',
+	          handleSubmit: this.handleSubmit,
+	          reset: this.handleReset
+	        },
+	        _react2.default.createElement(
+	          'form',
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.FormGroup,
+	            { controlId: 'question' },
+	            _react2.default.createElement(
+	              _reactBootstrap.ControlLabel,
+	              null,
+	              'Question:'
+	            ),
+	            _react2.default.createElement('input', { style: _FormModalStyles2.default.input, placeholder: 'Enter question', type: 'text', ref: function ref(input) {
+	                return _this2.question = input;
+	              } })
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.FormGroup,
+	            { controlId: 'answer' },
+	            _react2.default.createElement(
+	              _reactBootstrap.ControlLabel,
+	              null,
+	              'Answer:'
+	            ),
+	            _react2.default.createElement('input', { style: _FormModalStyles2.default.input, placeholder: 'Enter answer', type: 'text', ref: function ref(input) {
+	                return _this2.answer = input;
+	              } })
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return QuestionAddForm;
+	}(_react.Component);
+	
+	exports.QuestionAddForm = QuestionAddForm;
+
+/***/ }),
+/* 754 */
+/*!*******************************************************!*\
+  !*** ./src/main/js/src/Components/Forms/FormModal.js ***!
+  \*******************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var FormModal = function (_Component) {
+	  _inherits(FormModal, _Component);
+	
+	  function FormModal() {
+	    _classCallCheck(this, FormModal);
+	
+	    return _possibleConstructorReturn(this, (FormModal.__proto__ || Object.getPrototypeOf(FormModal)).apply(this, arguments));
+	  }
+	
+	  _createClass(FormModal, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _reactBootstrap.Modal,
+	        { show: this.props.showModal, onHide: this.props.close },
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Header,
+	          { closeButton: true },
+	          _react2.default.createElement(
+	            _reactBootstrap.Modal.Title,
+	            null,
+	            this.props.title
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Body,
+	          null,
+	          this.props.children
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Footer,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Button,
+	            { onClick: this.props.reset },
+	            'Reset'
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Button,
+	            { onClick: this.props.handleSubmit },
+	            'Submit'
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Button,
+	            { onClick: this.props.close },
+	            'Close'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return FormModal;
+	}(_react.Component);
+	
+	exports.default = FormModal;
+
+/***/ }),
+/* 755 */
+/*!**************************************************************!*\
+  !*** ./src/main/js/src/Components/Styles/FormModalStyles.js ***!
+  \**************************************************************/
+/***/ (function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var styles = {
+	  input: {
+	    borderRadius: 5,
+	    padding: 10,
+	    display: 'block',
+	    borderWidth: 1,
+	    borderColor: '#ccc',
+	    borderStyle: 'solid',
+	    width: '80%'
+	  }
+	};
+	
+	exports.default = styles;
+
+/***/ }),
+/* 756 */
+/*!**************************************************************!*\
+  !*** ./src/main/js/src/Components/Forms/QuestionEditForm.js ***!
+  \**************************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.QuestionEditForm = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
+	
+	var _FormModal = __webpack_require__(/*! ./FormModal */ 754);
+	
+	var _FormModal2 = _interopRequireDefault(_FormModal);
+	
+	var _FormModalStyles = __webpack_require__(/*! ../Styles/FormModalStyles */ 755);
+	
+	var _FormModalStyles2 = _interopRequireDefault(_FormModalStyles);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var QuestionEditForm = function (_Component) {
+	  _inherits(QuestionEditForm, _Component);
+	
+	  function QuestionEditForm(props) {
+	    _classCallCheck(this, QuestionEditForm);
+	
+	    var _this = _possibleConstructorReturn(this, (QuestionEditForm.__proto__ || Object.getPrototypeOf(QuestionEditForm)).call(this, props));
+	
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    _this.handleReset = _this.handleReset.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(QuestionEditForm, [{
+	    key: 'handleSubmit',
+	    value: function handleSubmit(event) {
+	      alert('A quiz was editted: ' + this.text.value + 'and solution ' + this.solution.value);
+	      this.props.close();
+	      event.preventDefault();
+	    }
+	  }, {
+	    key: 'handleReset',
+	    value: function handleReset() {
+	      this.text.value = '';
+	      this.solution.value = '';
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      return _react2.default.createElement(
+	        _FormModal2.default,
+	        {
+	          showModal: this.props.showModal,
+	          close: this.props.close,
+	          title: 'Edit selected question',
+	          handleSubmit: this.handleSubmit,
+	          reset: this.handleReset
+	        },
+	        _react2.default.createElement(
+	          'form',
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.FormGroup,
+	            { controlId: 'question' },
+	            _react2.default.createElement(
+	              _reactBootstrap.ControlLabel,
+	              null,
+	              'Question:'
+	            ),
+	            _react2.default.createElement('input', { style: _FormModalStyles2.default.input, placeholder: 'Enter question', type: 'text', defaultValue: this.props.value.text, ref: function ref(input) {
+	                return _this2.text = input;
+	              } })
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.FormGroup,
+	            { controlId: 'answer' },
+	            _react2.default.createElement(
+	              _reactBootstrap.ControlLabel,
+	              null,
+	              'Answer:'
+	            ),
+	            _react2.default.createElement('input', { style: _FormModalStyles2.default.input, placeholder: 'Enter solution', type: 'text', defaultValue: this.props.value.solution, ref: function ref(input) {
+	                return _this2.solution = input;
+	              } })
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return QuestionEditForm;
+	}(_react.Component);
+	
+	exports.QuestionEditForm = QuestionEditForm;
+
+/***/ }),
 /* 757 */
+/*!*************************************************!*\
+  !*** ./src/main/js/src/Redux/CoursesActions.js ***!
+  \*************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.getAllQuestions = exports.selectQuiz = exports.getAllQuizzes = exports.selectCourse = exports.getAllCourses = undefined;
+	
+	var _api = __webpack_require__(/*! ../Services/api */ 747);
+	
+	var _api2 = _interopRequireDefault(_api);
+	
+	var _Types = __webpack_require__(/*! ./Types */ 423);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var getAllCourses = exports.getAllCourses = function getAllCourses(username) {
+	  return function (dispatch) {
+	    _api2.default.getCourses(username).then(function (res) {
+	      if (res.data) {
+	        dispatch({ type: _Types.GET_ALL_COURSES, payload: res.data });
+	        dispatch({ type: _Types.SELECT_COURSE, payload: res.data[0] });
+	      }
+	    }).catch(function (err) {
+	      return dispatch(requestFailed());
+	    });
+	  };
+	};
+	
+	var selectCourse = exports.selectCourse = function selectCourse(course) {
+	  return {
+	    type: _Types.SELECT_COURSE,
+	    payload: course
+	  };
+	};
+	
+	var getAllQuizzes = exports.getAllQuizzes = function getAllQuizzes(username, courseId) {
+	  return function (dispatch) {
+	    _api2.default.getQuizzes(username, courseId).then(function (res) {
+	      if (res.data) {
+	        dispatch({ type: _Types.GET_ALL_QUIZZES, payload: res.data });
+	        dispatch(selectQuiz(res.data[0]));
+	      }
+	    }).catch(function (err) {
+	      return dispatch(requestFailed());
+	    });
+	  };
+	};
+	
+	var selectQuiz = exports.selectQuiz = function selectQuiz(quiz) {
+	  return {
+	    type: _Types.SELECT_QUIZ,
+	    payload: quiz
+	  };
+	};
+	
+	var getAllQuestions = exports.getAllQuestions = function getAllQuestions(username, courseId, quizId) {
+	  return function (dispatch) {
+	    _api2.default.getAllQuestions(username, courseId, quizId).then(function (res) {
+	      if (res.data) {
+	        dispatch({ type: _Types.GET_ALL_QUESTIONS, payload: res.data });
+	      }
+	    }).catch(function (err) {
+	      return dispatch(requestFailed());
+	    });
+	  };
+	};
+	
+	var requestFailed = function requestFailed() {
+	  type: _Types.REQUEST_FAIL;
+	};
+
+/***/ }),
+/* 758 */
 /*!**********************************************************!*\
   !*** ./src/main/js/src/Components/Forms/FormTemplate.js ***!
   \**********************************************************/
@@ -64051,11 +64232,11 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _FormModal = __webpack_require__(/*! ./FormModal */ 723);
+	var _FormModal = __webpack_require__(/*! ./FormModal */ 754);
 	
 	var _FormModal2 = _interopRequireDefault(_FormModal);
 	
-	var _FormModalStyles = __webpack_require__(/*! ../Styles/FormModalStyles */ 724);
+	var _FormModalStyles = __webpack_require__(/*! ../Styles/FormModalStyles */ 755);
 	
 	var _FormModalStyles2 = _interopRequireDefault(_FormModalStyles);
 	
@@ -64132,7 +64313,7 @@
 	exports.default = FormTemplate;
 
 /***/ }),
-/* 758 */
+/* 759 */
 /*!**************************************************************!*\
   !*** ./src/main/js/src/Components/Exercises/ExerciseForm.js ***!
   \**************************************************************/
@@ -64154,7 +64335,7 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _ExerciseStyles = __webpack_require__(/*! ../Styles/ExerciseStyles */ 720);
+	var _ExerciseStyles = __webpack_require__(/*! ../Styles/ExerciseStyles */ 751);
 	
 	var _ExerciseStyles2 = _interopRequireDefault(_ExerciseStyles);
 	
@@ -64162,7 +64343,7 @@
 	
 	var _reactFormulaBeautifier2 = _interopRequireDefault(_reactFormulaBeautifier);
 	
-	var _Error = __webpack_require__(/*! ../Common/Error */ 759);
+	var _Error = __webpack_require__(/*! ../Common/Error */ 760);
 	
 	var _Error2 = _interopRequireDefault(_Error);
 	
@@ -64365,7 +64546,7 @@
 	})(ExerciseForm);
 
 /***/ }),
-/* 759 */
+/* 760 */
 /*!****************************************************!*\
   !*** ./src/main/js/src/Components/Common/Error.js ***!
   \****************************************************/
@@ -64421,7 +64602,7 @@
 	exports.default = Error;
 
 /***/ }),
-/* 760 */
+/* 761 */
 /*!******************************************************!*\
   !*** ./src/main/js/src/Components/Auth/LoginForm.js ***!
   \******************************************************/
@@ -64445,11 +64626,17 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 182);
 	
-	var _Actions = __webpack_require__(/*! ../../Redux/Actions */ 761);
+	var _reactRouter = __webpack_require__(/*! react-router */ 436);
+	
+	var _Actions = __webpack_require__(/*! ../../Redux/Actions */ 717);
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 762);
+	var _Alert = __webpack_require__(/*! ../Common/Alert */ 762);
+	
+	var _Alert2 = _interopRequireDefault(_Alert);
+	
+	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 763);
 	
 	var _AuthStyles2 = _interopRequireDefault(_AuthStyles);
 	
@@ -64480,7 +64667,6 @@
 	    key: 'handleSubmit',
 	    value: function handleSubmit(event) {
 	      this.props.loginUser(this.state.username);
-	      window.alert('username: ' + this.state.username + ' password: ' + this.state.password);
 	      event.preventDefault();
 	    }
 	  }, {
@@ -64488,10 +64674,16 @@
 	    value: function render() {
 	      var _this2 = this;
 	
+	      if (this.props.username) {
+	        window.alert('Logged in!');
+	        return _react2.default.createElement(_reactRouter.Redirect, { to: '/workspace' });
+	      }
+	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement(_NavigationBar2.default, null),
+	        this.props.error && _react2.default.createElement(_Alert2.default, { style: { width: '60%', margin: 50 }, bsStyle: 'danger', message: this.props.error }),
 	        _react2.default.createElement(
 	          _reactBootstrap.Jumbotron,
 	          { style: _AuthStyles2.default.jumbotron },
@@ -64527,7 +64719,8 @@
 	  var auth = _ref.auth;
 	
 	  return {
-	    username: auth.username
+	    username: auth.username,
+	    error: auth.error
 	  };
 	};
 	
@@ -64542,10 +64735,10 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LoginForm);
 
 /***/ }),
-/* 761 */
-/*!******************************************!*\
-  !*** ./src/main/js/src/Redux/Actions.js ***!
-  \******************************************/
+/* 762 */
+/*!****************************************************!*\
+  !*** ./src/main/js/src/Components/Common/Alert.js ***!
+  \****************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64553,81 +64746,59 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.logoutUser = exports.signupUserFail = exports.loginUserFail = exports.loginUserSuccess = exports.loginUser = exports.signupUser = undefined;
 	
-	var _Types = __webpack_require__(/*! ./Types */ 423);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _axios = __webpack_require__(/*! axios */ 728);
+	var _react = __webpack_require__(/*! react */ 1);
 	
-	var _axios2 = _interopRequireDefault(_axios);
+	var _react2 = _interopRequireDefault(_react);
 	
-	var _api = __webpack_require__(/*! ../Services/api */ 727);
-	
-	var _api2 = _interopRequireDefault(_api);
+	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var signupUser = exports.signupUser = function signupUser(username, password, firstName, lastName, email) {
-	  return function (dispatch) {
-	    console.log('sending sign up req...');
-	    _api2.default.createUser(username, password, firstName, lastName, email).then(function (res) {
-	      if (res.status === 200) {
-	        dispatch(loginUserSuccess(username));
-	      } else {
-	        dispatch(signupUserFail());
-	      }
-	    }).catch(function (err) {
-	      console.log(err);
-	      dispatch(signupUserFail());
-	    });
-	  };
-	};
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var loginUser = exports.loginUser = function loginUser(username) {
-	  return function (dispatch) {
-	    console.log('sending login req...');
-	    _api2.default.getUser().then(function (res) {
-	      if (res) {
-	        dispatch(loginUserSuccess(username));
-	      } else {
-	        dispatch(loginUserFail());
-	      }
-	    }).catch(function (err) {
-	      dispatch(loginUserFail());
-	      console.log('Error: ', err);
-	    });
-	  };
-	};
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	var loginUserSuccess = exports.loginUserSuccess = function loginUserSuccess(username) {
-	  console.log('log in user success');
-	  return {
-	    type: _Types.LOGIN_USER_SUCCESS,
-	    payload: username
-	  };
-	};
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var loginUserFail = exports.loginUserFail = function loginUserFail() {
-	  return {
-	    type: _Types.LOGIN_USER_FAIL
-	  };
-	};
+	var AlertDismissable = function (_Component) {
+	  _inherits(AlertDismissable, _Component);
 	
-	var signupUserFail = exports.signupUserFail = function signupUserFail() {
-	  console.log('sign up fail');
-	  return {
-	    type: _Types.SIGNUP_USER_FAIL
-	  };
-	};
+	  function AlertDismissable() {
+	    _classCallCheck(this, AlertDismissable);
 	
-	var logoutUser = exports.logoutUser = function logoutUser() {
-	  return {
-	    type: LOGOUT_USER_SUCCESS
-	  };
-	};
+	    return _possibleConstructorReturn(this, (AlertDismissable.__proto__ || Object.getPrototypeOf(AlertDismissable)).apply(this, arguments));
+	  }
+	
+	  _createClass(AlertDismissable, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _reactBootstrap.Alert,
+	        { style: this.props.style, bsStyle: this.props.bsStyle },
+	        _react2.default.createElement(
+	          'h4',
+	          null,
+	          'Alert!'
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          this.props.message
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return AlertDismissable;
+	}(_react.Component);
+	
+	exports.default = AlertDismissable;
 
 /***/ }),
-/* 762 */
+/* 763 */
 /*!*********************************************************!*\
   !*** ./src/main/js/src/Components/Styles/AuthStyles.js ***!
   \*********************************************************/
@@ -64667,7 +64838,7 @@
 	exports.default = styles;
 
 /***/ }),
-/* 763 */
+/* 764 */
 /*!*******************************************************!*\
   !*** ./src/main/js/src/Components/Auth/SignupForm.js ***!
   \*******************************************************/
@@ -64691,13 +64862,19 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 182);
 	
-	var _Actions = __webpack_require__(/*! ../../Redux/Actions */ 761);
+	var _reactRouter = __webpack_require__(/*! react-router */ 436);
+	
+	var _Actions = __webpack_require__(/*! ../../Redux/Actions */ 717);
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 762);
+	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 763);
 	
 	var _AuthStyles2 = _interopRequireDefault(_AuthStyles);
+	
+	var _Alert = __webpack_require__(/*! ../Common/Alert */ 762);
+	
+	var _Alert2 = _interopRequireDefault(_Alert);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -64729,7 +64906,6 @@
 	    key: 'handleSubmit',
 	    value: function handleSubmit(event) {
 	      this.props.signupUser(this.state.username, this.state.password, this.state.firstName, this.state.lastName, this.state.email);
-	      window.alert('username: ' + this.state.username + ' password: ' + this.state.password);
 	      event.preventDefault();
 	    }
 	  }, {
@@ -64737,10 +64913,15 @@
 	    value: function render() {
 	      var _this2 = this;
 	
+	      if (this.props.username) {
+	        window.alert('Signed up!');
+	        return _react2.default.createElement(_reactRouter.Redirect, { to: '/workspace' });
+	      }
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement(_NavigationBar2.default, null),
+	        this.props.error && _react2.default.createElement(_Alert2.default, { style: { width: '60%', margin: 50 }, bsStyle: 'danger', message: this.props.error }),
 	        _react2.default.createElement(
 	          _reactBootstrap.Jumbotron,
 	          { style: _AuthStyles2.default.jumbotron },
@@ -64785,7 +64966,8 @@
 	  var auth = _ref.auth;
 	
 	  return {
-	    username: auth.username
+	    username: auth.username,
+	    error: auth.error
 	  };
 	};
 	

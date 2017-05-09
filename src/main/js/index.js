@@ -22,6 +22,15 @@ const reducer = combineReducers({
 const store =
   (window.devToolsExtension ? window.devToolsExtension()(createStore) : createStore)(reducer, {}, applyMiddleware(thunk))
 
+// const requireAuth = (nextState, replace) => {
+//   if () {
+//     replace({
+//       pathname: '/login',
+//       state: { nextPathname: nextState.location.pathname }
+//     })
+//   }
+// }
+
 ReactDOM.render(
   <Provider store={store}>
     <Router>

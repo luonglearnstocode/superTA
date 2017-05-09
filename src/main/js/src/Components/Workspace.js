@@ -26,8 +26,6 @@ class Workspace extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      course: CourseList[0],
-      quiz: CourseList[0].quizzes[0],
       activeModal: null
     }
     this.modal = { title: '', placeholder: '', value: ''}
@@ -50,6 +48,20 @@ class Workspace extends Component {
     window.confirm('Are you sure you want to delete: ' + item.title)
   }
 
+  _selectCourse(course) {
+    this.props.selectCourse(course)
+    if (this.props.selectedCourse) {
+      this.props.getAllQuizzes(this.props.username, this.props.selectedCourse.id)
+    }
+  }
+
+  _selectQuiz(quiz) {
+    this.props.selectQuiz(quiz)
+    if (this.props.selectedQuiz && this.props.selectedCourse) {
+      this.props.getAllQuestions(this.props.username, this.props.selectedCourse.id, this.props.selectedQuiz.id)
+    }
+  }
+
   render() {
     console.log(this.props)
     return (
@@ -60,27 +72,27 @@ class Workspace extends Component {
             <Col md={2} style={styles.bar}>
               <h3 style={styles.heading} >Courses</h3>
               <div style={styles.buttons}>
-                <Button bsStyle="danger" onClick={() => this._delete(this.state.course)}>Delete</Button>
-                <Button bsStyle="warning" onClick={() => this._open('Course Edit Form', 'Course Name', this.state.course.name)}>Edit</Button>
+                <Button bsStyle="danger" onClick={() => this._delete(this.props.selectedCourse)}>Delete</Button>
+                <Button bsStyle="warning" onClick={() => this._open('Course Edit Form', 'Course Name', this.props.selectCourse.name)}>Edit</Button>
                 <Button bsStyle="success" onClick={() => this._open('Course Add Form', 'Course Name', '')}> Add </Button>
               </div>
               <ListGroup>
-                {CourseList.map((course) => <ListGroupItem style={styles.item} key={course.id} onClick={() => this.setState({ course })} active={this.state.course === course}>{course.name}</ListGroupItem> )}
+                {this.props.courses.map((course) => <ListGroupItem style={styles.item} key={course.id} onClick={() => this._selectCourse(course)} active={this.props.selectedCourse === course}>{course.name}</ListGroupItem> )}
               </ListGroup>
             </Col>
             <Col md={2} style={styles.bar}>
               <h3 style={styles.heading} >Quizzes</h3>
               <div style={styles.buttons}>
-                <Button bsStyle="danger" onClick={() => this._delete(this.state.quiz)}>Delete</Button>
-                <Button bsStyle="warning" onClick={() => this._open('Quiz Edit Form', 'Quiz Name', this.state.quiz.title)}>Edit</Button>
+                <Button bsStyle="danger" onClick={() => this._delete(this.props.selectedQuiz)}>Delete</Button>
+                <Button bsStyle="warning" onClick={() => this._open('Quiz Edit Form', 'Quiz Name', this.props.selectedQuiz.title)}>Edit</Button>
                 <Button bsStyle="success" onClick={() => this._open('Quiz Add Form', 'Quiz Name', '')}> Add </Button>
               </div>
               <ListGroup>
-                {this.state.course.quizzes.map((quiz) => <ListGroupItem style={styles.item} key={quiz.id} onClick={() => this.setState({ quiz })} active={this.state.quiz === quiz}>{quiz.title}</ListGroupItem> )}
+                {this.props.quizzes.map((quiz) => <ListGroupItem style={styles.item} key={quiz.id} onClick={() => this._selectQuiz(quiz)} active={this.props.selectedQuiz === quiz}>{quiz.title}</ListGroupItem> )}
               </ListGroup>
             </Col>
             <Col md={8}>
-              <ExerciseQuestions questions={this.state.quiz.questions}/>
+              <ExerciseQuestions questions={this.props.questions}/>
             </Col>
           </Row>
         </Grid>

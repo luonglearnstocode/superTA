@@ -3,6 +3,7 @@ import {
   LOGIN_USER_FAIL,
   LOGIN_USER_SUCCESS,
   LOGOUT_USER,
+  LOGOUT_USER_SUCCESS
 } from './Types';
 import axios from 'axios'
 import API from '../Services/api'
@@ -11,7 +12,8 @@ export const signupUser = (username, password, firstName, lastName, email) => {
   return (dispatch) => {
     console.log('sending sign up req...')
     API.createUser(username, password, firstName, lastName, email).then((res) => {
-      if(res.status === 200){
+      console.log(res)
+      if(res.status === 200 || res.status === 201){
         dispatch(loginUserSuccess(username))
       } else {
         dispatch(signupUserFail())
@@ -26,8 +28,9 @@ export const signupUser = (username, password, firstName, lastName, email) => {
 export const loginUser = (username) => {
   return (dispatch) => {
     console.log('sending login req...')
-    API.getUser().then((res) => {
-      if(res){
+    API.getUser(username).then((res) => {
+      console.log(res)
+      if(res.data){
         dispatch(loginUserSuccess(username))
       } else {
         dispatch(loginUserFail())
@@ -48,6 +51,7 @@ export const loginUserSuccess = (username) => {
 }
 
 export const loginUserFail = () => {
+  console.log('log in user fail')
   return {
     type: LOGIN_USER_FAIL
   }
@@ -62,6 +66,6 @@ export const signupUserFail = () => {
 
 export const logoutUser = () => {
   return {
-    type: LOGOUT_USER_SUCCESS,
+    type: LOGOUT_USER_SUCCESS
   }
 }
