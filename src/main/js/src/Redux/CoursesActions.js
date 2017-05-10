@@ -23,8 +23,10 @@ export const getAllCourses = (username) => {
 
 export const selectCourse = (username, course) => {
   return dispatch => {
-    dispatch({ type: SELECT_COURSE, payload: course})
-    dispatch(getAllQuizzes(username, course.id))
+    if (course) {
+      dispatch({ type: SELECT_COURSE, payload: course})
+      dispatch(getAllQuizzes(username, course.id))
+    }
   }
 }
 
@@ -41,8 +43,10 @@ export const getAllQuizzes = (username, courseId) => {
 
 export const selectQuiz = (quiz, username, courseId ) => {
   return dispatch => {
-    dispatch(getAllQuestions(username, courseId, quiz.id))
-    dispatch({ type: SELECT_QUIZ, payload: quiz })
+    if(quiz) {
+      dispatch(getAllQuestions(username, courseId, quiz.id))
+      dispatch({ type: SELECT_QUIZ, payload: quiz })
+    }
   }
 }
 

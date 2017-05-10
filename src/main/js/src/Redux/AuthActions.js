@@ -12,7 +12,6 @@ export const signupUser = (username, password, firstName, lastName, email) => {
   return (dispatch) => {
     console.log('sending sign up req...')
     API.createUser(username, password, firstName, lastName, email).then((res) => {
-      console.log(res)
       if(res.status === 200 || res.status === 201){
         dispatch(loginUserSuccess(username))
       } else {
@@ -29,7 +28,6 @@ export const loginUser = (username) => {
   return (dispatch) => {
     console.log('sending login req...')
     API.getUser(username).then((res) => {
-      console.log(res)
       if(res.data){
         dispatch(loginUserSuccess(username))
       } else {

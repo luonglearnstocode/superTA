@@ -59528,7 +59528,6 @@
 	  return function (dispatch) {
 	    console.log('sending sign up req...');
 	    _api2.default.createUser(username, password, firstName, lastName, email).then(function (res) {
-	      console.log(res);
 	      if (res.status === 200 || res.status === 201) {
 	        dispatch(loginUserSuccess(username));
 	      } else {
@@ -59545,7 +59544,6 @@
 	  return function (dispatch) {
 	    console.log('sending login req...');
 	    _api2.default.getUser(username).then(function (res) {
-	      console.log(res);
 	      if (res.data) {
 	        dispatch(loginUserSuccess(username));
 	      } else {
@@ -63389,7 +63387,6 @@
 	    value: function render() {
 	      var _this2 = this;
 	
-	      console.log(this.props);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -63415,7 +63412,7 @@
 	                _react2.default.createElement(
 	                  _reactBootstrap.ListGroup,
 	                  null,
-	                  this.props.courses.map(function (course) {
+	                  this.props.courses ? this.props.courses.map(function (course) {
 	                    return _react2.default.createElement(
 	                      _reactBootstrap.ListGroupItem,
 	                      { style: _WorkspaceStyles2.default.item, key: course.id, onClick: function onClick() {
@@ -63423,7 +63420,11 @@
 	                        }, active: _this2.props.selectedCourse === course },
 	                      course.name
 	                    );
-	                  })
+	                  }) : _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    ' None '
+	                  )
 	                )
 	              ),
 	              _react2.default.createElement(
@@ -63811,7 +63812,6 @@
 	  _createClass(GradesTab, [{
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props);
 	      return _react2.default.createElement(
 	        _reactBootstrap.Table,
 	        { striped: true, bordered: true, condensed: true, hover: true },
@@ -63923,8 +63923,10 @@
 	
 	var selectCourse = exports.selectCourse = function selectCourse(username, course) {
 	  return function (dispatch) {
-	    dispatch({ type: _Types.SELECT_COURSE, payload: course });
-	    dispatch(getAllQuizzes(username, course.id));
+	    if (course) {
+	      dispatch({ type: _Types.SELECT_COURSE, payload: course });
+	      dispatch(getAllQuizzes(username, course.id));
+	    }
 	  };
 	};
 	
@@ -63943,8 +63945,10 @@
 	
 	var selectQuiz = exports.selectQuiz = function selectQuiz(quiz, username, courseId) {
 	  return function (dispatch) {
-	    dispatch(getAllQuestions(username, courseId, quiz.id));
-	    dispatch({ type: _Types.SELECT_QUIZ, payload: quiz });
+	    if (quiz) {
+	      dispatch(getAllQuestions(username, courseId, quiz.id));
+	      dispatch({ type: _Types.SELECT_QUIZ, payload: quiz });
+	    }
 	  };
 	};
 	

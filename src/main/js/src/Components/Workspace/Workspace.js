@@ -44,7 +44,12 @@ class Workspace extends Component {
                   <div style={styles.buttons}>
                   </div>
                   <ListGroup>
-                    {this.props.courses.map((course) => <ListGroupItem style={styles.item} key={course.id} onClick={() => this._selectCourse(course)} active={this.props.selectedCourse === course}>{course.name}</ListGroupItem> )}
+                    {
+                      this.props.courses ?
+                        this.props.courses.map((course) => <ListGroupItem style={styles.item} key={course.id} onClick={() => this._selectCourse(course)} active={this.props.selectedCourse === course}>{course.name}</ListGroupItem> )
+                      :
+                        <p> None </p>
+                    }
                   </ListGroup>
                 </Col>
                 <Col md={2} style={styles.bar}>
