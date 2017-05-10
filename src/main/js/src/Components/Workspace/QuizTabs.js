@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Tabs, Tab } from 'react-bootstrap'
 import ExerciseQuestions from './ExerciseQuestions'
+import GradesTab from './GradesTab'
 
 class QuizTabs extends Component {
   render() {
@@ -13,7 +14,9 @@ class QuizTabs extends Component {
             <ExerciseQuestions questions={this.props.questions}/>
           </div>
         </Tab>
-        <Tab eventKey={2} onClick={() => console.log('grades clicked!')} title="Grades">Grades</Tab>
+        <Tab eventKey={2} title="Grades">
+          <GradesTab grades={this.props.grades} />
+        </Tab>
       </Tabs>
     )
   }

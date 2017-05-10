@@ -33,7 +33,7 @@ export default (state = INITIAL_STATE, action) => {
     case GET_ALL_QUESTIONS:
       return { ...state, questions: action.payload}
     case GET_GRADES:
-      return { ...state, grades: actions.payload}
+      return { ...state, grades: action.payload}
     case REQUEST_FAIL:
       return { ...state, error: 'request failed' }
     case LOGOUT_USER_SUCCESS:

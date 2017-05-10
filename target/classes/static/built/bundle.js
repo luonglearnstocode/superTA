@@ -85,15 +85,15 @@
 	
 	var _Workspace2 = _interopRequireDefault(_Workspace);
 	
-	var _ExerciseForm = __webpack_require__(/*! ./src/Components/Exercises/ExerciseForm */ 757);
+	var _ExerciseForm = __webpack_require__(/*! ./src/Components/Student/ExerciseForm */ 758);
 	
 	var _ExerciseForm2 = _interopRequireDefault(_ExerciseForm);
 	
-	var _LoginForm = __webpack_require__(/*! ./src/Components/Auth/LoginForm */ 759);
+	var _LoginForm = __webpack_require__(/*! ./src/Components/Auth/LoginForm */ 760);
 	
 	var _LoginForm2 = _interopRequireDefault(_LoginForm);
 	
-	var _SignupForm = __webpack_require__(/*! ./src/Components/Auth/SignupForm */ 762);
+	var _SignupForm = __webpack_require__(/*! ./src/Components/Auth/SignupForm */ 763);
 	
 	var _SignupForm2 = _interopRequireDefault(_SignupForm);
 	
@@ -35636,7 +35636,7 @@
 	    case _Types.GET_ALL_QUESTIONS:
 	      return _extends({}, state, { questions: action.payload });
 	    case _Types.GET_GRADES:
-	      return _extends({}, state, { grades: actions.payload });
+	      return _extends({}, state, { grades: action.payload });
 	    case _Types.REQUEST_FAIL:
 	      return _extends({}, state, { error: 'request failed' });
 	    case _Types.LOGOUT_USER_SUCCESS:
@@ -63232,18 +63232,6 @@
 	  return _axios2.default.get(baseURL + '/users/' + username + '/courses');
 	};
 	
-	var createCourse = function createCourse(username, id, name) {
-	  return _axios2.default.post(baseURL + '/users/' + username + '/courses', { id: id, name: name });
-	};
-	
-	var editCourse = function editCourse(username, id, name) {
-	  return _axios2.default.put(baseURL + '/users/' + username + '/courses/' + id, { id: id, name: name });
-	};
-	
-	var deleteCourse = function deleteCourse(username, id) {
-	  return _axios2.default.delete(baseURL + '/users/' + username + '/courses/' + id);
-	};
-	
 	// QUIZZES
 	var getQuizzes = function getQuizzes(username, courseId) {
 	  return _axios2.default.get(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes');
@@ -63251,14 +63239,6 @@
 	
 	var createQuiz = function createQuiz(username, courseId, id, title) {
 	  return _axios2.default.post(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes', { id: id, title: title });
-	};
-	
-	var editQuiz = function editQuiz(username, courseId, id, title) {
-	  return _axios2.default.put(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + id, { id: id, title: title });
-	};
-	
-	var deleteQuiz = function deleteQuiz(username, courseId, id) {
-	  return _axios2.default.delete(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + id);
 	};
 	
 	// QUESTIONS
@@ -63272,14 +63252,6 @@
 	
 	var createQuestion = function createQuestion(username, courseId, quizId, id, text, solution) {
 	  return _axios2.default.post(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/questions', { id: id, text: text, solution: solution });
-	};
-	
-	var editQuestion = function editQuestion(username, courseId, quizId, id, text, solution) {
-	  return _axios2.default.put(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/questions/' + id, { id: id, text: text, solution: solution });
-	};
-	
-	var deleteQuestion = function deleteQuestion(username, courseId, quizId, id) {
-	  return _axios2.default.delete(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/questions/' + id);
 	};
 	
 	// ANSWERS
@@ -63300,18 +63272,11 @@
 	  createUser: createUser,
 	  getUser: getUser,
 	  getCourses: getCourses,
-	  createCourse: createCourse,
-	  editCourse: editCourse,
-	  deleteCourse: deleteCourse,
 	  getQuizzes: getQuizzes,
 	  createQuiz: createQuiz,
-	  editQuiz: editQuiz,
-	  deleteQuiz: deleteQuiz,
 	  getAllQuestions: getAllQuestions,
 	  getQuestion: getQuestion,
 	  createQuestion: createQuestion,
-	  editQuestion: editQuestion,
-	  deleteQuestion: deleteQuestion,
 	  getOnlyQuestions: getOnlyQuestions,
 	  answerQuestions: answerQuestions,
 	  getGrades: getGrades
@@ -63365,7 +63330,7 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 182);
 	
-	var _CoursesActions = __webpack_require__(/*! ../../Redux/CoursesActions */ 756);
+	var _CoursesActions = __webpack_require__(/*! ../../Redux/CoursesActions */ 757);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -63424,6 +63389,7 @@
 	    value: function render() {
 	      var _this2 = this;
 	
+	      console.log(this.props);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -63490,7 +63456,7 @@
 	              _react2.default.createElement(
 	                _reactBootstrap.Col,
 	                { md: 8 },
-	                this.props.questions ? _react2.default.createElement(_QuizTabs2.default, { getLink: this._getLink.bind(this), questions: this.props.questions }) : _react2.default.createElement(
+	                this.props.questions ? _react2.default.createElement(_QuizTabs2.default, { getLink: this._getLink.bind(this), questions: this.props.questions, grades: this.props.grades }) : _react2.default.createElement(
 	                  'h5',
 	                  null,
 	                  ' Select Quiz '
@@ -63601,6 +63567,10 @@
 	
 	var _ExerciseQuestions2 = _interopRequireDefault(_ExerciseQuestions);
 	
+	var _GradesTab = __webpack_require__(/*! ./GradesTab */ 756);
+	
+	var _GradesTab2 = _interopRequireDefault(_GradesTab);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -63637,10 +63607,8 @@
 	        ),
 	        _react2.default.createElement(
 	          _reactBootstrap.Tab,
-	          { eventKey: 2, onClick: function onClick() {
-	              return console.log('grades clicked!');
-	            }, title: 'Grades' },
-	          'Grades'
+	          { eventKey: 2, title: 'Grades' },
+	          _react2.default.createElement(_GradesTab2.default, { grades: this.props.grades })
 	        )
 	      );
 	    }
@@ -63699,20 +63667,18 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        this.props.questions.map(function (question, index) {
+	        this.props.questions ? this.props.questions.map(function (question, index) {
 	          return _react2.default.createElement(
 	            _reactBootstrap.Panel,
 	            {
 	              key: question.id,
 	              style: _ExerciseStyles2.default.box,
-	              header: function header() {
-	                return _react2.default.createElement(
-	                  'h4',
-	                  null,
-	                  'Question ',
-	                  index + 1
-	                );
-	              },
+	              header: _react2.default.createElement(
+	                'h4',
+	                null,
+	                'Question ',
+	                index + 1
+	              ),
 	              bsStyle: 'warning' },
 	            _react2.default.createElement(
 	              'label',
@@ -63725,7 +63691,11 @@
 	              question.solution
 	            )
 	          );
-	        })
+	        }) : _react2.default.createElement(
+	          'div',
+	          null,
+	          ' No Questions to show '
+	        )
 	      );
 	    }
 	  }]);
@@ -63802,6 +63772,122 @@
 
 /***/ }),
 /* 756 */
+/*!***********************************************************!*\
+  !*** ./src/main/js/src/Components/Workspace/GradesTab.js ***!
+  \***********************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var GradesTab = function (_Component) {
+	  _inherits(GradesTab, _Component);
+	
+	  function GradesTab() {
+	    _classCallCheck(this, GradesTab);
+	
+	    return _possibleConstructorReturn(this, (GradesTab.__proto__ || Object.getPrototypeOf(GradesTab)).apply(this, arguments));
+	  }
+	
+	  _createClass(GradesTab, [{
+	    key: 'render',
+	    value: function render() {
+	      console.log(this.props);
+	      return _react2.default.createElement(
+	        _reactBootstrap.Table,
+	        { striped: true, bordered: true, condensed: true, hover: true },
+	        _react2.default.createElement(
+	          'thead',
+	          null,
+	          _react2.default.createElement(
+	            'tr',
+	            null,
+	            _react2.default.createElement(
+	              'th',
+	              null,
+	              '#'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              null,
+	              'ID'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              null,
+	              'Student ID'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              null,
+	              'Grade'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'tbody',
+	          null,
+	          this.props.grades ? this.props.grades.map(function (grade, index) {
+	            return _react2.default.createElement(
+	              'tr',
+	              { key: grade.id },
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                index + 1
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                grade.id
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                grade.studentId
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                grade.grade
+	              )
+	            );
+	          }) : _react2.default.createElement(
+	            'div',
+	            null,
+	            ' No Grades to show '
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return GradesTab;
+	}(_react.Component);
+	
+	exports.default = GradesTab;
+
+/***/ }),
+/* 757 */
 /*!*************************************************!*\
   !*** ./src/main/js/src/Redux/CoursesActions.js ***!
   \*************************************************/
@@ -63867,6 +63953,7 @@
 	    _api2.default.getAllQuestions(username, courseId, quizId).then(function (res) {
 	      if (res.data) {
 	        dispatch({ type: _Types.GET_ALL_QUESTIONS, payload: res.data });
+	        dispatch(getGrades(username, courseId, quizId));
 	      }
 	    }).catch(function (err) {
 	      return dispatch(requestFailed());
@@ -63877,8 +63964,10 @@
 	var getGrades = exports.getGrades = function getGrades(username, courseId, quizId) {
 	  return function (dispatch) {
 	    _api2.default.getGrades(username, courseId, quizId).then(function (res) {
-	      if (res.status === 200 && res.data.length > 0) {
-	        dispatch({ type: GET_GRADES, payload: res.data });
+	      if (res.data && res.data.length > 0) {
+	        dispatch({ type: _Types.GET_GRADES, payload: res.data });
+	      } else {
+	        dispatch({ type: _Types.GET_GRADES, payload: null });
 	      }
 	    }).catch(function (err) {
 	      return dispatch(requestFailed());
@@ -63891,10 +63980,10 @@
 	};
 
 /***/ }),
-/* 757 */
-/*!**************************************************************!*\
-  !*** ./src/main/js/src/Components/Exercises/ExerciseForm.js ***!
-  \**************************************************************/
+/* 758 */
+/*!************************************************************!*\
+  !*** ./src/main/js/src/Components/Student/ExerciseForm.js ***!
+  \************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63919,7 +64008,7 @@
 	
 	var _ExerciseStyles2 = _interopRequireDefault(_ExerciseStyles);
 	
-	var _Error = __webpack_require__(/*! ../Common/Error */ 758);
+	var _Error = __webpack_require__(/*! ../Common/Error */ 759);
 	
 	var _Error2 = _interopRequireDefault(_Error);
 	
@@ -64154,7 +64243,7 @@
 	})(ExerciseForm);
 
 /***/ }),
-/* 758 */
+/* 759 */
 /*!****************************************************!*\
   !*** ./src/main/js/src/Components/Common/Error.js ***!
   \****************************************************/
@@ -64210,7 +64299,7 @@
 	exports.default = Error;
 
 /***/ }),
-/* 759 */
+/* 760 */
 /*!******************************************************!*\
   !*** ./src/main/js/src/Components/Auth/LoginForm.js ***!
   \******************************************************/
@@ -64240,11 +64329,11 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _Alert = __webpack_require__(/*! ../Common/Alert */ 760);
+	var _Alert = __webpack_require__(/*! ../Common/Alert */ 761);
 	
 	var _Alert2 = _interopRequireDefault(_Alert);
 	
-	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 761);
+	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 762);
 	
 	var _AuthStyles2 = _interopRequireDefault(_AuthStyles);
 	
@@ -64347,7 +64436,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LoginForm);
 
 /***/ }),
-/* 760 */
+/* 761 */
 /*!****************************************************!*\
   !*** ./src/main/js/src/Components/Common/Alert.js ***!
   \****************************************************/
@@ -64410,7 +64499,7 @@
 	exports.default = AlertDismissable;
 
 /***/ }),
-/* 761 */
+/* 762 */
 /*!*********************************************************!*\
   !*** ./src/main/js/src/Components/Styles/AuthStyles.js ***!
   \*********************************************************/
@@ -64453,7 +64542,7 @@
 	exports.default = styles;
 
 /***/ }),
-/* 762 */
+/* 763 */
 /*!*******************************************************!*\
   !*** ./src/main/js/src/Components/Auth/SignupForm.js ***!
   \*******************************************************/
@@ -64483,11 +64572,11 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 761);
+	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 762);
 	
 	var _AuthStyles2 = _interopRequireDefault(_AuthStyles);
 	
-	var _Alert = __webpack_require__(/*! ../Common/Alert */ 760);
+	var _Alert = __webpack_require__(/*! ../Common/Alert */ 761);
 	
 	var _Alert2 = _interopRequireDefault(_Alert);
 	

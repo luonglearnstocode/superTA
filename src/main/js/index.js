@@ -10,7 +10,7 @@ import { HashRouter as Router, Route } from 'react-router-dom';
 
 import Home from './src/Components/Home'
 import Workspace from './src/Components/Workspace/Workspace'
-import ExerciseForm from './src/Components/Exercises/ExerciseForm'
+import ExerciseForm from './src/Components/Student/ExerciseForm'
 import LoginForm from './src/Components/Auth/LoginForm'
 import SignupForm from './src/Components/Auth/SignupForm'
 

@@ -6,6 +6,7 @@ import {
   SELECT_QUIZ,
   GET_ALL_QUESTIONS,
   SELECT_QUESTION,
+  GET_GRADES,
   REQUEST_FAIL
 } from './Types'
 
@@ -50,6 +51,7 @@ const getAllQuestions = (username, courseId, quizId) => {
     API.getAllQuestions(username, courseId, quizId).then((res) => {
       if (res.data) {
         dispatch({ type: GET_ALL_QUESTIONS, payload: res.data })
+        dispatch(getGrades(username, courseId, quizId))
       }
     }).catch((err) => dispatch(requestFailed()))
   }
@@ -58,8 +60,10 @@ const getAllQuestions = (username, courseId, quizId) => {
 export const getGrades = (username, courseId, quizId) => {
   return (dispatch) => {
     API.getGrades(username, courseId, quizId).then((res) => {
-      if(res.status === 200 && res.data.length > 0) {
+      if(res.data && res.data.length > 0) {
         dispatch({ type: GET_GRADES, payload: res.data })
+      } else {
+        dispatch({ type: GET_GRADES, payload: null })
       }
     }).catch((err) => dispatch(requestFailed()))
   }

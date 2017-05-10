@@ -14,10 +14,14 @@ const getCourses = (username) => axios.get(baseURL + '/users/' + username + '/co
 // QUIZZES
 const getQuizzes = (username, courseId) => axios.get(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes')
 
+const createQuiz = (username, courseId, id, title) => axios.post(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes', { id, title })
+
 // QUESTIONS
 const getAllQuestions = (username, courseId, quizId) => axios.get(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/questions')
 
 const getQuestion = (username, courseId, quizId, id) => axios.get(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/questions/' + id)
+
+const createQuestion = (username, courseId, quizId, id, text, solution) => axios.post(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/questions', { id, text, solution })
 
 // ANSWERS
 const getOnlyQuestions = (quizId) => axios.get(baseURL + '/public/' + quizId + '/answer')
@@ -32,8 +36,10 @@ export default {
   getUser,
   getCourses,
   getQuizzes,
+  createQuiz,
   getAllQuestions,
   getQuestion,
+  createQuestion,
   getOnlyQuestions,
   answerQuestions,
   getGrades

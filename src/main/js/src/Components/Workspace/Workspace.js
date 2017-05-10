@@ -63,7 +63,7 @@ class Workspace extends Component {
                 <Col md={8}>
                   {
                     this.props.questions ?
-                      <QuizTabs getLink={this._getLink.bind(this)} questions={this.props.questions} />
+                      <QuizTabs getLink={this._getLink.bind(this)} questions={this.props.questions} grades={this.props.grades}/>
                     :
                       <h5> Select Quiz </h5>
                   }
