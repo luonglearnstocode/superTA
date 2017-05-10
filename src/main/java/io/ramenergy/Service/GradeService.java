@@ -19,7 +19,7 @@ public class GradeService {
 
     public List<Grade> getAllGrades(int quizId) {
         List<Grade> grades = new ArrayList<>();
-        gradeRepository.findAll().forEach(grades::add);
+        gradeRepository.findByQuizId(quizId).forEach(grades::add);
         Collections.sort(grades);
         return grades;
     }
