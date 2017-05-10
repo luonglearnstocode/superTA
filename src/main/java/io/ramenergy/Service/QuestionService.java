@@ -65,6 +65,7 @@ public class QuestionService {
         Grade grade = new Grade();
         grade.setStudentId(studentId);
         grade.setGrade((int) score);
+        grade.setQuiz(new Quiz(quizId, "", ""));
         gradeService.addGrade(grade);
 
         return check;
