@@ -85,15 +85,15 @@
 	
 	var _Workspace2 = _interopRequireDefault(_Workspace);
 	
-	var _ExerciseForm = __webpack_require__(/*! ./src/Components/Exercises/ExerciseForm */ 763);
+	var _ExerciseForm = __webpack_require__(/*! ./src/Components/Exercises/ExerciseForm */ 757);
 	
 	var _ExerciseForm2 = _interopRequireDefault(_ExerciseForm);
 	
-	var _LoginForm = __webpack_require__(/*! ./src/Components/Auth/LoginForm */ 765);
+	var _LoginForm = __webpack_require__(/*! ./src/Components/Auth/LoginForm */ 759);
 	
 	var _LoginForm2 = _interopRequireDefault(_LoginForm);
 	
-	var _SignupForm = __webpack_require__(/*! ./src/Components/Auth/SignupForm */ 768);
+	var _SignupForm = __webpack_require__(/*! ./src/Components/Auth/SignupForm */ 762);
 	
 	var _SignupForm2 = _interopRequireDefault(_SignupForm);
 	
@@ -39119,6 +39119,11 @@
 	          { style: { width: 800, margin: 'auto', marginTop: 200, padding: 50, borderRadius: 20, backgroundColor: '#f8f8f8' } },
 	          _react2.default.createElement(_reactBootstrap.Image, { src: _supertaImg2.default, style: { width: 600, marginLeft: 50, marginRight: 50 } }),
 	          _react2.default.createElement(
+	            'p',
+	            { style: { fontStyle: 'italic' } },
+	            ' Play around with latex '
+	          ),
+	          _react2.default.createElement(
 	            _reactBootstrap.FormGroup,
 	            { bsSize: 'large' },
 	            _react2.default.createElement(_reactBootstrap.FormControl, {
@@ -63360,11 +63365,7 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 182);
 	
-	var _CoursesActions = __webpack_require__(/*! ../../Redux/CoursesActions */ 761);
-	
-	var _FormTemplate = __webpack_require__(/*! ../Forms/FormTemplate */ 762);
-	
-	var _FormTemplate2 = _interopRequireDefault(_FormTemplate);
+	var _CoursesActions = __webpack_require__(/*! ../../Redux/CoursesActions */ 756);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -63377,16 +63378,10 @@
 	var Workspace = function (_Component) {
 	  _inherits(Workspace, _Component);
 	
-	  function Workspace(props) {
+	  function Workspace() {
 	    _classCallCheck(this, Workspace);
 	
-	    var _this = _possibleConstructorReturn(this, (Workspace.__proto__ || Object.getPrototypeOf(Workspace)).call(this, props));
-	
-	    _this.state = {
-	      activeModal: null
-	    };
-	    _this.modal = { title: '', placeholder: '', value: '' };
-	    return _this;
+	    return _possibleConstructorReturn(this, (Workspace.__proto__ || Object.getPrototypeOf(Workspace)).apply(this, arguments));
 	  }
 	
 	  _createClass(Workspace, [{
@@ -63396,22 +63391,6 @@
 	      if (!this.props.username) {
 	        window.alert('You need to be logged in to do that!');
 	      }
-	    }
-	  }, {
-	    key: '_close',
-	    value: function _close() {
-	      this.setState({ activeModal: null });
-	    }
-	  }, {
-	    key: '_open',
-	    value: function _open(title, placeholder, value) {
-	      this.setState({ activeModal: true });
-	      this.modal = { title: title, placeholder: placeholder, value: value };
-	    }
-	  }, {
-	    key: '_delete',
-	    value: function _delete(item) {
-	      window.confirm('Are you sure you want to delete: ' + item.title);
 	    }
 	  }, {
 	    key: '_selectCourse',
@@ -63466,31 +63445,7 @@
 	                  { style: _WorkspaceStyles2.default.heading },
 	                  'Courses'
 	                ),
-	                _react2.default.createElement(
-	                  'div',
-	                  { style: _WorkspaceStyles2.default.buttons },
-	                  _react2.default.createElement(
-	                    _reactBootstrap.Button,
-	                    { bsStyle: 'danger', onClick: function onClick() {
-	                        return _this2._delete(_this2.props.selectedCourse);
-	                      } },
-	                    _react2.default.createElement('i', { className: 'fa fa-trash-o' })
-	                  ),
-	                  _react2.default.createElement(
-	                    _reactBootstrap.Button,
-	                    { bsStyle: 'warning', onClick: function onClick() {
-	                        return _this2._open('Course Edit Form', 'Course Name', _this2.props.selectedCourse.name);
-	                      } },
-	                    _react2.default.createElement('i', { className: 'fa fa-pencil' })
-	                  ),
-	                  _react2.default.createElement(
-	                    _reactBootstrap.Button,
-	                    { bsStyle: 'success', onClick: function onClick() {
-	                        return _this2._open('Course Add Form', 'Course Name', '');
-	                      } },
-	                    _react2.default.createElement('i', { className: 'fa fa-plus', 'aria-hidden': 'true' })
-	                  )
-	                ),
+	                _react2.default.createElement('div', { style: _WorkspaceStyles2.default.buttons }),
 	                _react2.default.createElement(
 	                  _reactBootstrap.ListGroup,
 	                  null,
@@ -63513,31 +63468,7 @@
 	                  { style: _WorkspaceStyles2.default.heading },
 	                  'Quizzes'
 	                ),
-	                _react2.default.createElement(
-	                  'div',
-	                  { style: _WorkspaceStyles2.default.buttons },
-	                  _react2.default.createElement(
-	                    _reactBootstrap.Button,
-	                    { bsStyle: 'danger', onClick: function onClick() {
-	                        return _this2._delete(_this2.props.selectedQuiz);
-	                      } },
-	                    _react2.default.createElement('i', { className: 'fa fa-trash-o' })
-	                  ),
-	                  _react2.default.createElement(
-	                    _reactBootstrap.Button,
-	                    { bsStyle: 'warning', onClick: function onClick() {
-	                        return _this2._open('Quiz Edit Form', 'Quiz Name', _this2.props.selectedQuiz.title);
-	                      } },
-	                    _react2.default.createElement('i', { className: 'fa fa-pencil' })
-	                  ),
-	                  _react2.default.createElement(
-	                    _reactBootstrap.Button,
-	                    { bsStyle: 'success', onClick: function onClick() {
-	                        return _this2._open('Quiz Add Form', 'Quiz Name', '');
-	                      } },
-	                    _react2.default.createElement('i', { className: 'fa fa-plus' })
-	                  )
-	                ),
+	                _react2.default.createElement('div', { style: _WorkspaceStyles2.default.buttons }),
 	                _react2.default.createElement(
 	                  _reactBootstrap.ListGroup,
 	                  null,
@@ -63566,14 +63497,7 @@
 	                )
 	              )
 	            )
-	          ),
-	          _react2.default.createElement(_FormTemplate2.default, {
-	            close: this._close.bind(this),
-	            showModal: this.state.activeModal,
-	            title: this.modal.title,
-	            placeholder: this.modal.placeholder,
-	            value: this.modal.value
-	          })
+	          )
 	        ) : _react2.default.createElement(_reactRouter.Redirect, { to: '/login' })
 	      );
 	    }
@@ -63752,8 +63676,6 @@
 	
 	var _ExerciseStyles2 = _interopRequireDefault(_ExerciseStyles);
 	
-	var _Forms = __webpack_require__(/*! ../Forms */ 756);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -63762,80 +63684,35 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var header = function header(question, number, onClick) {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      'h4',
-	      { style: { display: 'inline' } },
-	      'Question ',
-	      number
-	    ),
-	    _react2.default.createElement(
-	      _reactBootstrap.Button,
-	      { bsStyle: 'danger', style: { display: 'inline-block', float: 'right' }, onClick: function onClick() {
-	          return window.alert('Do you want to delete ' + question.text);
-	        } },
-	      _react2.default.createElement('i', { className: 'fa fa-trash-o' })
-	    ),
-	    _react2.default.createElement(
-	      _reactBootstrap.Button,
-	      { bsStyle: 'warning', style: { display: 'inline-block', float: 'right' }, onClick: onClick },
-	      _react2.default.createElement('i', { className: 'fa fa-pencil' })
-	    )
-	  );
-	};
-	
 	var ExerciseQuestions = function (_Component) {
 	  _inherits(ExerciseQuestions, _Component);
 	
-	  function ExerciseQuestions(props) {
+	  function ExerciseQuestions() {
 	    _classCallCheck(this, ExerciseQuestions);
 	
-	    var _this = _possibleConstructorReturn(this, (ExerciseQuestions.__proto__ || Object.getPrototypeOf(ExerciseQuestions)).call(this, props));
-	
-	    _this.state = {
-	      activeModal: null,
-	      question: { text: null, solution: null }
-	    };
-	    return _this;
+	    return _possibleConstructorReturn(this, (ExerciseQuestions.__proto__ || Object.getPrototypeOf(ExerciseQuestions)).apply(this, arguments));
 	  }
 	
 	  _createClass(ExerciseQuestions, [{
-	    key: 'close',
-	    value: function close() {
-	      this.setState({ activeModal: null });
-	    }
-	  }, {
-	    key: 'open',
-	    value: function open(modal, item) {
-	      this.setState({ activeModal: modal, question: item });
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
-	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(
-	          _reactBootstrap.Button,
-	          { bsStyle: 'success', style: _ExerciseStyles2.default.addButton, onClick: function onClick() {
-	              return _this2.open('QuestionAddForm');
-	            } },
-	          'Add Question'
-	        ),
 	        this.props.questions.map(function (question, index) {
 	          return _react2.default.createElement(
 	            _reactBootstrap.Panel,
 	            {
 	              key: question.id,
 	              style: _ExerciseStyles2.default.box,
-	              header: header(question, index + 1, function () {
-	                return _this2.open('QuestionEditForm', question);
-	              }),
+	              header: function header() {
+	                return _react2.default.createElement(
+	                  'h4',
+	                  null,
+	                  'Question ',
+	                  index + 1
+	                );
+	              },
 	              bsStyle: 'warning' },
 	            _react2.default.createElement(
 	              'label',
@@ -63848,9 +63725,7 @@
 	              question.solution
 	            )
 	          );
-	        }),
-	        _react2.default.createElement(_Forms.QuestionAddForm, { close: this.close.bind(this), showModal: this.state.activeModal === 'QuestionAddForm' }),
-	        _react2.default.createElement(_Forms.QuestionEditForm, { close: this.close.bind(this), showModal: this.state.activeModal === 'QuestionEditForm', value: this.state.question })
+	        })
 	      );
 	    }
 	  }]);
@@ -63927,385 +63802,6 @@
 
 /***/ }),
 /* 756 */
-/*!***************************************************!*\
-  !*** ./src/main/js/src/Components/Forms/index.js ***!
-  \***************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _QuestionAddForm = __webpack_require__(/*! ./QuestionAddForm */ 757);
-	
-	Object.keys(_QuestionAddForm).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _QuestionAddForm[key];
-	    }
-	  });
-	});
-	
-	var _QuestionEditForm = __webpack_require__(/*! ./QuestionEditForm */ 760);
-	
-	Object.keys(_QuestionEditForm).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _QuestionEditForm[key];
-	    }
-	  });
-	});
-
-/***/ }),
-/* 757 */
-/*!*************************************************************!*\
-  !*** ./src/main/js/src/Components/Forms/QuestionAddForm.js ***!
-  \*************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.QuestionAddForm = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
-	
-	var _FormModal = __webpack_require__(/*! ./FormModal */ 758);
-	
-	var _FormModal2 = _interopRequireDefault(_FormModal);
-	
-	var _FormModalStyles = __webpack_require__(/*! ../Styles/FormModalStyles */ 759);
-	
-	var _FormModalStyles2 = _interopRequireDefault(_FormModalStyles);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var QuestionAddForm = function (_Component) {
-	  _inherits(QuestionAddForm, _Component);
-	
-	  function QuestionAddForm(props) {
-	    _classCallCheck(this, QuestionAddForm);
-	
-	    var _this = _possibleConstructorReturn(this, (QuestionAddForm.__proto__ || Object.getPrototypeOf(QuestionAddForm)).call(this, props));
-	
-	    _this.handleSubmit = _this.handleSubmit.bind(_this);
-	    _this.handleReset = _this.handleReset.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(QuestionAddForm, [{
-	    key: 'handleSubmit',
-	    value: function handleSubmit(event) {
-	      alert('A question was submitted: ' + this.question.value + ' and answer: ' + this.answer.value);
-	      this.props.close();
-	      event.preventDefault();
-	    }
-	  }, {
-	    key: 'handleReset',
-	    value: function handleReset() {
-	      this.question.value = '';
-	      this.answer.value = '';
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      return _react2.default.createElement(
-	        _FormModal2.default,
-	        {
-	          showModal: this.props.showModal,
-	          close: this.props.close,
-	          title: 'Add Question',
-	          handleSubmit: this.handleSubmit,
-	          reset: this.handleReset
-	        },
-	        _react2.default.createElement(
-	          'form',
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.FormGroup,
-	            { controlId: 'question' },
-	            _react2.default.createElement(
-	              _reactBootstrap.ControlLabel,
-	              null,
-	              'Question:'
-	            ),
-	            _react2.default.createElement('input', { style: _FormModalStyles2.default.input, placeholder: 'Enter question', type: 'text', ref: function ref(input) {
-	                return _this2.question = input;
-	              } })
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.FormGroup,
-	            { controlId: 'answer' },
-	            _react2.default.createElement(
-	              _reactBootstrap.ControlLabel,
-	              null,
-	              'Answer:'
-	            ),
-	            _react2.default.createElement('input', { style: _FormModalStyles2.default.input, placeholder: 'Enter answer', type: 'text', ref: function ref(input) {
-	                return _this2.answer = input;
-	              } })
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return QuestionAddForm;
-	}(_react.Component);
-	
-	exports.QuestionAddForm = QuestionAddForm;
-
-/***/ }),
-/* 758 */
-/*!*******************************************************!*\
-  !*** ./src/main/js/src/Components/Forms/FormModal.js ***!
-  \*******************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var FormModal = function (_Component) {
-	  _inherits(FormModal, _Component);
-	
-	  function FormModal() {
-	    _classCallCheck(this, FormModal);
-	
-	    return _possibleConstructorReturn(this, (FormModal.__proto__ || Object.getPrototypeOf(FormModal)).apply(this, arguments));
-	  }
-	
-	  _createClass(FormModal, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        _reactBootstrap.Modal,
-	        { show: this.props.showModal, onHide: this.props.close },
-	        _react2.default.createElement(
-	          _reactBootstrap.Modal.Header,
-	          { closeButton: true },
-	          _react2.default.createElement(
-	            _reactBootstrap.Modal.Title,
-	            null,
-	            this.props.title
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Modal.Body,
-	          null,
-	          this.props.children
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Modal.Footer,
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.Button,
-	            { onClick: this.props.reset },
-	            'Reset'
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Button,
-	            { onClick: this.props.handleSubmit },
-	            'Submit'
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Button,
-	            { onClick: this.props.close },
-	            'Close'
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return FormModal;
-	}(_react.Component);
-	
-	exports.default = FormModal;
-
-/***/ }),
-/* 759 */
-/*!**************************************************************!*\
-  !*** ./src/main/js/src/Components/Styles/FormModalStyles.js ***!
-  \**************************************************************/
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var styles = {
-	  input: {
-	    borderRadius: 5,
-	    padding: 10,
-	    display: 'block',
-	    borderWidth: 1,
-	    borderColor: '#ccc',
-	    borderStyle: 'solid',
-	    width: '80%'
-	  }
-	};
-	
-	exports.default = styles;
-
-/***/ }),
-/* 760 */
-/*!**************************************************************!*\
-  !*** ./src/main/js/src/Components/Forms/QuestionEditForm.js ***!
-  \**************************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.QuestionEditForm = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
-	
-	var _FormModal = __webpack_require__(/*! ./FormModal */ 758);
-	
-	var _FormModal2 = _interopRequireDefault(_FormModal);
-	
-	var _FormModalStyles = __webpack_require__(/*! ../Styles/FormModalStyles */ 759);
-	
-	var _FormModalStyles2 = _interopRequireDefault(_FormModalStyles);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var QuestionEditForm = function (_Component) {
-	  _inherits(QuestionEditForm, _Component);
-	
-	  function QuestionEditForm(props) {
-	    _classCallCheck(this, QuestionEditForm);
-	
-	    var _this = _possibleConstructorReturn(this, (QuestionEditForm.__proto__ || Object.getPrototypeOf(QuestionEditForm)).call(this, props));
-	
-	    _this.handleSubmit = _this.handleSubmit.bind(_this);
-	    _this.handleReset = _this.handleReset.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(QuestionEditForm, [{
-	    key: 'handleSubmit',
-	    value: function handleSubmit(event) {
-	      alert('A quiz was editted: ' + this.text.value + 'and solution ' + this.solution.value);
-	      this.props.close();
-	      event.preventDefault();
-	    }
-	  }, {
-	    key: 'handleReset',
-	    value: function handleReset() {
-	      this.text.value = '';
-	      this.solution.value = '';
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      return _react2.default.createElement(
-	        _FormModal2.default,
-	        {
-	          showModal: this.props.showModal,
-	          close: this.props.close,
-	          title: 'Edit selected question',
-	          handleSubmit: this.handleSubmit,
-	          reset: this.handleReset
-	        },
-	        _react2.default.createElement(
-	          'form',
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.FormGroup,
-	            { controlId: 'question' },
-	            _react2.default.createElement(
-	              _reactBootstrap.ControlLabel,
-	              null,
-	              'Question:'
-	            ),
-	            _react2.default.createElement('input', { style: _FormModalStyles2.default.input, placeholder: 'Enter question', type: 'text', defaultValue: this.props.value.text, ref: function ref(input) {
-	                return _this2.text = input;
-	              } })
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.FormGroup,
-	            { controlId: 'answer' },
-	            _react2.default.createElement(
-	              _reactBootstrap.ControlLabel,
-	              null,
-	              'Answer:'
-	            ),
-	            _react2.default.createElement('input', { style: _FormModalStyles2.default.input, placeholder: 'Enter solution', type: 'text', defaultValue: this.props.value.solution, ref: function ref(input) {
-	                return _this2.solution = input;
-	              } })
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return QuestionEditForm;
-	}(_react.Component);
-	
-	exports.QuestionEditForm = QuestionEditForm;
-
-/***/ }),
-/* 761 */
 /*!*************************************************!*\
   !*** ./src/main/js/src/Redux/CoursesActions.js ***!
   \*************************************************/
@@ -64341,8 +63837,8 @@
 	
 	var selectCourse = exports.selectCourse = function selectCourse(username, course) {
 	  return function (dispatch) {
-	    dispatch(getAllQuizzes(username, course.id));
 	    dispatch({ type: _Types.SELECT_COURSE, payload: course });
+	    dispatch(getAllQuizzes(username, course.id));
 	  };
 	};
 	
@@ -64395,108 +63891,7 @@
 	};
 
 /***/ }),
-/* 762 */
-/*!**********************************************************!*\
-  !*** ./src/main/js/src/Components/Forms/FormTemplate.js ***!
-  \**********************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
-	
-	var _FormModal = __webpack_require__(/*! ./FormModal */ 758);
-	
-	var _FormModal2 = _interopRequireDefault(_FormModal);
-	
-	var _FormModalStyles = __webpack_require__(/*! ../Styles/FormModalStyles */ 759);
-	
-	var _FormModalStyles2 = _interopRequireDefault(_FormModalStyles);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var FormTemplate = function (_Component) {
-	  _inherits(FormTemplate, _Component);
-	
-	  function FormTemplate(props) {
-	    _classCallCheck(this, FormTemplate);
-	
-	    var _this = _possibleConstructorReturn(this, (FormTemplate.__proto__ || Object.getPrototypeOf(FormTemplate)).call(this, props));
-	
-	    _this.handleSubmit = _this.handleSubmit.bind(_this);
-	    _this.handleReset = _this.handleReset.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(FormTemplate, [{
-	    key: 'handleSubmit',
-	    value: function handleSubmit(event) {
-	      alert('submitted: ' + this.input.value);
-	      this.props.close();
-	      event.preventDefault();
-	    }
-	  }, {
-	    key: 'handleReset',
-	    value: function handleReset() {
-	      this.input.value = '';
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      return _react2.default.createElement(
-	        _FormModal2.default,
-	        {
-	          showModal: this.props.showModal,
-	          close: this.props.close,
-	          title: this.props.title,
-	          handleSubmit: this.handleSubmit,
-	          reset: this.handleReset
-	        },
-	        _react2.default.createElement(
-	          'form',
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.FormGroup,
-	            { controlId: 'course' },
-	            _react2.default.createElement(
-	              _reactBootstrap.ControlLabel,
-	              null,
-	              'Title:'
-	            ),
-	            _react2.default.createElement('input', { style: _FormModalStyles2.default.input, placeholder: this.props.placeholder, defaultValue: this.props.value, type: 'text', ref: function ref(input) {
-	                return _this2.input = input;
-	              } })
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return FormTemplate;
-	}(_react.Component);
-	
-	exports.default = FormTemplate;
-
-/***/ }),
-/* 763 */
+/* 757 */
 /*!**************************************************************!*\
   !*** ./src/main/js/src/Components/Exercises/ExerciseForm.js ***!
   \**************************************************************/
@@ -64524,7 +63919,7 @@
 	
 	var _ExerciseStyles2 = _interopRequireDefault(_ExerciseStyles);
 	
-	var _Error = __webpack_require__(/*! ../Common/Error */ 764);
+	var _Error = __webpack_require__(/*! ../Common/Error */ 758);
 	
 	var _Error2 = _interopRequireDefault(_Error);
 	
@@ -64759,7 +64154,7 @@
 	})(ExerciseForm);
 
 /***/ }),
-/* 764 */
+/* 758 */
 /*!****************************************************!*\
   !*** ./src/main/js/src/Components/Common/Error.js ***!
   \****************************************************/
@@ -64815,7 +64210,7 @@
 	exports.default = Error;
 
 /***/ }),
-/* 765 */
+/* 759 */
 /*!******************************************************!*\
   !*** ./src/main/js/src/Components/Auth/LoginForm.js ***!
   \******************************************************/
@@ -64845,11 +64240,11 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _Alert = __webpack_require__(/*! ../Common/Alert */ 766);
+	var _Alert = __webpack_require__(/*! ../Common/Alert */ 760);
 	
 	var _Alert2 = _interopRequireDefault(_Alert);
 	
-	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 767);
+	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 761);
 	
 	var _AuthStyles2 = _interopRequireDefault(_AuthStyles);
 	
@@ -64952,7 +64347,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LoginForm);
 
 /***/ }),
-/* 766 */
+/* 760 */
 /*!****************************************************!*\
   !*** ./src/main/js/src/Components/Common/Alert.js ***!
   \****************************************************/
@@ -65015,7 +64410,7 @@
 	exports.default = AlertDismissable;
 
 /***/ }),
-/* 767 */
+/* 761 */
 /*!*********************************************************!*\
   !*** ./src/main/js/src/Components/Styles/AuthStyles.js ***!
   \*********************************************************/
@@ -65058,7 +64453,7 @@
 	exports.default = styles;
 
 /***/ }),
-/* 768 */
+/* 762 */
 /*!*******************************************************!*\
   !*** ./src/main/js/src/Components/Auth/SignupForm.js ***!
   \*******************************************************/
@@ -65088,11 +64483,11 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 767);
+	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 761);
 	
 	var _AuthStyles2 = _interopRequireDefault(_AuthStyles);
 	
-	var _Alert = __webpack_require__(/*! ../Common/Alert */ 766);
+	var _Alert = __webpack_require__(/*! ../Common/Alert */ 760);
 	
 	var _Alert2 = _interopRequireDefault(_Alert);
 	

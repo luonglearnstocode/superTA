@@ -6,33 +6,11 @@ import QuizTabs from './QuizTabs'
 import NavigationBar from '../Common/NavigationBar'
 import { connect } from 'react-redux'
 import { getAllCourses, getAllQuizzes, getAllQuestions, selectCourse, selectQuiz, getGrades } from '../../Redux/CoursesActions'
-import FormTemplate from '../Forms/FormTemplate'
 
 class Workspace extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      activeModal: null
-    }
-    this.modal = { title: '', placeholder: '', value: ''}
-  }
-
   componentWillMount() {
     this.props.getAllCourses(this.props.username)
     if(!this.props.username) { window.alert('You need to be logged in to do that!') }
-  }
-
-  _close() {
-    this.setState({ activeModal: null })
-  }
-
-  _open(title, placeholder, value) {
-    this.setState({ activeModal: true })
-    this.modal = { title, placeholder, value }
-  }
-
-  _delete(item) {
-    window.confirm('Are you sure you want to delete: ' + item.title)
   }
 
   _selectCourse(course) {
@@ -64,9 +42,6 @@ class Workspace extends Component {
                 <Col md={2} style={styles.bar}>
                   <h3 style={styles.heading} >Courses</h3>
                   <div style={styles.buttons}>
-                    <Button bsStyle="danger" onClick={() => this._delete(this.props.selectedCourse)}><i className="fa fa-trash-o"></i></Button>
-                    <Button bsStyle="warning" onClick={() => this._open('Course Edit Form', 'Course Name', this.props.selectedCourse.name)}><i className="fa fa-pencil"></i></Button>
-                    <Button bsStyle="success" onClick={() => this._open('Course Add Form', 'Course Name', '')}><i className="fa fa-plus" aria-hidden="true"></i></Button>
                   </div>
                   <ListGroup>
                     {this.props.courses.map((course) => <ListGroupItem style={styles.item} key={course.id} onClick={() => this._selectCourse(course)} active={this.props.selectedCourse === course}>{course.name}</ListGroupItem> )}
@@ -75,9 +50,6 @@ class Workspace extends Component {
                 <Col md={2} style={styles.bar}>
                   <h3 style={styles.heading} >Quizzes</h3>
                   <div style={styles.buttons}>
-                    <Button bsStyle="danger" onClick={() => this._delete(this.props.selectedQuiz)}><i className="fa fa-trash-o"></i></Button>
-                    <Button bsStyle="warning" onClick={() => this._open('Quiz Edit Form', 'Quiz Name', this.props.selectedQuiz.title)}><i className="fa fa-pencil"></i></Button>
-                    <Button bsStyle="success" onClick={() => this._open('Quiz Add Form', 'Quiz Name', '')}><i className="fa fa-plus"></i></Button>
                   </div>
                   <ListGroup>
                     {
@@ -98,13 +70,6 @@ class Workspace extends Component {
                 </Col>
               </Row>
             </Grid>
-            <FormTemplate
-              close={this._close.bind(this)}
-              showModal={this.state.activeModal}
-              title={this.modal.title}
-              placeholder={this.modal.placeholder}
-              value={this.modal.value}
-            />
           </div>
           :
             <Redirect to="/login" />

@@ -22,8 +22,8 @@ export const getAllCourses = (username) => {
 
 export const selectCourse = (username, course) => {
   return dispatch => {
-    dispatch(getAllQuizzes(username, course.id))
     dispatch({ type: SELECT_COURSE, payload: course})
+    dispatch(getAllQuizzes(username, course.id))
   }
 }
 

@@ -24,6 +24,7 @@ class Home extends Component {
         <NavigationBar />
         <Jumbotron style={{ width: 800, margin: 'auto', marginTop: 200, padding: 50, borderRadius: 20, backgroundColor: '#f8f8f8' }}>
           <Image src={logo} style={{ width: 600, marginLeft: 50, marginRight: 50 }} />
+          <p style={{ fontStyle: 'italic' }}> Play around with latex </p>
           <FormGroup bsSize="large">
             <FormControl
               type="text"
