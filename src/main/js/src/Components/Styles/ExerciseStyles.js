@@ -44,6 +44,11 @@ const styles = {
   },
   label: {
     fontSize: 18
+  },
+  actionButton: {
+    display: 'inline-block',
+     marginRight: 8,
+     float: 'right'
   }
 }
 

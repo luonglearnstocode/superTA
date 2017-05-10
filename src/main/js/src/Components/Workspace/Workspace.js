@@ -43,6 +43,11 @@ class Workspace extends Component {
               <Row className="show-grid">
                 <Col md={2} style={styles.bar}>
                   <h3 style={styles.heading} >Courses</h3>
+                  <div style={styles.buttons}>
+                     <Button bsStyle="danger" style={styles.button}><i className="fa fa-trash-o"></i></Button>
+                    <Button bsStyle="warning" style={styles.button}><i className="fa fa-pencil"></i></Button>
+                    <Button bsStyle="success" style={styles.button}><i className="fa fa-plus"></i></Button>
+                  </div>
                   <ListGroup>
                     {
                       this.props.loadingCourses ?
@@ -56,6 +61,11 @@ class Workspace extends Component {
                 </Col>
                 <Col md={2} style={styles.bar}>
                   <h3 style={styles.heading} >Quizzes</h3>
+                  <div style={styles.buttons}>
+                    <Button bsStyle="danger" style={styles.button}><i className="fa fa-trash-o"></i></Button>
+                    <Button bsStyle="warning" style={styles.button}><i className="fa fa-pencil"></i></Button>
+                    <Button bsStyle="success" style={styles.button}><i className="fa fa-plus"></i></Button>
+                  </div>
                   <ListGroup>
                     {
                       this.props.loadingQuizzes ?
@@ -99,7 +109,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getAllCourses: (username) => dispatch(getAllCourses(username)),
     getAllQuizzes: (username, courseId) => dispatch(getAllQuizzes(username, courseId)),
-    selectCourse: (course) => dispatch(selectCourse(course)),
+    selectCourse: (username, course) => dispatch(selectCourse(username, course)),
     selectQuiz: (quiz, username, courseId) => dispatch(selectQuiz(quiz, username, courseId)),
     getGrades: (username, courseId, quizId) => dispatch(getGrades(username, courseId, quizId))
   }
