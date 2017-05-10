@@ -4,13 +4,14 @@
 var path = require('path');
 
 module.exports = {
-    entry: './src/main/js/app.js',
+    entry: './src/main/js/index.js',
     devtool: 'sourcemaps',
     cache: true,
     debug: true,
     output: {
-        path: __dirname,
-        filename: './src/main/resources/static/built/bundle.js'
+        path: './src/main/resources/static/', // This is where images AND js will go
+        publicPath: '/', // This is used to generate URLs to e.g. images
+        filename: 'built/bundle.js'
     },
     module: {
         loaders: [
@@ -20,9 +21,21 @@ module.exports = {
                 loader: 'babel',
                 query: {
                     cacheDirectory: true,
-                    presets: ['es2015', 'react']
+                    presets: ['es2015', 'react', 'stage-2']
                 }
-            }
+            },
+            { test: /\.less$/, loader: 'style-loader!css-loader!less-loader' }, // use ! to chain loaders
+            { test: /\.css$/, loader: 'style-loader!css-loader' },
+            { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' } // inline base64 URLs for <=8k images, direct URLs for the rest
+        ],
+        rules: [
+          {
+            test: /\.css$/,
+            use: [
+              { loader: "style-loader" },
+              { loader: "css-loader" }
+            ]
+          }
         ]
     }
 };
