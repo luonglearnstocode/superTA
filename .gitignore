@@ -4,4 +4,5 @@
 node_modules/
 #
 #bundle js
+target/classes/static/built/
 src/main/resources/static/built/

@@ -10,8 +10,6 @@ class QuizTabs extends Component {
     return (
       <Tabs defaultActiveKey={1} id="quiz-tabs">
         <Tab eventKey={1} title="Questions">
-          <div>
-            <br/>
             {
               this.props.loadingQuestions ?
                 <div className="loader">Loading...</div>
@@ -21,8 +19,6 @@ class QuizTabs extends Component {
                   <ExerciseQuestions questions={this.props.questions}/>
                 </div>
             }
-
-          </div>
         </Tab>
         <Tab eventKey={2} title="Grades">
         {

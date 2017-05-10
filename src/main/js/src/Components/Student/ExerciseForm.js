@@ -27,7 +27,7 @@ class ExerciseForm extends React.Component {
     this.state = {
       questions: [],
       loadingQuestions: true,
-      disabled: false,
+      submittingAnswers: false,
       results: null
     }
     this.quizId = this.props.match.params.quizId
@@ -46,6 +46,7 @@ class ExerciseForm extends React.Component {
       answersArray.push(values.answers[key])
     })
     if (answersArray.length > 0) {
+      this.setState({ submittingAnswers: true })
       API.answerQuestions(this.quizId, answersArray, values.studentId).then((res) => {
         if(res.data) {
           this.checkAnswers(res.data, sortedKeys)
@@ -66,7 +67,7 @@ class ExerciseForm extends React.Component {
       }
     }
     if (Object.keys(results).length > 0) {
-      this.setState({ disabled: true, results: results })
+      this.setState({ results: results, submittingAnswers: false })
     }
   }
 
@@ -134,7 +135,12 @@ class ExerciseForm extends React.Component {
           }
           <Row style={{ width: '100%' }}>
             <Col md={2} mdOffset={5}>
-                <Button style={styles.button} bsStyle="warning" type="submit" disabled={this.state.disabled}>Submit</Button>
+              {
+                this.state.submittingAnswers ?
+                  <div className="loader">Loading...</div>
+                :
+                <Button style={styles.button} bsStyle="warning" type="submit">Submit</Button>
+              }
             </Col>
           </Row>
         </form>
