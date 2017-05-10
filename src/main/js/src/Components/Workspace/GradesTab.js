@@ -26,7 +26,7 @@ class GradesTab extends Component {
               )
             })
           :
-          <div> No Grades to show </div>
+          <p> No Grades to show </p>
         }
         </tbody>
       </Table>

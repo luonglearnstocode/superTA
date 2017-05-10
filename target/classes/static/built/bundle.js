@@ -85,15 +85,15 @@
 	
 	var _Workspace2 = _interopRequireDefault(_Workspace);
 	
-	var _ExerciseForm = __webpack_require__(/*! ./src/Components/Student/ExerciseForm */ 758);
+	var _ExerciseForm = __webpack_require__(/*! ./src/Components/Student/ExerciseForm */ 763);
 	
 	var _ExerciseForm2 = _interopRequireDefault(_ExerciseForm);
 	
-	var _LoginForm = __webpack_require__(/*! ./src/Components/Auth/LoginForm */ 760);
+	var _LoginForm = __webpack_require__(/*! ./src/Components/Auth/LoginForm */ 765);
 	
 	var _LoginForm2 = _interopRequireDefault(_LoginForm);
 	
-	var _SignupForm = __webpack_require__(/*! ./src/Components/Auth/SignupForm */ 763);
+	var _SignupForm = __webpack_require__(/*! ./src/Components/Auth/SignupForm */ 768);
 	
 	var _SignupForm2 = _interopRequireDefault(_SignupForm);
 	
@@ -35535,7 +35535,8 @@
 	
 	var INITIAL_STATE = {
 	  username: null,
-	  error: null
+	  error: null,
+	  loading: null
 	};
 	
 	exports.default = function () {
@@ -35544,14 +35545,17 @@
 	
 	  console.log(action);
 	  switch (action.type) {
+	    case _Types.LOGIN_USER:
+	    case _Types.SIGNUP_USER:
+	      return _extends({}, state, { loading: true });
 	    case _Types.LOGIN_USER_SUCCESS:
-	      return _extends({}, state, { username: action.payload });
+	      return _extends({}, state, { username: action.payload, loading: false });
 	    case _Types.LOGIN_USER_FAIL:
-	      return _extends({}, state, { error: 'Log in failed!' });
+	      return _extends({}, state, { error: 'Log in failed!', loading: false });
 	    case _Types.SIGNUP_USER_FAIL:
-	      return _extends({}, state, { error: 'Sign up failed!' });
+	      return _extends({}, state, { error: 'Sign up failed!', loading: false });
 	    case _Types.LOGOUT_USER_SUCCESS:
-	      return { error: null, username: null };
+	      return { error: null, username: null, loading: false };
 	    default:
 	      return state;
 	  }
@@ -35592,6 +35596,11 @@
 	var REQUEST_FAIL = exports.REQUEST_FAIL = 'request_fail';
 	
 	var GET_GRADES = exports.GET_GRADES = 'get_grades';
+	
+	var FETCH_COURSES = exports.FETCH_COURSES = 'fetch_courses';
+	var FETCH_QUIZZES = exports.FETCH_QUIZZES = 'fetch_quizzes';
+	var FETCH_QUESTIONS = exports.FETCH_QUESTIONS = 'fetch_questions';
+	var FETCH_GRADES = exports.FETCH_GRADES = 'fetch_grades';
 
 /***/ }),
 /* 424 */
@@ -35617,7 +35626,11 @@
 	  selectedCourse: null,
 	  selectedQuiz: null,
 	  grades: null,
-	  error: null
+	  error: null,
+	  loadingCourses: null,
+	  loadingQuizzes: null,
+	  loadingQuestions: null,
+	  loadingGrades: null
 	};
 	
 	exports.default = function () {
@@ -35625,18 +35638,26 @@
 	  var action = arguments[1];
 	
 	  switch (action.type) {
+	    case _Types.FETCH_COURSES:
+	      return _extends({}, state, { loadingCourses: true });
 	    case _Types.GET_ALL_COURSES:
-	      return _extends({}, state, { courses: action.payload });
+	      return _extends({}, state, { courses: action.payload, loadingCourses: false });
 	    case _Types.SELECT_COURSE:
 	      return _extends({}, state, { selectedCourse: action.payload });
+	    case _Types.FETCH_QUIZZES:
+	      return _extends({}, state, { loadingQuizzes: true });
 	    case _Types.GET_ALL_QUIZZES:
-	      return _extends({}, state, { quizzes: action.payload });
+	      return _extends({}, state, { quizzes: action.payload, loadingQuizzes: false });
 	    case _Types.SELECT_QUIZ:
 	      return _extends({}, state, { selectedQuiz: action.payload });
+	    case _Types.FETCH_QUESTIONS:
+	      return _extends({}, state, { loadingQuestions: true });
 	    case _Types.GET_ALL_QUESTIONS:
-	      return _extends({}, state, { questions: action.payload });
+	      return _extends({}, state, { questions: action.payload, loadingQuestions: false });
+	    case _Types.FETCH_GRADES:
+	      return _extends({}, state, { loadingGrades: true });
 	    case _Types.GET_GRADES:
-	      return _extends({}, state, { grades: action.payload });
+	      return _extends({}, state, { grades: action.payload, loadingGrades: false });
 	    case _Types.REQUEST_FAIL:
 	      return _extends({}, state, { error: 'request failed' });
 	    case _Types.LOGOUT_USER_SUCCESS:
@@ -59526,7 +59547,7 @@
 	
 	var signupUser = exports.signupUser = function signupUser(username, password, firstName, lastName, email) {
 	  return function (dispatch) {
-	    console.log('sending sign up req...');
+	    dispatch({ type: _Types.SIGNUP_USER });
 	    _api2.default.createUser(username, password, firstName, lastName, email).then(function (res) {
 	      if (res.status === 200 || res.status === 201) {
 	        dispatch(loginUserSuccess(username));
@@ -59542,7 +59563,7 @@
 	
 	var loginUser = exports.loginUser = function loginUser(username) {
 	  return function (dispatch) {
-	    console.log('sending login req...');
+	    dispatch({ type: _Types.LOGIN_USER });
 	    _api2.default.getUser(username).then(function (res) {
 	      if (res.data) {
 	        dispatch(loginUserSuccess(username));
@@ -63318,7 +63339,9 @@
 	
 	var _WorkspaceStyles2 = _interopRequireDefault(_WorkspaceStyles);
 	
-	var _QuizTabs = __webpack_require__(/*! ./QuizTabs */ 753);
+	__webpack_require__(/*! ../Styles/spinner.css */ 753);
+	
+	var _QuizTabs = __webpack_require__(/*! ./QuizTabs */ 758);
 	
 	var _QuizTabs2 = _interopRequireDefault(_QuizTabs);
 	
@@ -63328,7 +63351,7 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 182);
 	
-	var _CoursesActions = __webpack_require__(/*! ../../Redux/CoursesActions */ 757);
+	var _CoursesActions = __webpack_require__(/*! ../../Redux/CoursesActions */ 762);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -63412,7 +63435,11 @@
 	                _react2.default.createElement(
 	                  _reactBootstrap.ListGroup,
 	                  null,
-	                  this.props.courses ? this.props.courses.map(function (course) {
+	                  this.props.loadingCourses ? _react2.default.createElement(
+	                    'div',
+	                    { className: 'loader' },
+	                    'Loading...'
+	                  ) : this.props.courses ? this.props.courses.map(function (course) {
 	                    return _react2.default.createElement(
 	                      _reactBootstrap.ListGroupItem,
 	                      { style: _WorkspaceStyles2.default.item, key: course.id, onClick: function onClick() {
@@ -63439,7 +63466,11 @@
 	                _react2.default.createElement(
 	                  _reactBootstrap.ListGroup,
 	                  null,
-	                  this.props.quizzes ? this.props.quizzes.map(function (quiz) {
+	                  this.props.loadingQuizzes ? _react2.default.createElement(
+	                    'div',
+	                    { className: 'loader' },
+	                    'Loading...'
+	                  ) : this.props.quizzes ? this.props.quizzes.map(function (quiz) {
 	                    return _react2.default.createElement(
 	                      _reactBootstrap.ListGroupItem,
 	                      { style: _WorkspaceStyles2.default.item, key: quiz.id, onClick: function onClick() {
@@ -63457,11 +63488,7 @@
 	              _react2.default.createElement(
 	                _reactBootstrap.Col,
 	                { md: 8 },
-	                this.props.questions ? _react2.default.createElement(_QuizTabs2.default, { getLink: this._getLink.bind(this), questions: this.props.questions, grades: this.props.grades }) : _react2.default.createElement(
-	                  'h5',
-	                  null,
-	                  ' Select Quiz '
-	                )
+	                _react2.default.createElement(_QuizTabs2.default, { getLink: this._getLink.bind(this) })
 	              )
 	            )
 	          )
@@ -63484,7 +63511,9 @@
 	    questions: data.questions,
 	    selectedCourse: data.selectedCourse,
 	    selectedQuiz: data.selectedQuiz,
-	    grades: data.grades
+	    grades: data.grades,
+	    loadingCourses: data.loadingCourses,
+	    loadingQuizzes: data.loadingQuizzes
 	  };
 	};
 	
@@ -63545,6 +63574,560 @@
 
 /***/ }),
 /* 753 */
+/*!*******************************************************!*\
+  !*** ./src/main/js/src/Components/Styles/spinner.css ***!
+  \*******************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !../../../../../../~/css-loader!./spinner.css */ 754);
+	if (typeof content === 'string') content = [[module.id, content, '']];
+	// Prepare cssTransformation
+	var transform;
+	
+	var options = {};
+	options.transform = transform;
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ../../../../../../~/style-loader/addStyles.js */ 756)(content, options);
+	if (content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if (false) {
+		// When the styles change, update the <style> tags
+		if (!content.locals) {
+			module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!./spinner.css", function () {
+				var newContent = require("!!../../../../../../node_modules/css-loader/index.js!./spinner.css");
+				if (typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function () {
+			update();
+		});
+	}
+
+/***/ }),
+/* 754 */
+/*!**********************************************************************!*\
+  !*** ./~/css-loader!./src/main/js/src/Components/Styles/spinner.css ***!
+  \**********************************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ../../../../../../~/css-loader/lib/css-base.js */ 755)(undefined);
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".loader {\n  color: #000000;\n  font-size: 20px;\n  margin: 100px auto;\n  width: 1em;\n  height: 1em;\n  border-radius: 50%;\n  position: relative;\n  text-indent: -9999em;\n  -webkit-animation: load4 1.3s infinite linear;\n  animation: load4 1.3s infinite linear;\n  -webkit-transform: translateZ(0);\n  -ms-transform: translateZ(0);\n  transform: translateZ(0);\n}\n@-webkit-keyframes load4 {\n  0%,\n  100% {\n    box-shadow: 0 -3em 0 0.2em, 2em -2em 0 0em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 0;\n  }\n  12.5% {\n    box-shadow: 0 -3em 0 0, 2em -2em 0 0.2em, 3em 0 0 0, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;\n  }\n  25% {\n    box-shadow: 0 -3em 0 -0.5em, 2em -2em 0 0, 3em 0 0 0.2em, 2em 2em 0 0, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;\n  }\n  37.5% {\n    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 0, 2em 2em 0 0.2em, 0 3em 0 0em, -2em 2em 0 -1em, -3em 0em 0 -1em, -2em -2em 0 -1em;\n  }\n  50% {\n    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 0em, 0 3em 0 0.2em, -2em 2em 0 0, -3em 0em 0 -1em, -2em -2em 0 -1em;\n  }\n  62.5% {\n    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 0, -2em 2em 0 0.2em, -3em 0 0 0, -2em -2em 0 -1em;\n  }\n  75% {\n    box-shadow: 0em -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0.2em, -2em -2em 0 0;\n  }\n  87.5% {\n    box-shadow: 0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;\n  }\n}\n@keyframes load4 {\n  0%,\n  100% {\n    box-shadow: 0 -3em 0 0.2em, 2em -2em 0 0em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 0;\n  }\n  12.5% {\n    box-shadow: 0 -3em 0 0, 2em -2em 0 0.2em, 3em 0 0 0, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;\n  }\n  25% {\n    box-shadow: 0 -3em 0 -0.5em, 2em -2em 0 0, 3em 0 0 0.2em, 2em 2em 0 0, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;\n  }\n  37.5% {\n    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 0, 2em 2em 0 0.2em, 0 3em 0 0em, -2em 2em 0 -1em, -3em 0em 0 -1em, -2em -2em 0 -1em;\n  }\n  50% {\n    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 0em, 0 3em 0 0.2em, -2em 2em 0 0, -3em 0em 0 -1em, -2em -2em 0 -1em;\n  }\n  62.5% {\n    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 0, -2em 2em 0 0.2em, -3em 0 0 0, -2em -2em 0 -1em;\n  }\n  75% {\n    box-shadow: 0em -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0.2em, -2em -2em 0 0;\n  }\n  87.5% {\n    box-shadow: 0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;\n  }\n}\n", ""]);
+	
+	// exports
+
+
+/***/ }),
+/* 755 */
+/*!**************************************!*\
+  !*** ./~/css-loader/lib/css-base.js ***!
+  \**************************************/
+/***/ (function(module, exports) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function(useSourceMap) {
+		var list = [];
+	
+		// return the list of modules as css string
+		list.toString = function toString() {
+			return this.map(function (item) {
+				var content = cssWithMappingToString(item, useSourceMap);
+				if(item[2]) {
+					return "@media " + item[2] + "{" + content + "}";
+				} else {
+					return content;
+				}
+			}).join("");
+		};
+	
+		// import a list of modules into the list
+		list.i = function(modules, mediaQuery) {
+			if(typeof modules === "string")
+				modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for(var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if(typeof id === "number")
+					alreadyImportedModules[id] = true;
+			}
+			for(i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if(mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if(mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+	
+	function cssWithMappingToString(item, useSourceMap) {
+		var content = item[1] || '';
+		var cssMapping = item[3];
+		if (!cssMapping) {
+			return content;
+		}
+	
+		if (useSourceMap && typeof btoa === 'function') {
+			var sourceMapping = toComment(cssMapping);
+			var sourceURLs = cssMapping.sources.map(function (source) {
+				return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+			});
+	
+			return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+		}
+	
+		return [content].join('\n');
+	}
+	
+	// Adapted from convert-source-map (MIT)
+	function toComment(sourceMap) {
+		// eslint-disable-next-line no-undef
+		var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+		var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+	
+		return '/*# ' + data + ' */';
+	}
+
+
+/***/ }),
+/* 756 */
+/*!*************************************!*\
+  !*** ./~/style-loader/addStyles.js ***!
+  \*************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {},
+		memoize = function(fn) {
+			var memo;
+			return function () {
+				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+				return memo;
+			};
+		},
+		isOldIE = memoize(function() {
+			// Test for IE <= 9 as proposed by Browserhacks
+			// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+			// Tests for existence of standard globals is to allow style-loader 
+			// to operate correctly into non-standard environments
+			// @see https://github.com/webpack-contrib/style-loader/issues/177
+			return window && document && document.all && !window.atob;
+		}),
+		getElement = (function(fn) {
+			var memo = {};
+			return function(selector) {
+				if (typeof memo[selector] === "undefined") {
+					memo[selector] = fn.call(this, selector);
+				}
+				return memo[selector]
+			};
+		})(function (styleTarget) {
+			return document.querySelector(styleTarget)
+		}),
+		singletonElement = null,
+		singletonCounter = 0,
+		styleElementsInsertedAtTop = [],
+		fixUrls = __webpack_require__(/*! ./fixUrls */ 757);
+	
+	module.exports = function(list, options) {
+		if(true) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+	
+		options = options || {};
+		options.attrs = typeof options.attrs === "object" ? options.attrs : {};
+	
+		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+		// tags it will allow on a page
+		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+	
+		// By default, add <style> tags to the <head> element
+		if (typeof options.insertInto === "undefined") options.insertInto = "head";
+	
+		// By default, add <style> tags to the bottom of the target
+		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+	
+		var styles = listToStyles(list, options);
+		addStylesToDom(styles, options);
+	
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList, options);
+				addStylesToDom(newStyles, options);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	};
+	
+	function addStylesToDom(styles, options) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j], options));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j], options));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+	
+	function listToStyles(list, options) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = options.base ? item[0] + options.base : item[0];
+			var css = item[1];
+			var media = item[2];
+			var sourceMap = item[3];
+			var part = {css: css, media: media, sourceMap: sourceMap};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+	
+	function insertStyleElement(options, styleElement) {
+		var styleTarget = getElement(options.insertInto)
+		if (!styleTarget) {
+			throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
+		}
+		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+		if (options.insertAt === "top") {
+			if(!lastStyleElementInsertedAtTop) {
+				styleTarget.insertBefore(styleElement, styleTarget.firstChild);
+			} else if(lastStyleElementInsertedAtTop.nextSibling) {
+				styleTarget.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+			} else {
+				styleTarget.appendChild(styleElement);
+			}
+			styleElementsInsertedAtTop.push(styleElement);
+		} else if (options.insertAt === "bottom") {
+			styleTarget.appendChild(styleElement);
+		} else {
+			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+		}
+	}
+	
+	function removeStyleElement(styleElement) {
+		styleElement.parentNode.removeChild(styleElement);
+		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+		if(idx >= 0) {
+			styleElementsInsertedAtTop.splice(idx, 1);
+		}
+	}
+	
+	function createStyleElement(options) {
+		var styleElement = document.createElement("style");
+		options.attrs.type = "text/css";
+	
+		attachTagAttrs(styleElement, options.attrs);
+		insertStyleElement(options, styleElement);
+		return styleElement;
+	}
+	
+	function createLinkElement(options) {
+		var linkElement = document.createElement("link");
+		options.attrs.type = "text/css";
+		options.attrs.rel = "stylesheet";
+	
+		attachTagAttrs(linkElement, options.attrs);
+		insertStyleElement(options, linkElement);
+		return linkElement;
+	}
+	
+	function attachTagAttrs(element, attrs) {
+		Object.keys(attrs).forEach(function (key) {
+			element.setAttribute(key, attrs[key]);
+		});
+	}
+	
+	function addStyle(obj, options) {
+		var styleElement, update, remove, transformResult;
+	
+		// If a transform function was defined, run it on the css
+		if (options.transform && obj.css) {
+		    transformResult = options.transform(obj.css);
+		    
+		    if (transformResult) {
+		    	// If transform returns a value, use that instead of the original css.
+		    	// This allows running runtime transformations on the css.
+		    	obj.css = transformResult;
+		    } else {
+		    	// If the transform function returns a falsy value, don't add this css. 
+		    	// This allows conditional loading of css
+		    	return function() {
+		    		// noop
+		    	};
+		    }
+		}
+	
+		if (options.singleton) {
+			var styleIndex = singletonCounter++;
+			styleElement = singletonElement || (singletonElement = createStyleElement(options));
+			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+		} else if(obj.sourceMap &&
+			typeof URL === "function" &&
+			typeof URL.createObjectURL === "function" &&
+			typeof URL.revokeObjectURL === "function" &&
+			typeof Blob === "function" &&
+			typeof btoa === "function") {
+			styleElement = createLinkElement(options);
+			update = updateLink.bind(null, styleElement, options);
+			remove = function() {
+				removeStyleElement(styleElement);
+				if(styleElement.href)
+					URL.revokeObjectURL(styleElement.href);
+			};
+		} else {
+			styleElement = createStyleElement(options);
+			update = applyToTag.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+			};
+		}
+	
+		update(obj);
+	
+		return function updateStyle(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+					return;
+				update(obj = newObj);
+			} else {
+				remove();
+			}
+		};
+	}
+	
+	var replaceText = (function () {
+		var textStore = [];
+	
+		return function (index, replacement) {
+			textStore[index] = replacement;
+			return textStore.filter(Boolean).join('\n');
+		};
+	})();
+	
+	function applyToSingletonTag(styleElement, index, remove, obj) {
+		var css = remove ? "" : obj.css;
+	
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = replaceText(index, css);
+		} else {
+			var cssNode = document.createTextNode(css);
+			var childNodes = styleElement.childNodes;
+			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			if (childNodes.length) {
+				styleElement.insertBefore(cssNode, childNodes[index]);
+			} else {
+				styleElement.appendChild(cssNode);
+			}
+		}
+	}
+	
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+	
+		if(media) {
+			styleElement.setAttribute("media", media)
+		}
+	
+		if(styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+	}
+	
+	function updateLink(linkElement, options, obj) {
+		var css = obj.css;
+		var sourceMap = obj.sourceMap;
+	
+		/* If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
+		and there is no publicPath defined then lets turn convertToAbsoluteUrls
+		on by default.  Otherwise default to the convertToAbsoluteUrls option
+		directly
+		*/
+		var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
+	
+		if (options.convertToAbsoluteUrls || autoFixUrls){
+			css = fixUrls(css);
+		}
+	
+		if(sourceMap) {
+			// http://stackoverflow.com/a/26603875
+			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+		}
+	
+		var blob = new Blob([css], { type: "text/css" });
+	
+		var oldSrc = linkElement.href;
+	
+		linkElement.href = URL.createObjectURL(blob);
+	
+		if(oldSrc)
+			URL.revokeObjectURL(oldSrc);
+	}
+
+
+/***/ }),
+/* 757 */
+/*!***********************************!*\
+  !*** ./~/style-loader/fixUrls.js ***!
+  \***********************************/
+/***/ (function(module, exports) {
+
+	
+	/**
+	 * When source maps are enabled, `style-loader` uses a link element with a data-uri to
+	 * embed the css on the page. This breaks all relative urls because now they are relative to a
+	 * bundle instead of the current page.
+	 *
+	 * One solution is to only use full urls, but that may be impossible.
+	 *
+	 * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
+	 *
+	 * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
+	 *
+	 */
+	
+	module.exports = function (css) {
+	  // get current location
+	  var location = typeof window !== "undefined" && window.location;
+	
+	  if (!location) {
+	    throw new Error("fixUrls requires window.location");
+	  }
+	
+		// blank or null?
+		if (!css || typeof css !== "string") {
+		  return css;
+	  }
+	
+	  var baseUrl = location.protocol + "//" + location.host;
+	  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
+	
+		// convert each url(...)
+		/*
+		This regular expression is just a way to recursively match brackets within
+		a string.
+	
+		 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
+		   (  = Start a capturing group
+		     (?:  = Start a non-capturing group
+		         [^)(]  = Match anything that isn't a parentheses
+		         |  = OR
+		         \(  = Match a start parentheses
+		             (?:  = Start another non-capturing groups
+		                 [^)(]+  = Match anything that isn't a parentheses
+		                 |  = OR
+		                 \(  = Match a start parentheses
+		                     [^)(]*  = Match anything that isn't a parentheses
+		                 \)  = Match a end parentheses
+		             )  = End Group
+	              *\) = Match anything and then a close parens
+	          )  = Close non-capturing group
+	          *  = Match anything
+	       )  = Close capturing group
+		 \)  = Match a close parens
+	
+		 /gi  = Get all matches, not the first.  Be case insensitive.
+		 */
+		var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
+			// strip quotes (if they exist)
+			var unquotedOrigUrl = origUrl
+				.trim()
+				.replace(/^"(.*)"$/, function(o, $1){ return $1; })
+				.replace(/^'(.*)'$/, function(o, $1){ return $1; });
+	
+			// already a full url? no change
+			if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/)/i.test(unquotedOrigUrl)) {
+			  return fullMatch;
+			}
+	
+			// convert the url to a full url
+			var newUrl;
+	
+			if (unquotedOrigUrl.indexOf("//") === 0) {
+			  	//TODO: should we add protocol?
+				newUrl = unquotedOrigUrl;
+			} else if (unquotedOrigUrl.indexOf("/") === 0) {
+				// path should be relative to the base url
+				newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
+			} else {
+				// path should be relative to current directory
+				newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
+			}
+	
+			// send back the fixed url(...)
+			return "url(" + JSON.stringify(newUrl) + ")";
+		});
+	
+		// send back the fixed css
+		return fixedCss;
+	};
+
+
+/***/ }),
+/* 758 */
 /*!**********************************************************!*\
   !*** ./src/main/js/src/Components/Workspace/QuizTabs.js ***!
   \**********************************************************/
@@ -63564,13 +64147,17 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _ExerciseQuestions = __webpack_require__(/*! ./ExerciseQuestions */ 754);
+	var _ExerciseQuestions = __webpack_require__(/*! ./ExerciseQuestions */ 759);
 	
 	var _ExerciseQuestions2 = _interopRequireDefault(_ExerciseQuestions);
 	
-	var _GradesTab = __webpack_require__(/*! ./GradesTab */ 756);
+	var _GradesTab = __webpack_require__(/*! ./GradesTab */ 761);
 	
 	var _GradesTab2 = _interopRequireDefault(_GradesTab);
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 182);
+	
+	__webpack_require__(/*! ../Styles/spinner.css */ 753);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -63602,14 +64189,26 @@
 	            'div',
 	            null,
 	            _react2.default.createElement('br', null),
-	            this.props.getLink(),
-	            _react2.default.createElement(_ExerciseQuestions2.default, { questions: this.props.questions })
+	            this.props.loadingQuestions ? _react2.default.createElement(
+	              'div',
+	              { className: 'loader' },
+	              'Loading...'
+	            ) : _react2.default.createElement(
+	              'div',
+	              null,
+	              this.props.getLink(),
+	              _react2.default.createElement(_ExerciseQuestions2.default, { questions: this.props.questions })
+	            )
 	          )
 	        ),
 	        _react2.default.createElement(
 	          _reactBootstrap.Tab,
 	          { eventKey: 2, title: 'Grades' },
-	          _react2.default.createElement(_GradesTab2.default, { grades: this.props.grades })
+	          this.props.loadingGrades ? _react2.default.createElement(
+	            'div',
+	            { className: 'loader' },
+	            'Loading...'
+	          ) : _react2.default.createElement(_GradesTab2.default, { grades: this.props.grades })
 	        )
 	      );
 	    }
@@ -63618,10 +64217,21 @@
 	  return QuizTabs;
 	}(_react.Component);
 	
-	exports.default = QuizTabs;
+	var mapStateToProps = function mapStateToProps(_ref) {
+	  var data = _ref.data;
+	
+	  return {
+	    grades: data.grades,
+	    questions: data.questions,
+	    loadingGrades: data.loadingGrades,
+	    loadingQuestions: data.loadingQuestions
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(QuizTabs);
 
 /***/ }),
-/* 754 */
+/* 759 */
 /*!*******************************************************************!*\
   !*** ./src/main/js/src/Components/Workspace/ExerciseQuestions.js ***!
   \*******************************************************************/
@@ -63641,7 +64251,7 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _ExerciseStyles = __webpack_require__(/*! ../Styles/ExerciseStyles */ 755);
+	var _ExerciseStyles = __webpack_require__(/*! ../Styles/ExerciseStyles */ 760);
 	
 	var _ExerciseStyles2 = _interopRequireDefault(_ExerciseStyles);
 	
@@ -63707,7 +64317,7 @@
 	exports.default = ExerciseQuestions;
 
 /***/ }),
-/* 755 */
+/* 760 */
 /*!*************************************************************!*\
   !*** ./src/main/js/src/Components/Styles/ExerciseStyles.js ***!
   \*************************************************************/
@@ -63772,7 +64382,7 @@
 	exports.default = styles;
 
 /***/ }),
-/* 756 */
+/* 761 */
 /*!***********************************************************!*\
   !*** ./src/main/js/src/Components/Workspace/GradesTab.js ***!
   \***********************************************************/
@@ -63872,7 +64482,7 @@
 	              )
 	            );
 	          }) : _react2.default.createElement(
-	            'div',
+	            'p',
 	            null,
 	            ' No Grades to show '
 	          )
@@ -63887,7 +64497,7 @@
 	exports.default = GradesTab;
 
 /***/ }),
-/* 757 */
+/* 762 */
 /*!*************************************************!*\
   !*** ./src/main/js/src/Redux/CoursesActions.js ***!
   \*************************************************/
@@ -63910,6 +64520,7 @@
 	
 	var getAllCourses = exports.getAllCourses = function getAllCourses(username) {
 	  return function (dispatch) {
+	    dispatch({ type: _Types.FETCH_COURSES });
 	    _api2.default.getCourses(username).then(function (res) {
 	      if (res.data) {
 	        dispatch({ type: _Types.GET_ALL_COURSES, payload: res.data });
@@ -63932,6 +64543,7 @@
 	
 	var getAllQuizzes = exports.getAllQuizzes = function getAllQuizzes(username, courseId) {
 	  return function (dispatch) {
+	    dispatch({ type: _Types.FETCH_QUIZZES });
 	    _api2.default.getQuizzes(username, courseId).then(function (res) {
 	      if (res.data) {
 	        dispatch({ type: _Types.GET_ALL_QUIZZES, payload: res.data });
@@ -63954,6 +64566,7 @@
 	
 	var getAllQuestions = function getAllQuestions(username, courseId, quizId) {
 	  return function (dispatch) {
+	    dispatch({ type: _Types.FETCH_QUESTIONS });
 	    _api2.default.getAllQuestions(username, courseId, quizId).then(function (res) {
 	      if (res.data) {
 	        dispatch({ type: _Types.GET_ALL_QUESTIONS, payload: res.data });
@@ -63967,6 +64580,7 @@
 	
 	var getGrades = exports.getGrades = function getGrades(username, courseId, quizId) {
 	  return function (dispatch) {
+	    dispatch({ type: _Types.FETCH_GRADES });
 	    _api2.default.getGrades(username, courseId, quizId).then(function (res) {
 	      if (res.data && res.data.length > 0) {
 	        dispatch({ type: _Types.GET_GRADES, payload: res.data });
@@ -63980,11 +64594,13 @@
 	};
 	
 	var requestFailed = function requestFailed() {
-	  type: _Types.REQUEST_FAIL;
+	  return {
+	    type: _Types.REQUEST_FAIL
+	  };
 	};
 
 /***/ }),
-/* 758 */
+/* 763 */
 /*!************************************************************!*\
   !*** ./src/main/js/src/Components/Student/ExerciseForm.js ***!
   \************************************************************/
@@ -64008,11 +64624,11 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _ExerciseStyles = __webpack_require__(/*! ../Styles/ExerciseStyles */ 755);
+	var _ExerciseStyles = __webpack_require__(/*! ../Styles/ExerciseStyles */ 760);
 	
 	var _ExerciseStyles2 = _interopRequireDefault(_ExerciseStyles);
 	
-	var _Error = __webpack_require__(/*! ../Common/Error */ 759);
+	var _Error = __webpack_require__(/*! ../Common/Error */ 764);
 	
 	var _Error2 = _interopRequireDefault(_Error);
 	
@@ -64247,7 +64863,7 @@
 	})(ExerciseForm);
 
 /***/ }),
-/* 759 */
+/* 764 */
 /*!****************************************************!*\
   !*** ./src/main/js/src/Components/Common/Error.js ***!
   \****************************************************/
@@ -64303,7 +64919,7 @@
 	exports.default = Error;
 
 /***/ }),
-/* 760 */
+/* 765 */
 /*!******************************************************!*\
   !*** ./src/main/js/src/Components/Auth/LoginForm.js ***!
   \******************************************************/
@@ -64333,17 +64949,19 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _Alert = __webpack_require__(/*! ../Common/Alert */ 761);
+	var _Alert = __webpack_require__(/*! ../Common/Alert */ 766);
 	
 	var _Alert2 = _interopRequireDefault(_Alert);
 	
-	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 762);
+	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 767);
 	
 	var _AuthStyles2 = _interopRequireDefault(_AuthStyles);
 	
 	var _background = __webpack_require__(/*! ../../../public/background.jpg */ 717);
 	
 	var _background2 = _interopRequireDefault(_background);
+	
+	__webpack_require__(/*! ../Styles/spinner.css */ 753);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -64397,7 +65015,11 @@
 	            { style: _AuthStyles2.default.h3 },
 	            ' Log in '
 	          ),
-	          _react2.default.createElement(
+	          this.props.loading ? _react2.default.createElement(
+	            'div',
+	            { className: 'loader', style: { height: 20 } },
+	            'Loading... '
+	          ) : _react2.default.createElement(
 	            'form',
 	            { onSubmit: this.handleSubmit.bind(this) },
 	            _react2.default.createElement('input', { style: _AuthStyles2.default.input, type: 'text', name: 'username', placeholder: 'Username', value: this.state.username, onChange: function onChange(event) {
@@ -64425,7 +65047,8 @@
 	
 	  return {
 	    username: auth.username,
-	    error: auth.error
+	    error: auth.error,
+	    loading: auth.loading
 	  };
 	};
 	
@@ -64440,7 +65063,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LoginForm);
 
 /***/ }),
-/* 761 */
+/* 766 */
 /*!****************************************************!*\
   !*** ./src/main/js/src/Components/Common/Alert.js ***!
   \****************************************************/
@@ -64503,7 +65126,7 @@
 	exports.default = AlertDismissable;
 
 /***/ }),
-/* 762 */
+/* 767 */
 /*!*********************************************************!*\
   !*** ./src/main/js/src/Components/Styles/AuthStyles.js ***!
   \*********************************************************/
@@ -64546,7 +65169,7 @@
 	exports.default = styles;
 
 /***/ }),
-/* 763 */
+/* 768 */
 /*!*******************************************************!*\
   !*** ./src/main/js/src/Components/Auth/SignupForm.js ***!
   \*******************************************************/
@@ -64576,17 +65199,19 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 762);
+	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 767);
 	
 	var _AuthStyles2 = _interopRequireDefault(_AuthStyles);
 	
-	var _Alert = __webpack_require__(/*! ../Common/Alert */ 761);
+	var _Alert = __webpack_require__(/*! ../Common/Alert */ 766);
 	
 	var _Alert2 = _interopRequireDefault(_Alert);
 	
 	var _background = __webpack_require__(/*! ../../../public/background.jpg */ 717);
 	
 	var _background2 = _interopRequireDefault(_background);
+	
+	__webpack_require__(/*! ../Styles/spinner.css */ 753);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -64642,7 +65267,11 @@
 	            { style: _AuthStyles2.default.h3 },
 	            ' Sign up '
 	          ),
-	          _react2.default.createElement(
+	          this.props.loading ? _react2.default.createElement(
+	            'div',
+	            { className: 'loader', style: { height: 20 } },
+	            'Loading... '
+	          ) : _react2.default.createElement(
 	            'form',
 	            { onSubmit: this.handleSubmit.bind(this) },
 	            _react2.default.createElement('input', { style: _AuthStyles2.default.input, type: 'text', name: 'firstname', placeholder: 'First name', value: this.state.firstName, onChange: function onChange(event) {
@@ -64679,7 +65308,8 @@
 	
 	  return {
 	    username: auth.username,
-	    error: auth.error
+	    error: auth.error,
+	    loading: auth.loading
 	  };
 	};
 	

@@ -1,5 +1,9 @@
 import API from '../Services/api'
 import {
+  FETCH_COURSES,
+  FETCH_QUIZZES,
+  FETCH_QUESTIONS,
+  FETCH_GRADES,
   GET_ALL_COURSES,
   SELECT_COURSE,
   GET_ALL_QUIZZES,
@@ -12,6 +16,7 @@ import {
 
 export const getAllCourses = (username) => {
   return (dispatch) => {
+    dispatch({ type: FETCH_COURSES })
     API.getCourses(username).then((res) => {
       if (res.data) {
         dispatch({ type: GET_ALL_COURSES, payload: res.data })
@@ -32,6 +37,7 @@ export const selectCourse = (username, course) => {
 
 export const getAllQuizzes = (username, courseId) => {
   return (dispatch) => {
+    dispatch({ type: FETCH_QUIZZES })
     API.getQuizzes(username, courseId).then((res) => {
       if (res.data) {
         dispatch({ type: GET_ALL_QUIZZES, payload: res.data })
@@ -52,6 +58,7 @@ export const selectQuiz = (quiz, username, courseId ) => {
 
 const getAllQuestions = (username, courseId, quizId) => {
   return (dispatch) => {
+    dispatch({ type: FETCH_QUESTIONS })
     API.getAllQuestions(username, courseId, quizId).then((res) => {
       if (res.data) {
         dispatch({ type: GET_ALL_QUESTIONS, payload: res.data })
@@ -63,6 +70,7 @@ const getAllQuestions = (username, courseId, quizId) => {
 
 export const getGrades = (username, courseId, quizId) => {
   return (dispatch) => {
+    dispatch({ type: FETCH_GRADES })
     API.getGrades(username, courseId, quizId).then((res) => {
       if(res.data && res.data.length > 0) {
         dispatch({ type: GET_GRADES, payload: res.data })
@@ -73,6 +81,6 @@ export const getGrades = (username, courseId, quizId) => {
   }
 }
 
-const requestFailed = () => {
+const requestFailed = () => ({
   type: REQUEST_FAIL
-}
+})

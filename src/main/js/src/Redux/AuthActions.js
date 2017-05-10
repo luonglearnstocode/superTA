@@ -1,6 +1,8 @@
 import {
   SIGNUP_USER_FAIL,
   LOGIN_USER_FAIL,
+  LOGIN_USER,
+  SIGNUP_USER,
   LOGIN_USER_SUCCESS,
   LOGOUT_USER,
   LOGOUT_USER_SUCCESS
@@ -10,7 +12,7 @@ import API from '../Services/api'
 
 export const signupUser = (username, password, firstName, lastName, email) => {
   return (dispatch) => {
-    console.log('sending sign up req...')
+    dispatch({ type: SIGNUP_USER })
     API.createUser(username, password, firstName, lastName, email).then((res) => {
       if(res.status === 200 || res.status === 201){
         dispatch(loginUserSuccess(username))
@@ -26,7 +28,7 @@ export const signupUser = (username, password, firstName, lastName, email) => {
 
 export const loginUser = (username) => {
   return (dispatch) => {
-    console.log('sending login req...')
+    dispatch({ type: LOGIN_USER })
     API.getUser(username).then((res) => {
       if(res.data){
         dispatch(loginUserSuccess(username))

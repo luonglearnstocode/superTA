@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { Grid, Row, Col, ListGroup, ListGroupItem, Button, Tabs, Tab } from 'react-bootstrap'
 import { Redirect } from 'react-router'
 import styles from '../Styles/WorkspaceStyles'
+import '../Styles/spinner.css'
 import QuizTabs from './QuizTabs'
 import NavigationBar from '../Common/NavigationBar'
 import { connect } from 'react-redux'
@@ -45,10 +46,12 @@ class Workspace extends Component {
                   </div>
                   <ListGroup>
                     {
-                      this.props.courses ?
-                        this.props.courses.map((course) => <ListGroupItem style={styles.item} key={course.id} onClick={() => this._selectCourse(course)} active={this.props.selectedCourse === course}>{course.name}</ListGroupItem> )
-                      :
-                        <p> None </p>
+                      this.props.loadingCourses ?
+                        <div className="loader">Loading...</div>
+                      : this.props.courses ?
+                          this.props.courses.map((course) => <ListGroupItem style={styles.item} key={course.id} onClick={() => this._selectCourse(course)} active={this.props.selectedCourse === course}>{course.name}</ListGroupItem> )
+                        :
+                          <p> None </p>
                     }
                   </ListGroup>
                 </Col>
@@ -58,20 +61,17 @@ class Workspace extends Component {
                   </div>
                   <ListGroup>
                     {
-                      this.props.quizzes ?
-                        this.props.quizzes.map((quiz) => <ListGroupItem style={styles.item} key={quiz.id} onClick={() => this._selectQuiz(quiz)} active={this.props.selectedQuiz === quiz}>{quiz.title}</ListGroupItem> )
-                      :
-                        <p> Select a Course </p>
+                      this.props.loadingQuizzes ?
+                        <div className="loader">Loading...</div>
+                      : this.props.quizzes ?
+                          this.props.quizzes.map((quiz) => <ListGroupItem style={styles.item} key={quiz.id} onClick={() => this._selectQuiz(quiz)} active={this.props.selectedQuiz === quiz}>{quiz.title}</ListGroupItem> )
+                        :
+                          <p> Select a Course </p>
                     }
                   </ListGroup>
                 </Col>
                 <Col md={8}>
-                  {
-                    this.props.questions ?
-                      <QuizTabs getLink={this._getLink.bind(this)} questions={this.props.questions} grades={this.props.grades}/>
-                    :
-                      <h5> Select Quiz </h5>
-                  }
+                  <QuizTabs getLink={this._getLink.bind(this)} />
                 </Col>
               </Row>
             </Grid>
@@ -92,7 +92,9 @@ const mapStateToProps = ({ data, auth }) => {
     questions: data.questions,
     selectedCourse: data.selectedCourse,
     selectedQuiz: data.selectedQuiz,
-    grades: data.grades
+    grades: data.grades,
+    loadingCourses: data.loadingCourses,
+    loadingQuizzes: data.loadingQuizzes
   }
 }
 

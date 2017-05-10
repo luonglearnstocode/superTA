@@ -21,3 +21,8 @@ export const SELECT_QUESTION = 'select_question'
 export const REQUEST_FAIL = 'request_fail'
 
 export const GET_GRADES = 'get_grades'
+
+export const FETCH_COURSES = 'fetch_courses'
+export const FETCH_QUIZZES = 'fetch_quizzes'
+export const FETCH_QUESTIONS = 'fetch_questions'
+export const FETCH_GRADES = 'fetch_grades'

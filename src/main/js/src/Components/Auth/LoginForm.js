@@ -7,6 +7,7 @@ import { Button, Jumbotron } from 'react-bootstrap'
 import Alert from '../Common/Alert'
 import styles from '../Styles/AuthStyles'
 import BackgroundImage from '../../../public/background.jpg'
+import '../Styles/spinner.css'
 
 class LoginForm extends Component {
   constructor(props) {
@@ -34,11 +35,16 @@ class LoginForm extends Component {
         { this.props.error && <Alert style={{ width: '60%', margin: 50 }} bsStyle="danger" message={this.props.error} /> }
         <Jumbotron style={styles.jumbotron}>
           <h3 style={styles.h3}> Log in </h3>
-          <form onSubmit={this.handleSubmit.bind(this)}>
-            <input style={styles.input} type="text" name="username" placeholder="Username" value={this.state.username} onChange={(event) => this.setState({ username: event.target.value})} />
-            <input style={styles.input} type="password" name="password" placeholder="Password" value={this.state.password} onChange={(event) => this.setState({ password: event.target.value})} />
-            <Button bsStyle="primary" type="submit">Log in</Button>
-          </form>
+          {
+            this.props.loading ?
+              <div className='loader' style={{ height: 20 }}>Loading... </div>
+            :
+            <form onSubmit={this.handleSubmit.bind(this)}>
+              <input style={styles.input} type="text" name="username" placeholder="Username" value={this.state.username} onChange={(event) => this.setState({ username: event.target.value})} />
+              <input style={styles.input} type="password" name="password" placeholder="Password" value={this.state.password} onChange={(event) => this.setState({ password: event.target.value})} />
+              <Button bsStyle="primary" type="submit">Log in</Button>
+            </form>
+          }
         </Jumbotron>
       </div>
     )
@@ -48,7 +54,8 @@ class LoginForm extends Component {
 const mapStateToProps = ({ auth }) => {
   return {
     username: auth.username,
-    error: auth.error
+    error: auth.error,
+    loading: auth.loading
   }
 }
 
