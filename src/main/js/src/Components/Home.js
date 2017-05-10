@@ -14,8 +14,7 @@ class Home extends Component {
   }
 
   updateCurrentFormula(e) {
-    const value = e.target.value.replace("/", ' \\over ').replace("*", " \\times ").replace('.', ' \\cdot ')
-    this.setState({ currentFormula: value })
+    this.setState({ currentFormula: e.target.value })
   }
 
   render() {
