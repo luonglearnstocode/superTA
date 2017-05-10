@@ -4,15 +4,20 @@ import {
   GET_ALL_QUIZZES,
   SELECT_QUIZ,
   GET_ALL_QUESTIONS,
-  SELECT_QUESTION
+  SELECT_QUESTION,
+  GET_GRADES,
+  LOGOUT_USER_SUCCESS,
+  REQUEST_FAIL
 } from './Types'
 
 const INITIAL_STATE = {
-  courses: [{ id: null, name: null }],
-  quizzes: [{ id: null, title: null }],
-  questions: [{ id: null, text: null, solution: null }],
+  courses: null,
+  quizzes: null,
+  questions: null,
   selectedCourse: null,
-  selectedQuiz: null
+  selectedQuiz: null,
+  grades: null,
+  error: null
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -27,6 +32,12 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, selectedQuiz: action.payload}
     case GET_ALL_QUESTIONS:
       return { ...state, questions: action.payload}
+    case GET_GRADES:
+      return { ...state, grades: actions.payload}
+    case REQUEST_FAIL:
+      return { ...state, error: 'request failed' }
+    case LOGOUT_USER_SUCCESS:
+      return state
     default:
       return state
   }

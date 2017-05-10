@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { reducer as reduxFormReducer } from 'redux-form'
 import AuthReducer from './src/Redux/AuthReducers'
 import CourseReducers from './src/Redux/CourseReducers'
@@ -9,7 +9,7 @@ import thunk from 'redux-thunk'
 import { HashRouter as Router, Route } from 'react-router-dom';
 
 import Home from './src/Components/Home'
-import Workspace from './src/Components/Workspace'
+import Workspace from './src/Components/Workspace/Workspace'
 import ExerciseForm from './src/Components/Exercises/ExerciseForm'
 import LoginForm from './src/Components/Auth/LoginForm'
 import SignupForm from './src/Components/Auth/SignupForm'
@@ -19,17 +19,14 @@ const reducer = combineReducers({
   auth: AuthReducer,
   data: CourseReducers
 })
-const store =
-  (window.devToolsExtension ? window.devToolsExtension()(createStore) : createStore)(reducer, {}, applyMiddleware(thunk))
 
-// const requireAuth = (nextState, replace) => {
-//   if () {
-//     replace({
-//       pathname: '/login',
-//       state: { nextPathname: nextState.location.pathname }
-//     })
-//   }
-// }
+const store = createStore(
+  reducer,{},
+  compose(
+    applyMiddleware(thunk),
+    window.devToolsExtension ? window.devToolsExtension() : f => f
+  )
+)
 
 ReactDOM.render(
   <Provider store={store}>

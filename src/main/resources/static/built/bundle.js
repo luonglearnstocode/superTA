@@ -81,19 +81,19 @@
 	
 	var _Home2 = _interopRequireDefault(_Home);
 	
-	var _Workspace = __webpack_require__(/*! ./src/Components/Workspace */ 751);
+	var _Workspace = __webpack_require__(/*! ./src/Components/Workspace/Workspace */ 751);
 	
 	var _Workspace2 = _interopRequireDefault(_Workspace);
 	
-	var _ExerciseForm = __webpack_require__(/*! ./src/Components/Exercises/ExerciseForm */ 762);
+	var _ExerciseForm = __webpack_require__(/*! ./src/Components/Exercises/ExerciseForm */ 763);
 	
 	var _ExerciseForm2 = _interopRequireDefault(_ExerciseForm);
 	
-	var _LoginForm = __webpack_require__(/*! ./src/Components/Auth/LoginForm */ 764);
+	var _LoginForm = __webpack_require__(/*! ./src/Components/Auth/LoginForm */ 765);
 	
 	var _LoginForm2 = _interopRequireDefault(_LoginForm);
 	
-	var _SignupForm = __webpack_require__(/*! ./src/Components/Auth/SignupForm */ 767);
+	var _SignupForm = __webpack_require__(/*! ./src/Components/Auth/SignupForm */ 768);
 	
 	var _SignupForm2 = _interopRequireDefault(_SignupForm);
 	
@@ -104,16 +104,10 @@
 	  auth: _AuthReducers2.default,
 	  data: _CourseReducers2.default
 	});
-	var store = (window.devToolsExtension ? window.devToolsExtension()(_redux.createStore) : _redux.createStore)(reducer, {}, (0, _redux.applyMiddleware)(_reduxThunk2.default));
 	
-	// const requireAuth = (nextState, replace) => {
-	//   if () {
-	//     replace({
-	//       pathname: '/login',
-	//       state: { nextPathname: nextState.location.pathname }
-	//     })
-	//   }
-	// }
+	var store = (0, _redux.createStore)(reducer, {}, (0, _redux.compose)((0, _redux.applyMiddleware)(_reduxThunk2.default), window.devToolsExtension ? window.devToolsExtension() : function (f) {
+	  return f;
+	}));
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRedux.Provider,
@@ -35596,6 +35590,8 @@
 	var SELECT_QUESTION = exports.SELECT_QUESTION = 'select_question';
 	
 	var REQUEST_FAIL = exports.REQUEST_FAIL = 'request_fail';
+	
+	var GET_GRADES = exports.GET_GRADES = 'get_grades';
 
 /***/ }),
 /* 424 */
@@ -35615,11 +35611,13 @@
 	var _Types = __webpack_require__(/*! ./Types */ 423);
 	
 	var INITIAL_STATE = {
-	  courses: [{ id: null, name: null }],
-	  quizzes: [{ id: null, title: null }],
-	  questions: [{ id: null, text: null, solution: null }],
+	  courses: null,
+	  quizzes: null,
+	  questions: null,
 	  selectedCourse: null,
-	  selectedQuiz: null
+	  selectedQuiz: null,
+	  grades: null,
+	  error: null
 	};
 	
 	exports.default = function () {
@@ -35637,6 +35635,12 @@
 	      return _extends({}, state, { selectedQuiz: action.payload });
 	    case _Types.GET_ALL_QUESTIONS:
 	      return _extends({}, state, { questions: action.payload });
+	    case _Types.GET_GRADES:
+	      return _extends({}, state, { grades: actions.payload });
+	    case _Types.REQUEST_FAIL:
+	      return _extends({}, state, { error: 'request failed' });
+	    case _Types.LOGOUT_USER_SUCCESS:
+	      return state;
 	    default:
 	      return state;
 	  }
@@ -59363,7 +59367,7 @@
 	  },
 	  brandImage: {
 	    height: 40,
-	    marginRight: 20,
+	    marginRight: 15,
 	    display: 'inline'
 	  }
 	};
@@ -63321,9 +63325,9 @@
 
 /***/ }),
 /* 751 */
-/*!*************************************************!*\
-  !*** ./src/main/js/src/Components/Workspace.js ***!
-  \*************************************************/
+/*!***********************************************************!*\
+  !*** ./src/main/js/src/Components/Workspace/Workspace.js ***!
+  \***********************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63342,23 +63346,23 @@
 	
 	var _reactRouter = __webpack_require__(/*! react-router */ 436);
 	
-	var _WorkspaceStyles = __webpack_require__(/*! ./Styles/WorkspaceStyles */ 752);
+	var _WorkspaceStyles = __webpack_require__(/*! ../Styles/WorkspaceStyles */ 752);
 	
 	var _WorkspaceStyles2 = _interopRequireDefault(_WorkspaceStyles);
 	
-	var _ExerciseQuestions = __webpack_require__(/*! ./Exercises/ExerciseQuestions */ 753);
+	var _QuizTabs = __webpack_require__(/*! ./QuizTabs */ 753);
 	
-	var _ExerciseQuestions2 = _interopRequireDefault(_ExerciseQuestions);
+	var _QuizTabs2 = _interopRequireDefault(_QuizTabs);
 	
-	var _NavigationBar = __webpack_require__(/*! ./Common/NavigationBar */ 718);
+	var _NavigationBar = __webpack_require__(/*! ../Common/NavigationBar */ 718);
 	
 	var _NavigationBar2 = _interopRequireDefault(_NavigationBar);
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 182);
 	
-	var _CoursesActions = __webpack_require__(/*! ../Redux/CoursesActions */ 760);
+	var _CoursesActions = __webpack_require__(/*! ../../Redux/CoursesActions */ 761);
 	
-	var _FormTemplate = __webpack_require__(/*! ./Forms/FormTemplate */ 761);
+	var _FormTemplate = __webpack_require__(/*! ../Forms/FormTemplate */ 762);
 	
 	var _FormTemplate2 = _interopRequireDefault(_FormTemplate);
 	
@@ -63389,6 +63393,9 @@
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
 	      this.props.getAllCourses(this.props.username);
+	      if (!this.props.username) {
+	        window.alert('You need to be logged in to do that!');
+	      }
 	    }
 	  }, {
 	    key: '_close',
@@ -63409,10 +63416,7 @@
 	  }, {
 	    key: '_selectCourse',
 	    value: function _selectCourse(course) {
-	      this.props.selectCourse(course);
-	      if (this.props.selectedCourse) {
-	        this.props.getAllQuizzes(this.props.username, this.props.selectedCourse.id);
-	      }
+	      this.props.selectCourse(this.props.username, course);
 	    }
 	  }, {
 	    key: '_selectQuiz',
@@ -63430,6 +63434,11 @@
 	          'https://superta.herokuapp.com/quiz/' + this.props.selectedQuiz.id + '/answer'
 	        );
 	      }
+	    }
+	  }, {
+	    key: '_showGrades',
+	    value: function _showGrades() {
+	      this.props.getGrades(this.props.username, this.props.selectedCourse.id, this.props.selectedQuiz.id);
 	    }
 	  }, {
 	    key: 'render',
@@ -63470,7 +63479,7 @@
 	                  _react2.default.createElement(
 	                    _reactBootstrap.Button,
 	                    { bsStyle: 'warning', onClick: function onClick() {
-	                        return _this2._open('Course Edit Form', 'Course Name', _this2.props.selectCourse.name);
+	                        return _this2._open('Course Edit Form', 'Course Name', _this2.props.selectedCourse.name);
 	                      } },
 	                    _react2.default.createElement('i', { className: 'fa fa-pencil' })
 	                  ),
@@ -63532,7 +63541,7 @@
 	                _react2.default.createElement(
 	                  _reactBootstrap.ListGroup,
 	                  null,
-	                  this.props.quizzes.map(function (quiz) {
+	                  this.props.quizzes ? this.props.quizzes.map(function (quiz) {
 	                    return _react2.default.createElement(
 	                      _reactBootstrap.ListGroupItem,
 	                      { style: _WorkspaceStyles2.default.item, key: quiz.id, onClick: function onClick() {
@@ -63540,14 +63549,21 @@
 	                        }, active: _this2.props.selectedQuiz === quiz },
 	                      quiz.title
 	                    );
-	                  })
+	                  }) : _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    ' Select a Course '
+	                  )
 	                )
 	              ),
 	              _react2.default.createElement(
 	                _reactBootstrap.Col,
 	                { md: 8 },
-	                this._getLink(),
-	                _react2.default.createElement(_ExerciseQuestions2.default, { questions: this.props.questions })
+	                this.props.questions ? _react2.default.createElement(_QuizTabs2.default, { getLink: this._getLink.bind(this), questions: this.props.questions }) : _react2.default.createElement(
+	                  'h5',
+	                  null,
+	                  ' Select Quiz '
+	                )
 	              )
 	            )
 	          ),
@@ -63576,7 +63592,8 @@
 	    quizzes: data.quizzes,
 	    questions: data.questions,
 	    selectedCourse: data.selectedCourse,
-	    selectedQuiz: data.selectedQuiz
+	    selectedQuiz: data.selectedQuiz,
+	    grades: data.grades
 	  };
 	};
 	
@@ -63593,6 +63610,9 @@
 	    },
 	    selectQuiz: function selectQuiz(quiz, username, courseId) {
 	      return dispatch((0, _CoursesActions.selectQuiz)(quiz, username, courseId));
+	    },
+	    getGrades: function getGrades(username, courseId, quizId) {
+	      return dispatch((0, _CoursesActions.getGrades)(username, courseId, quizId));
 	    }
 	  };
 	};
@@ -63634,8 +63654,83 @@
 
 /***/ }),
 /* 753 */
+/*!**********************************************************!*\
+  !*** ./src/main/js/src/Components/Workspace/QuizTabs.js ***!
+  \**********************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
+	
+	var _ExerciseQuestions = __webpack_require__(/*! ./ExerciseQuestions */ 754);
+	
+	var _ExerciseQuestions2 = _interopRequireDefault(_ExerciseQuestions);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var QuizTabs = function (_Component) {
+	  _inherits(QuizTabs, _Component);
+	
+	  function QuizTabs() {
+	    _classCallCheck(this, QuizTabs);
+	
+	    return _possibleConstructorReturn(this, (QuizTabs.__proto__ || Object.getPrototypeOf(QuizTabs)).apply(this, arguments));
+	  }
+	
+	  _createClass(QuizTabs, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _reactBootstrap.Tabs,
+	        { defaultActiveKey: 1, id: 'quiz-tabs' },
+	        _react2.default.createElement(
+	          _reactBootstrap.Tab,
+	          { eventKey: 1, title: 'Questions' },
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement('br', null),
+	            this.props.getLink(),
+	            _react2.default.createElement(_ExerciseQuestions2.default, { questions: this.props.questions })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Tab,
+	          { eventKey: 2, onClick: function onClick() {
+	              return console.log('grades clicked!');
+	            }, title: 'Grades' },
+	          'Grades'
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return QuizTabs;
+	}(_react.Component);
+	
+	exports.default = QuizTabs;
+
+/***/ }),
+/* 754 */
 /*!*******************************************************************!*\
-  !*** ./src/main/js/src/Components/Exercises/ExerciseQuestions.js ***!
+  !*** ./src/main/js/src/Components/Workspace/ExerciseQuestions.js ***!
   \*******************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -63653,11 +63748,11 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _ExerciseStyles = __webpack_require__(/*! ../Styles/ExerciseStyles */ 754);
+	var _ExerciseStyles = __webpack_require__(/*! ../Styles/ExerciseStyles */ 755);
 	
 	var _ExerciseStyles2 = _interopRequireDefault(_ExerciseStyles);
 	
-	var _Forms = __webpack_require__(/*! ../Forms */ 755);
+	var _Forms = __webpack_require__(/*! ../Forms */ 756);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -63766,7 +63861,7 @@
 	exports.default = ExerciseQuestions;
 
 /***/ }),
-/* 754 */
+/* 755 */
 /*!*************************************************************!*\
   !*** ./src/main/js/src/Components/Styles/ExerciseStyles.js ***!
   \*************************************************************/
@@ -63831,7 +63926,7 @@
 	exports.default = styles;
 
 /***/ }),
-/* 755 */
+/* 756 */
 /*!***************************************************!*\
   !*** ./src/main/js/src/Components/Forms/index.js ***!
   \***************************************************/
@@ -63843,7 +63938,7 @@
 	  value: true
 	});
 	
-	var _QuestionAddForm = __webpack_require__(/*! ./QuestionAddForm */ 756);
+	var _QuestionAddForm = __webpack_require__(/*! ./QuestionAddForm */ 757);
 	
 	Object.keys(_QuestionAddForm).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -63855,7 +63950,7 @@
 	  });
 	});
 	
-	var _QuestionEditForm = __webpack_require__(/*! ./QuestionEditForm */ 759);
+	var _QuestionEditForm = __webpack_require__(/*! ./QuestionEditForm */ 760);
 	
 	Object.keys(_QuestionEditForm).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -63868,7 +63963,7 @@
 	});
 
 /***/ }),
-/* 756 */
+/* 757 */
 /*!*************************************************************!*\
   !*** ./src/main/js/src/Components/Forms/QuestionAddForm.js ***!
   \*************************************************************/
@@ -63889,11 +63984,11 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _FormModal = __webpack_require__(/*! ./FormModal */ 757);
+	var _FormModal = __webpack_require__(/*! ./FormModal */ 758);
 	
 	var _FormModal2 = _interopRequireDefault(_FormModal);
 	
-	var _FormModalStyles = __webpack_require__(/*! ../Styles/FormModalStyles */ 758);
+	var _FormModalStyles = __webpack_require__(/*! ../Styles/FormModalStyles */ 759);
 	
 	var _FormModalStyles2 = _interopRequireDefault(_FormModalStyles);
 	
@@ -63983,7 +64078,7 @@
 	exports.QuestionAddForm = QuestionAddForm;
 
 /***/ }),
-/* 757 */
+/* 758 */
 /*!*******************************************************!*\
   !*** ./src/main/js/src/Components/Forms/FormModal.js ***!
   \*******************************************************/
@@ -64069,7 +64164,7 @@
 	exports.default = FormModal;
 
 /***/ }),
-/* 758 */
+/* 759 */
 /*!**************************************************************!*\
   !*** ./src/main/js/src/Components/Styles/FormModalStyles.js ***!
   \**************************************************************/
@@ -64095,7 +64190,7 @@
 	exports.default = styles;
 
 /***/ }),
-/* 759 */
+/* 760 */
 /*!**************************************************************!*\
   !*** ./src/main/js/src/Components/Forms/QuestionEditForm.js ***!
   \**************************************************************/
@@ -64116,11 +64211,11 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _FormModal = __webpack_require__(/*! ./FormModal */ 757);
+	var _FormModal = __webpack_require__(/*! ./FormModal */ 758);
 	
 	var _FormModal2 = _interopRequireDefault(_FormModal);
 	
-	var _FormModalStyles = __webpack_require__(/*! ../Styles/FormModalStyles */ 758);
+	var _FormModalStyles = __webpack_require__(/*! ../Styles/FormModalStyles */ 759);
 	
 	var _FormModalStyles2 = _interopRequireDefault(_FormModalStyles);
 	
@@ -64210,7 +64305,7 @@
 	exports.QuestionEditForm = QuestionEditForm;
 
 /***/ }),
-/* 760 */
+/* 761 */
 /*!*************************************************!*\
   !*** ./src/main/js/src/Redux/CoursesActions.js ***!
   \*************************************************/
@@ -64221,7 +64316,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.selectQuiz = exports.getAllQuizzes = exports.selectCourse = exports.getAllCourses = undefined;
+	exports.getGrades = exports.selectQuiz = exports.getAllQuizzes = exports.selectCourse = exports.getAllCourses = undefined;
 	
 	var _api = __webpack_require__(/*! ../Services/api */ 749);
 	
@@ -64236,7 +64331,7 @@
 	    _api2.default.getCourses(username).then(function (res) {
 	      if (res.data) {
 	        dispatch({ type: _Types.GET_ALL_COURSES, payload: res.data });
-	        dispatch({ type: _Types.SELECT_COURSE, payload: res.data[0] });
+	        dispatch(selectCourse(username, res.data[0]));
 	      }
 	    }).catch(function (err) {
 	      return dispatch(requestFailed());
@@ -64244,10 +64339,10 @@
 	  };
 	};
 	
-	var selectCourse = exports.selectCourse = function selectCourse(course) {
-	  return {
-	    type: _Types.SELECT_COURSE,
-	    payload: course
+	var selectCourse = exports.selectCourse = function selectCourse(username, course) {
+	  return function (dispatch) {
+	    dispatch(getAllQuizzes(username, course.id));
+	    dispatch({ type: _Types.SELECT_COURSE, payload: course });
 	  };
 	};
 	
@@ -64283,12 +64378,24 @@
 	  };
 	};
 	
+	var getGrades = exports.getGrades = function getGrades(username, courseId, quizId) {
+	  return function (dispatch) {
+	    _api2.default.getGrades(username, courseId, quizId).then(function (res) {
+	      if (res.status === 200 && res.data.length > 0) {
+	        dispatch({ type: GET_GRADES, payload: res.data });
+	      }
+	    }).catch(function (err) {
+	      return dispatch(requestFailed());
+	    });
+	  };
+	};
+	
 	var requestFailed = function requestFailed() {
 	  type: _Types.REQUEST_FAIL;
 	};
 
 /***/ }),
-/* 761 */
+/* 762 */
 /*!**********************************************************!*\
   !*** ./src/main/js/src/Components/Forms/FormTemplate.js ***!
   \**********************************************************/
@@ -64308,11 +64415,11 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _FormModal = __webpack_require__(/*! ./FormModal */ 757);
+	var _FormModal = __webpack_require__(/*! ./FormModal */ 758);
 	
 	var _FormModal2 = _interopRequireDefault(_FormModal);
 	
-	var _FormModalStyles = __webpack_require__(/*! ../Styles/FormModalStyles */ 758);
+	var _FormModalStyles = __webpack_require__(/*! ../Styles/FormModalStyles */ 759);
 	
 	var _FormModalStyles2 = _interopRequireDefault(_FormModalStyles);
 	
@@ -64389,7 +64496,7 @@
 	exports.default = FormTemplate;
 
 /***/ }),
-/* 762 */
+/* 763 */
 /*!**************************************************************!*\
   !*** ./src/main/js/src/Components/Exercises/ExerciseForm.js ***!
   \**************************************************************/
@@ -64413,11 +64520,11 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _ExerciseStyles = __webpack_require__(/*! ../Styles/ExerciseStyles */ 754);
+	var _ExerciseStyles = __webpack_require__(/*! ../Styles/ExerciseStyles */ 755);
 	
 	var _ExerciseStyles2 = _interopRequireDefault(_ExerciseStyles);
 	
-	var _Error = __webpack_require__(/*! ../Common/Error */ 763);
+	var _Error = __webpack_require__(/*! ../Common/Error */ 764);
 	
 	var _Error2 = _interopRequireDefault(_Error);
 	
@@ -64570,7 +64677,7 @@
 	            ),
 	            _react2.default.createElement(
 	              _reactBootstrap.Col,
-	              { md: 3 },
+	              { md: 3, style: { marginTop: 15 } },
 	              _react2.default.createElement(
 	                'label',
 	                { style: _ExerciseStyles2.default.label, htmlFor: 'studentId' },
@@ -64652,7 +64759,7 @@
 	})(ExerciseForm);
 
 /***/ }),
-/* 763 */
+/* 764 */
 /*!****************************************************!*\
   !*** ./src/main/js/src/Components/Common/Error.js ***!
   \****************************************************/
@@ -64708,7 +64815,7 @@
 	exports.default = Error;
 
 /***/ }),
-/* 764 */
+/* 765 */
 /*!******************************************************!*\
   !*** ./src/main/js/src/Components/Auth/LoginForm.js ***!
   \******************************************************/
@@ -64738,11 +64845,11 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _Alert = __webpack_require__(/*! ../Common/Alert */ 765);
+	var _Alert = __webpack_require__(/*! ../Common/Alert */ 766);
 	
 	var _Alert2 = _interopRequireDefault(_Alert);
 	
-	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 766);
+	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 767);
 	
 	var _AuthStyles2 = _interopRequireDefault(_AuthStyles);
 	
@@ -64845,7 +64952,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LoginForm);
 
 /***/ }),
-/* 765 */
+/* 766 */
 /*!****************************************************!*\
   !*** ./src/main/js/src/Components/Common/Alert.js ***!
   \****************************************************/
@@ -64908,7 +65015,7 @@
 	exports.default = AlertDismissable;
 
 /***/ }),
-/* 766 */
+/* 767 */
 /*!*********************************************************!*\
   !*** ./src/main/js/src/Components/Styles/AuthStyles.js ***!
   \*********************************************************/
@@ -64951,7 +65058,7 @@
 	exports.default = styles;
 
 /***/ }),
-/* 767 */
+/* 768 */
 /*!*******************************************************!*\
   !*** ./src/main/js/src/Components/Auth/SignupForm.js ***!
   \*******************************************************/
@@ -64981,11 +65088,11 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 465);
 	
-	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 766);
+	var _AuthStyles = __webpack_require__(/*! ../Styles/AuthStyles */ 767);
 	
 	var _AuthStyles2 = _interopRequireDefault(_AuthStyles);
 	
-	var _Alert = __webpack_require__(/*! ../Common/Alert */ 765);
+	var _Alert = __webpack_require__(/*! ../Common/Alert */ 766);
 	
 	var _Alert2 = _interopRequireDefault(_Alert);
 	

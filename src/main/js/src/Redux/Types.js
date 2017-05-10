@@ -19,3 +19,5 @@ export const GET_ALL_QUESTIONS = 'get_all_questions'
 export const SELECT_QUESTION = 'select_question'
 
 export const REQUEST_FAIL = 'request_fail'
+
+export const GET_GRADES = 'get_grades'

@@ -22,7 +22,7 @@ const styles = {
   },
   brandImage: {
     height: 40,
-    marginRight: 20,
+    marginRight: 15,
     display: 'inline'
   }
 }

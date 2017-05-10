@@ -43,7 +43,7 @@ const getOnlyQuestions = (quizId) => axios.get(baseURL + '/public/' + quizId + '
 const answerQuestions = (quizId, answersArray, studentId) => axios.post(baseURL + '/public/' + quizId + '/answer?student=' + studentId, answersArray)
 
 // GRADES
-const getGrades = (username, courseId, quizId ) => axios.get(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/grades')
+const getGrades = (username, courseId, quizId) => axios.get(baseURL + '/users/' + username + '/courses/' + courseId + '/quizzes/' + quizId + '/grades')
 
 export default {
   createUser,

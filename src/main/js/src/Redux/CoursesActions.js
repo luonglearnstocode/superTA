@@ -14,16 +14,16 @@ export const getAllCourses = (username) => {
     API.getCourses(username).then((res) => {
       if (res.data) {
         dispatch({ type: GET_ALL_COURSES, payload: res.data })
-        dispatch({ type: SELECT_COURSE, payload: res.data[0] })
+        dispatch(selectCourse(username, res.data[0]))
       }
     }).catch((err) => dispatch(requestFailed()))
   }
 }
 
-export const selectCourse = (course) => {
-  return {
-    type: SELECT_COURSE,
-    payload: course
+export const selectCourse = (username, course) => {
+  return dispatch => {
+    dispatch(getAllQuizzes(username, course.id))
+    dispatch({ type: SELECT_COURSE, payload: course})
   }
 }
 
@@ -50,6 +50,16 @@ const getAllQuestions = (username, courseId, quizId) => {
     API.getAllQuestions(username, courseId, quizId).then((res) => {
       if (res.data) {
         dispatch({ type: GET_ALL_QUESTIONS, payload: res.data })
+      }
+    }).catch((err) => dispatch(requestFailed()))
+  }
+}
+
+export const getGrades = (username, courseId, quizId) => {
+  return (dispatch) => {
+    API.getGrades(username, courseId, quizId).then((res) => {
+      if(res.status === 200 && res.data.length > 0) {
+        dispatch({ type: GET_GRADES, payload: res.data })
       }
     }).catch((err) => dispatch(requestFailed()))
   }
