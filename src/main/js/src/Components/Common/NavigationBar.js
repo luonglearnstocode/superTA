@@ -32,7 +32,6 @@ class NavigationBar extends Component {
   handleLogout() {
     this.props.logoutUser()
     window.alert('Logged out!')
-    console.log(this.props)
   }
 
   render() {
