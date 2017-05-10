@@ -4,6 +4,7 @@ import { Panel, Button, Row, Col } from 'react-bootstrap'
 import styles from '../Styles/ExerciseStyles'
 import Error from '../Common/Error'
 import API from '../../Services/api'
+import '../Styles/spinner.css'
 
 const title = (number) => {
   return (
@@ -25,6 +26,7 @@ class ExerciseForm extends React.Component {
     super(props)
     this.state = {
       questions: [],
+      loadingQuestions: true,
       disabled: false,
       results: null
     }
@@ -33,7 +35,7 @@ class ExerciseForm extends React.Component {
 
   componentWillMount() {
     API.getOnlyQuestions(this.quizId).then((res) => {
-      this.setState({ questions: res.data })
+      this.setState({ questions: res.data, loadingQuestions: false })
     }).catch((err) => console.log(err))
   }
 
@@ -100,32 +102,39 @@ class ExerciseForm extends React.Component {
               <p style={styles.result}>Percentage: {this._getPercent()} %</p>
             </Col>
           </Row>
-          <div style={this.props.style}>
-          { this.state.questions.map((question, index) => {
-            return (
-              <Panel
-                key={index}
-                style={styles.box}
-                header={title(index+1)}
-                bsStyle="warning">
-                <label style={styles.label}>{question}</label>
-                <div>
-                  <Field
-                    style={styles.input}
-                    results={this.state.results}
-                    name={'answers[a' + index + ']'}
-                    answerId={'a' + index}
-                    component={InputComponent}
-                    placeholder="Answer"
-                  />
-                </div>
-              </Panel>
-            )
-          })}
-          </div>
+          {
+            this.state.loadingQuestions ?
+              <div className="loader">Loading ...</div>
+            :
+            <div style={this.props.style}>
+              {
+                  this.state.questions.map((question, index) => {
+                  return (
+                    <Panel
+                      key={index}
+                      style={styles.box}
+                      header={title(index+1)}
+                      bsStyle="warning">
+                      <label style={styles.label}>{question}</label>
+                      <div>
+                        <Field
+                          style={styles.input}
+                          results={this.state.results}
+                          name={'answers[a' + index + ']'}
+                          answerId={'a' + index}
+                          component={InputComponent}
+                          placeholder="Answer"
+                        />
+                      </div>
+                    </Panel>
+                  )
+                })
+              }
+            </div>
+          }
           <Row style={{ width: '100%' }}>
             <Col md={2} mdOffset={5}>
-              <Button style={styles.button} bsStyle="warning" type="submit" disabled={this.state.disabled}>Submit</Button>
+                <Button style={styles.button} bsStyle="warning" type="submit" disabled={this.state.disabled}>Submit</Button>
             </Col>
           </Row>
         </form>

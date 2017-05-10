@@ -64636,6 +64636,8 @@
 	
 	var _api2 = _interopRequireDefault(_api);
 	
+	__webpack_require__(/*! ../Styles/spinner.css */ 753);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -64680,6 +64682,7 @@
 	
 	    _this.state = {
 	      questions: [],
+	      loadingQuestions: true,
 	      disabled: false,
 	      results: null
 	    };
@@ -64693,7 +64696,7 @@
 	      var _this2 = this;
 	
 	      _api2.default.getOnlyQuestions(this.quizId).then(function (res) {
-	        _this2.setState({ questions: res.data });
+	        _this2.setState({ questions: res.data, loadingQuestions: false });
 	      }).catch(function (err) {
 	        return console.log(err);
 	      });
@@ -64806,7 +64809,11 @@
 	              )
 	            )
 	          ),
-	          _react2.default.createElement(
+	          this.state.loadingQuestions ? _react2.default.createElement(
+	            'div',
+	            { className: 'loader' },
+	            'Loading ...'
+	          ) : _react2.default.createElement(
 	            'div',
 	            { style: this.props.style },
 	            this.state.questions.map(function (question, index) {
