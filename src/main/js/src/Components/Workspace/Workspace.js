@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Grid, Row, Col, ListGroup, ListGroupItem, Button, Tabs, Tab } from 'react-bootstrap'
+import { Grid, Row, Col, ListGroup, ListGroupItem, Button, Well } from 'react-bootstrap'
 import { Redirect } from 'react-router'
 import styles from '../Styles/WorkspaceStyles'
 import '../Styles/spinner.css'
@@ -25,7 +25,7 @@ class Workspace extends Component {
   _getLink() {
     if(this.props.selectedQuiz) {
       const link = 'https://superta.herokuapp.com/#/quiz/' + this.props.selectedQuiz.id + '/answer'
-      return <a href={link}>Link: {link}</a>
+      return  <Well style={{ margin: 30, width: '80%' }}><a href={link}>{link}</a></Well>
     }
   }
 
