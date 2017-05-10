@@ -43,8 +43,6 @@ class Workspace extends Component {
               <Row className="show-grid">
                 <Col md={2} style={styles.bar}>
                   <h3 style={styles.heading} >Courses</h3>
-                  <div style={styles.buttons}>
-                  </div>
                   <ListGroup>
                     {
                       this.props.loadingCourses ?
@@ -58,8 +56,6 @@ class Workspace extends Component {
                 </Col>
                 <Col md={2} style={styles.bar}>
                   <h3 style={styles.heading} >Quizzes</h3>
-                  <div style={styles.buttons}>
-                  </div>
                   <ListGroup>
                     {
                       this.props.loadingQuizzes ?
