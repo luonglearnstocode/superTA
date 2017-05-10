@@ -5,7 +5,7 @@ const styles = {
     borderWidth: 0
   },
   heading: {
-    marginBottom: 5
+    marginBottom: 20
   },
   buttons: {
     float: 'right',
