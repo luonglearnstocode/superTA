@@ -24,7 +24,8 @@ class Workspace extends Component {
 
   _getLink() {
     if(this.props.selectedQuiz) {
-      return <p>Link: {'https://superta.herokuapp.com/quiz/' + this.props.selectedQuiz.id + '/answer'}</p>
+      const link = 'https://superta.herokuapp.com/#/quiz/' + this.props.selectedQuiz.id + '/answer'
+      return <a href={link}>Link: {link}</a>
     }
   }
 
